@@ -1920,6 +1920,9 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .grid>.adz.adrun,.cgrid>.adz.adrun{grid-column:1/-1}
 @media(max-width:700px){.adc1{width:210px}.adc1-img{height:130px}}
 .adc1{display:flex;flex-direction:column;align-items:center}.adc1 .adc-btn{margin-top:auto}.adc1-img{flex:none}
+/* ===== V104 ===== */
+.af-scroll{max-height:330px;overflow-y:auto;overflow-x:hidden;padding-right:4px;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin}
+.af-scroll .af-o{min-width:0}
 </style>
 </head>
 <body>
@@ -3261,7 +3264,7 @@ function pgPostJob(editId){
  ${accessBanner(u)}
  <div class="panel"><form class="form" onsubmit="saveJob(event,'${j?j.id:''}')" novalidate>
   <div class="fld full"><label for="j-co">Company name</label><input id="j-co" value="${esc(u.company?.name)}" readonly></div>
-  <div class="fld full"><label for="j-title-in">Job title <span class="hint">(choose or type; you can add more than one)</span></label>${tagBox('j-title',v.title||'',titleSugg,'e.g. Accounts Executive, HR Executive',{sep:'/',max:5,label:'Job title'})}</div>
+  <div class="fld full"><label for="j-title-in">Job title <span class="hint">(choose or type; you can add more than one)</span></label>${tagBox('j-title',v.title||'',officeTitles,'e.g. Accounts Executive, HR Executive',{sep:'/',max:5,label:'Job title'})}</div>
   ${stateSel('j',v.state,'Job state')}
   ${cityPick('j',v.state,v.city,'Job city')}
   <div class="fld full"><span class="l">Location on map</span><div class="row-btns" style="margin:0;align-items:center"><button type="button" class="btn alt" id="geo-btn" onclick="GEO_P='j';useMyLocation()">📍 Use my current location</button><button type="button" class="btn ghost" onclick="GEO_P='j';openMapPicker()">🗺️ Add location from Google Map</button><span id="geo-st">${geoChip(v.geo)}</span></div><div id="geo-msg" class="geomsg" role="status" aria-live="polite" hidden></div><small class="hint">Use your current location, or pick the place on Google Maps. The city, state, address and pincode fill in automatically. Job seekers can get directions to it.</small><input type="hidden" id="j-lat" value="${v.geo?v.geo.lat:''}"><input type="hidden" id="j-lng" value="${v.geo?v.geo.lng:''}"></div>
@@ -4701,7 +4704,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='103';
+const WEB_BUILD='105';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -6903,9 +6906,9 @@ const UG_BTN=(cls,txt,href)=>`<a class="ug-btn ${cls||''}" href="${href||'#/guid
 /* ==================================================================
    V96: yearly salary ranges (Lakhs) and the full education list with "Other"
    ================================================================== */
-const EDU_ALL=['Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma','B.A.','B.Com','B.Sc','BBA','BCA','B.Tech / B.E.','B.Pharm','B.Ed','B.Arch','B.Des','BDS','BAMS / BHMS','BHM (Hotel Management)','BJMC (Mass Communication)','BPT (Physiotherapy)','B.Voc','MBBS','LLB','Nursing (GNM / B.Sc)','CA','CS','CMA','M.A.','M.Com','M.Sc','MBA / PGDM','MCA','M.Tech / M.E.','M.Pharm','M.Ed','LLM','MSW','MD / MS','PG Diploma','Ph.D'];
-const EDU_LVL=o=>o==='Below 10th'?0:o==='10th (SSC)'?1:o==='12th (HSC)'||o==='ITI'?2:o==='Diploma'?3:/^(M\.|MBA|MCA|MSW|MD |LLM|PG |Ph\.D)/.test(o)?5:4;
-const JOB_LVL=e=>{const m=({'Below 10th':0,'10th pass':1,'12th pass':2,'ITI':2,'Diploma':3,'Graduate':4,'Any Graduate':4,'Post Graduate':5,'Any Postgraduate':5})[e];if(m!=null)return m;return EDU_ALL.includes(e)?EDU_LVL(e):-1};
+const EDU_ALL=['Any Postgraduate','MBA / PGDM','Post Graduation Not Required','CA','M.Tech / M.E.','M.Sc','MCA','M.Com','MD / MS','PG Diploma','LLM','M.Pharm','B.A.','Any Graduate','B.Tech / B.E.','Graduation Not Required','BBA','B.Sc','Diploma','B.Com','BCA','B.Pharm','MBBS','BDS','LLB','M.A.','M.Ed','MSW','CS','CMA','Ph.D','B.Ed','B.Arch','B.Des','BAMS / BHMS','BHM (Hotel Management)','BJMC (Mass Communication)','BPT (Physiotherapy)','B.Voc','Nursing (GNM / B.Sc)','ITI','12th (HSC)','10th (SSC)','Below 10th'];
+const EDU_LVL=o=>o==='Below 10th'?0:o==='10th (SSC)'?1:o==='12th (HSC)'||o==='ITI'?2:o==='Diploma'?3:/^(M\.|MBA|MCA|MSW|MD |LLM|PG |Ph\.D|Any Postgraduate)/.test(o)?5:4;
+const JOB_LVL=e=>{const m=({'Below 10th':0,'10th pass':1,'12th pass':2,'ITI':2,'Diploma':3,'Graduate':4,'Any Graduate':4,'Post Graduate':5,'Any Postgraduate':5,'Graduation Not Required':-1,'Post Graduation Not Required':4})[e];if(m!=null)return m;return EDU_ALL.includes(e)?EDU_LVL(e):-1};
 function eduOk(j,opt){const r=JOB_LVL(j.education);return r<0||EDU_LVL(opt)>=r}
 function eduOther(base,k,q){const v=q.get(k)||'';return `<label class="af-o af-oth"><input type="checkbox" ${v?'checked':''} onchange="if(!this.checked)afSet('${base}','${k}','');else this.closest('.af-oth').nextElementSibling.hidden=false"><span>Other</span></label><div class="af-othin" ${v?'':'hidden'}><input placeholder="Type your course, e.g. Hotel Management" value="${esc(v)}" onkeydown="if(event.key==='Enter'){event.preventDefault();afSet('${base}','${k}',this.value.trim())}"><button type="button" onclick="afSet('${base}','${k}',this.previousElementSibling.value.trim())">Apply</button></div>`}
 function eduSec(base,title,k,ok,list,q,hint){const on=afList(q,k),cnt=EDU_ALL.map(o=>[o,list.filter(x=>ok(x,o)).length]);const show=window._eduAll?cnt:cnt.slice(0,6);
@@ -6939,7 +6942,7 @@ function afSecR(base,title,k,entries,q,opt){const html=afSec(base,title,k,entrie
 function afPanel(base,inner,active,keys){return `<aside class="af"><details class="af-box" id="af-box" open><summary class="af-h"><span>All Filters</span>${active?`<button type="button" class="af-clear" onclick="event.preventDefault();afClear('${base}',${JSON.stringify(keys).replace(/"/g,"'")})">Clear (${active})</button>`:''}</summary>${inner}</details></aside>`}
 
 /* ---------------- job filters ---------------- */
-const SAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10-15','10 – 15 Lakhs',1000000,1500000],['15-25','15 – 25 Lakhs',1500000,2500000],['25-50','25 – 50 Lakhs',2500000,5000000],['50+','50+ Lakhs',5000000,1e13]];
+const SAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10-15','10 – 15 Lakhs',1000000,1500000],['15-25','15 – 25 Lakhs',1500000,2500000],['25-50','25 – 50 Lakhs',2500000,5000000],['50-75','50 – 75 Lakhs',5000000,7500000],['75-100','75 – 100 Lakhs',7500000,10000000],['1-5cr','1 – 5 Cr',10000000,50000000],['5cr+','5+ Cr',50000000,1e14]];
 const FRESH=[['1','Last 24 hours'],['3','Last 3 days'],['7','Last 7 days'],['15','Last 15 days'],['30','Last 30 days']];
 const JMODE=j=>jModes(j).map(modeLbl);
 const JIND=j=>emp(j.employerId)?.company?.industry||'';
@@ -6952,13 +6955,13 @@ function jobFilter(list,q){const t=now(),fx=q.get('fx'),L=k=>afList(q,k);
   if(!chk('fm',JMODE(j))||!chk('fet',(j.empTypes&&j.empTypes.length)?j.empTypes:['Full Time'])||!chk('fdp',j.dept||'')||!chk('fl',j.city)||!chk('fs',JSAL(j))||!chk('fi',JIND(j))||!chk('ft',JCT(j))||!chk('fw',j.workStatus))return false;
   {const fe=L('fe');if(fe.length&&!fe.some(o=>eduOk(j,o)))return false;const fo=q.get('feo');if(fo&&!eduTxt([j.education,j.title,j.description,j.highlights].join(' '),fo))return false}if(q.get('fd')&&t-(+j.createdAt||0)>(+q.get('fd'))*DAY)return false;if(q.get('fwi')==='1'&&!isWalkin(j))return false;return true})}
 function jobFilters(base,all,q){const active=JKEYS.filter(k=>q.get(k)).length,fx=q.get('fx');const xv=fx===null||fx===''?31:+fx;
- const sal=SAL_B.map(([k,l])=>[k,all.filter(j=>JSAL(j)===k).length,l]).filter(x=>x[1]);
+ const sal=SAL_B.map(([k,l])=>[k,all.filter(j=>JSAL(j)===k).length,l]);
  const inner=`<div class="af-sec af-exp"><div class="af-t">Experience <span class="hint">${xv>=31?'Any':xv===0?'Fresher':xv+' yrs'}</span></div><input type="range" min="0" max="31" value="${xv}" aria-label="Your experience in years" oninput="this.previousElementSibling.querySelector('span').textContent=this.value>=31?'Any':this.value==0?'Fresher':this.value+' yrs'" onchange="afSet('${base}','fx',this.value>=31?'':this.value)"><div class="af-rng"><span>0 Yrs</span><span>Any</span></div></div>
  ${afSecR(base,'Work mode','fm',afCount(all,JMODE),q)}
  ${afSecR(base,'Job type','fet',afCount(all,j=>j.empTypes&&j.empTypes.length?j.empTypes:['Full Time']),q)}
  ${afSecR(base,'Department','fdp',afCount(all,j=>j.dept),q,{closed:1})}
  ${afSecR(base,'Location','fl',afCount(all,j=>j.city),q)}
- ${afSecR(base,'Salary (yearly)','fs',sal,q)}
+ ${afSecR(base,'Salary (yearly)','fs',sal,q,{all:true})}
  ${afSecR(base,'Industry','fi',afCount(all,JIND),q)}
  ${afSecR(base,'Company type','ft',afCount(all,JCT),q,{closed:1})}
  ${eduSec(base,'Your education','fe',eduOk,all,q,'Jobs you qualify for with this education')}
@@ -7092,7 +7095,7 @@ function jpModes(v){const cur=v.jobTypes&&v.jobTypes.length?v.jobTypes:(v.jobTyp
 jobTypePick=function(pre,cur){cur=cur||[];return `<div class="fld full"><span class="l">Work mode <span class="hint">(tick one or more)</span></span><div class="checks">${WMODES.map(t=>`<label class="check"><input type="checkbox" name="${pre}-jt" value="${t}" ${cur.includes(t)?'checked':''}> ${modeLbl(t)}</label>`).join('')}</div></div>`};
 
 /* ---------- education: full list + Other ---------- */
-const JOB_EDU=['Any','Below 10th','10th pass','12th pass','ITI','Diploma','Graduate','Any Graduate','Post Graduate','Any Postgraduate'].concat(EDU_ALL.filter(x=>!['Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma'].includes(x)));
+const JOB_EDU=['Any','Graduation Not Required','Post Graduation Not Required','Any Graduate','Any Postgraduate','Below 10th','10th pass','12th pass','ITI','Diploma','Graduate','Post Graduate'].concat(EDU_ALL.filter(x=>!['Any Postgraduate','Any Graduate','Graduation Not Required','Post Graduation Not Required','Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma'].includes(x)));
 function jpEdu(v){const e=v.education||'',known=!e||JOB_EDU.includes(e);
  return `<div class="fld"><label for="j-edu">Education required</label><select id="j-edu" onchange="$('#j-eduo-b').hidden=this.value!=='Other'">${sel(JOB_EDU.concat(['Other']),known?e:'Other','Select')}</select></div>
  <div class="fld" id="j-eduo-b" ${known?'hidden':''}><label for="j-eduo">Type the education</label><input id="j-eduo" value="${known?'':esc(e)}" placeholder="e.g. Hotel Management, CFA"></div>`}
@@ -7157,7 +7160,7 @@ function pgJob(id){
 /* ---------- more candidate filters for employers ---------- */
 const NOTICE_B=[['0-15','Immediate / up to 15 days',0,15],['16-30','16 – 30 days',16,30],['31-60','1 – 2 months',31,60],['61+','More than 2 months',61,9999]];
 const AGE_B=[['18-25','18 – 25 years',18,25],['26-30','26 – 30 years',26,30],['31-40','31 – 40 years',31,40],['41+','41 years and above',41,200]];
-const CSAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10+','10+ Lakhs',1000000,1e13]];
+const CSAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10-15','10 – 15 Lakhs',1000000,1500000],['15-25','15 – 25 Lakhs',1500000,2500000],['25-50','25 – 50 Lakhs',2500000,5000000],['50-75','50 – 75 Lakhs',5000000,7500000],['75-100','75 – 100 Lakhs',7500000,10000000],['1-5cr','1 – 5 Cr',10000000,50000000],['5cr+','5+ Cr',50000000,1e14]];
 const UPD_B=[['7','Joined in last 7 days'],['30','Joined in last 30 days'],['90','Joined in last 3 months']];
 const bucket=(B,v)=>{if(v===null||v===undefined||v===''||isNaN(+v))return '';const b=B.find(([,, lo,hi])=>+v>=lo&&+v<=hi);return b?b[0]:''};
 const cNotice=c=>{const p=c.profile||{};return p.working==='Yes'?bucket(NOTICE_B,+p.notice||0):''};
@@ -7186,7 +7189,7 @@ function candFilters(base,all,q){const active=CKEYS.filter(k=>q.get(k)).length,c
  ${afSecR(base,'Work mode wanted','cjt',WMODES.map(t=>[t,C.filter(c=>(c.profile?.jobTypes||[]).includes(t)).length,modeLbl(t)]),q)}
  ${afSecR(base,'Industry','ci',afCount(C,c=>c.profile?.industry),q)}
  ${afSecR(base,'Current designation','cdg',afCount(C,c=>c.profile?.designation),q)}
- ${afSecR(base,'Current salary (yearly)','csl',fixedCnt(CSAL_B,C,cSal),q)}
+ ${afSecR(base,'Current salary (yearly)','csl',fixedCnt(CSAL_B,C,cSal),q,{all:true})}
  ${afSecR(base,'Currently working','cwk',[['Yes',C.filter(c=>c.profile?.working==='Yes').length,'Yes, working now'],['No',C.filter(c=>c.profile?.working!=='Yes').length,'Not working now']],q)}
  ${afSecR(base,'Notice period','cn2',fixedCnt(NOTICE_B,C,cNotice),q)}
  ${afSecR(base,'Age','cag',fixedCnt(AGE_B,C,cAge),q)}
@@ -7610,6 +7613,28 @@ adFit=function(box){if(box&&box.classList.contains('adrun'))adRun(box)};
 adTick=function(){};adGo=function(){};
 window.addEventListener('resize',()=>document.querySelectorAll('.adrun').forEach(adRun));
 {const _pa103=pgAdsAdmin;pgAdsAdmin=function(){return _pa103.apply(this,arguments).replace(/<div class="ad-speed"><label for="ad-sec">[\s\S]*?<\/div>/,`<div class="ad-speed"><label for="ad-spd2"><b>🎞 Moving speed of the ad row:</b></label> <select id="ad-spd2" onchange="adCfgSet({speed:+this.value},'Ad speed saved ✓')"><option value="30" ${adCfg().speed===30?'selected':''}>Slow</option><option value="60" ${adCfg().speed===60?'selected':''}>Normal</option><option value="100" ${adCfg().speed===100?'selected':''}>Fast</option></select> <span class="hint">Every company gets its own card. At the bottom of pages and inside lists the cards move across the page; in the side column they show one below the other.</span></div>`).replace(/📐 The ad size is automatic:[^<]*/,'📐 Each company gets its own card of the same size. Pictures always show fully (no white space).')}}
+
+/* ==================================================================
+   V104: full salary list (0 Lakh → 5+ Crore) and the full Naukri-style
+   education list, in the job filter, employer filter and job post form
+   ================================================================== */
+const EDU_LBL={'M.Sc':'MS/M.Sc (Science)','MD / MS':'Medical-MS/MD','BBA':'B.B.A. / B.M.S.','B.A.':'B.A - Bachelor of Arts','BCA':'B.C.A.','B.Pharm':'B.Pharma','M.Pharm':'M.Pharma','MBBS':'M.B.B.S.','BDS':'BDS - Bachelor of Dental Surgery','LLB':'LLB - Bachelor of Law','M.A.':'M.A - Master of Arts','M.Tech / M.E.':'M.Tech','MBA / PGDM':'MBA/PGDM','B.Tech / B.E.':'B.Tech / B.E.'};
+const eduLbl=o=>EDU_LBL[o]||o;
+const EDU_NR={'Graduation Not Required':4,'Post Graduation Not Required':5};
+/* job seeker filter: which jobs fit the chosen education */
+eduOk=function(j,opt){const r=JOB_LVL(j.education);if(EDU_NR[opt])return r<EDU_NR[opt];return r<0||EDU_LVL(opt)>=r};
+/* employer filter: which candidates have the chosen education */
+{const _ce104=candEdu;candEdu=function(c,o){const p=c.profile||{},lv=Math.max(JOB_LVL(p.education||''),p.degree&&EDU_ALL.includes(p.degree)?EDU_LVL(p.degree):-1);
+ if(o==='Any Graduate')return lv>=4;if(o==='Any Postgraduate')return lv>=5;if(o==='Graduation Not Required')return lv>=0&&lv<4;if(o==='Post Graduation Not Required')return lv===4;return _ce104.apply(this,arguments)}}
+eduSec=function(base,title,k,ok,list,q,hint){const on=afList(q,k),cnt=EDU_ALL.map(o=>[o,list.filter(x=>ok(x,o)).length]);
+ return `<details class="af-sec" open><summary>${title==='Your education'?'Education':title}${on.length?` <span class="af-n">${on.length}</span>`:''}</summary><div class="af-opts">${hint?`<p class="af-hint">${hint}</p>`:''}<div class="af-scroll">${cnt.map(([o,n])=>`<label class="af-o"><input type="checkbox" ${on.includes(o)?'checked':''} data-v="${esc(o)}" onchange="afToggle('${base}','${k}',this.dataset.v)"><span>${esc(eduLbl(o))}</span><em>(${n.toLocaleString('en-IN')})</em></label>`).join('')}</div>${eduOther(base,k+'o',q)}</div></details>`};
+/* job post form: nice names in the education list */
+{const _je104=jpEdu;jpEdu=function(v){return _je104.apply(this,arguments).replace(/<option( selected)?>([^<]*)<\/option>/g,(m,at,txt)=>`<option value="${txt}"${at||''}>${esc(eduLbl(txt.replace(/&amp;/g,'&')))}</option>`)}}
+
+/* V105: job title suggestions in "Post a job" — office jobs only (no AC / repair / trade titles) */
+const TRADE_RE=/technician|mechanic|repair|welder|plumber|carpenter|painter|mason|fitter|electrician/i;
+function officeTitles(){const u=me(),own=(db.jobs||[]).filter(j=>u&&j.employerId===u.id&&!j.dummy).flatMap(j=>tagSplit(j.title,'/'));
+ return uniqCI(JOB_TITLES.concat(own).filter(t=>!TRADE_RE.test(t)||/^lab technician$/i.test(t)))}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
