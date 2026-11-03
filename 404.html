@@ -1902,6 +1902,24 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 @media(max-width:700px){.adz.adc{padding:14px;margin:14px 0!important}.adc-deck{height:240px}.adc-h{font-size:1.12rem}}
 .grid>.adz.adc,.cgrid>.adz.adc{grid-column:1/-1;max-width:none}
 .ad-prev .adz.adc{margin:0!important}
+/* ===== V103: separate ad cards, moving row ===== */
+.adz.adrun{width:100%!important;max-width:100%!important;overflow:hidden!important;margin:18px 0!important;padding:6px 0 12px;display:block;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.adrun-tr{display:flex;gap:16px;width:max-content;transform:translateX(var(--from,100vw))}
+.adrun-tr.go{animation:adRow linear infinite}
+@keyframes adRow{from{transform:translateX(var(--from,100vw))}to{transform:translateX(var(--to,-100%))}}
+.adc1{flex:none;width:250px;display:grid;gap:6px;justify-items:center;text-align:center;padding:14px 14px 16px;border-radius:18px;border:1px solid #e6e9f2;background:linear-gradient(160deg,#fff 0%,#f6f8ff 55%,#fff7ef 100%);box-shadow:0 8px 22px rgba(20,40,110,.10)}
+.adc1 .adc-h{font-size:1.05rem}
+.adc1 .adc-p{font-size:.82rem}
+.adc1-img{position:relative;display:block;width:100%;height:150px;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(15,23,42,.18);background:#e9edf5;margin:4px 0}
+.adc1-img img{position:relative;display:block;width:100%;height:100%;object-fit:contain}
+.adc1 .adc-btn{padding:8px 20px;font-size:.88rem}
+.adz.adcol{display:grid!important;gap:14px;width:100%!important;margin:14px 0!important;overflow:visible}
+.adcol .adc1{width:auto}
+.adcol .adc1-img{height:220px}
+.adz.adprev{display:flex!important;justify-content:center;margin:0!important;width:100%!important}
+.grid>.adz.adrun,.cgrid>.adz.adrun{grid-column:1/-1}
+@media(max-width:700px){.adc1{width:210px}.adc1-img{height:130px}}
+.adc1{display:flex;flex-direction:column;align-items:center}.adc1 .adc-btn{margin-top:auto}.adc1-img{flex:none}
 </style>
 </head>
 <body>
@@ -4683,7 +4701,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='102';
+const WEB_BUILD='103';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7571,6 +7589,27 @@ adStrip=function(){};
  return h.replace('<div class="ad-speed">','<p class="hint ad-auto">📐 The ad size is automatic: a tall card in the side column, a wide card at the bottom of pages and inside lists, and a stacked card on mobile. Pictures always show fully (no white space).</p><div class="ad-speed">')}}
 
 {const _pa102b=pgAdsAdmin;pgAdsAdmin=function(){return _pa102b.apply(this,arguments).replace('(best size 1200 × 300 px; JPG, PNG or WebP)','(any shape works — square, tall or wide; JPG, PNG or WebP)')}}
+
+/* ==================================================================
+   V103: one separate card per company (no stacking on top of each other).
+   Wide places (bottom of page, inside lists): the row of cards keeps
+   moving across the page. Side column: cards one below the other.
+   ================================================================== */
+function adCard1(a){const t=adTxt(a);return `<div class="adc1" data-ad="${esc(a.id)}"><span class="adc-sp">Sponsored · <b>${esc(a.co||'')}</b></span><h4 class="adc-h">${esc(t.hd)}</h4>${t.tx?`<p class="adc-p">${esc(t.tx)}</p>`:''}
+ <a class="adc1-img" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" onclick="return adOpen(event,'${esc(a.id)}')" aria-label="${esc(a.co||'Advertisement')}"><span class="adc-bg" style="background-image:url('${esc(a.img)}')"></span><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" loading="lazy" onload="adFit(this.closest('.adz'))"></a>
+ <a class="adc-btn" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" onclick="return adOpen(event,'${esc(a.id)}')">▶ ${esc(t.bt)}</a></div>`}
+adSlot=function(L,kind){if(!L.length)return '';
+ if(window._adPrevFlag)return `<div class="adz adprev">${adCard1(L[0])}</div>`;
+ if(kind==='side')return `<div class="adz adcol">${L.map(adCard1).join('')}</div>`;
+ return `<div class="adz adrun"><div class="adrun-tr">${L.map(adCard1).join('')}</div></div>`};
+adHtml=function(a,kind){return adSlot([a],kind)};
+/* the row enters from the right edge and leaves at the left edge, again and again — each card only once */
+function adRun(box){const tr=box&&box.querySelector('.adrun-tr');if(!tr)return;const W=box.clientWidth||300,tw=tr.scrollWidth||300;
+ tr.style.setProperty('--from',W+'px');tr.style.setProperty('--to',(-tw)+'px');tr.style.animationDuration=Math.max(6,(W+tw)/adCfg().speed)+'s';if(!tr.classList.contains('go'))tr.classList.add('go')}
+adFit=function(box){if(box&&box.classList.contains('adrun'))adRun(box)};
+adTick=function(){};adGo=function(){};
+window.addEventListener('resize',()=>document.querySelectorAll('.adrun').forEach(adRun));
+{const _pa103=pgAdsAdmin;pgAdsAdmin=function(){return _pa103.apply(this,arguments).replace(/<div class="ad-speed"><label for="ad-sec">[\s\S]*?<\/div>/,`<div class="ad-speed"><label for="ad-spd2"><b>🎞 Moving speed of the ad row:</b></label> <select id="ad-spd2" onchange="adCfgSet({speed:+this.value},'Ad speed saved ✓')"><option value="30" ${adCfg().speed===30?'selected':''}>Slow</option><option value="60" ${adCfg().speed===60?'selected':''}>Normal</option><option value="100" ${adCfg().speed===100?'selected':''}>Fast</option></select> <span class="hint">Every company gets its own card. At the bottom of pages and inside lists the cards move across the page; in the side column they show one below the other.</span></div>`).replace(/📐 The ad size is automatic:[^<]*/,'📐 Each company gets its own card of the same size. Pictures always show fully (no white space).')}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
