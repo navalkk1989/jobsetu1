@@ -1934,6 +1934,10 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .bul-h{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
 .bul-t{border:1px solid #d6dbe6;background:#fff;color:#5b6478;border-radius:999px;font-size:.75rem;padding:3px 10px;cursor:pointer;flex:none;margin-bottom:6px}
 .bul-t.on{background:#eef3ff;border-color:#2457d6;color:#2457d6;font-weight:600}
+/* ===== V110 ===== */
+.dup-g{margin-top:10px;border-top:1px solid #eef0f5;padding-top:8px}
+.dup-r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;font-size:.9rem;flex-wrap:wrap}
+.warnp{border-left:4px solid #f59e0b}
 </style>
 </head>
 <body>
@@ -2551,10 +2555,9 @@ async function saveCompanyProfile(e){
  e.preventDefault();const u=me();if(!u||u.role!=='employer')return;const c=u.company;
  const name=val('cp-name'),mob=val('cp-mobile'),em=val('cp-email').toLowerCase(),p1=val('cp-pass'),p2=val('cp-pass2'),co=val('cp-co'),gst=val('cp-gst').toUpperCase();
  if(!name)return toast('Enter your name.');
- if(mob!==u.mobile){if(!isMobile(mob))return toast('Enter a valid 10-digit mobile number.');if(!otpOk('cp-mobile'))return toast('Verify your new mobile number with the OTP.');if(db.users.some(x=>x.id!==u.id&&x.mobile===mob))return toast('Another account already uses this mobile number.')}
+ if(mob!==u.mobile){if(!isMobile(mob))return toast('Enter a valid 10-digit mobile number.');if(!otpOk('cp-mobile'))return toast('Verify your new mobile number with the OTP.');if(takenBy('mobile',mob,u.id)||(await takenCloud('',mob,u.id)).mobile)return toast('Another account already uses this mobile number.')}
  if(!isEmail(em))return toast('Enter a valid email address.');
- if(em!==String(u.email||'').toLowerCase()&&!otpOk('cp-email'))return toast('Verify your new email with the OTP.');
- if(db.users.some(x=>x.id!==u.id&&x.email===em))return toast('Another account already uses this email.');
+ if(em!==lowE(u.email)){if(!otpOk('cp-email'))return toast('Verify your new email with the OTP.');if(takenBy('email',em,u.id)||(await takenCloud(em,'',u.id)).email)return toast('Another account already uses this email.')}
  if(p1||p2){if(p1.length<6)return toast('New password needs at least 6 characters.');if(p1!==p2)return toast('The two passwords don\'t match.')}
  if(!co)return toast('Enter your company name.');
  if(!val('cp-type'))return toast('Select your company type.');
@@ -2971,7 +2974,7 @@ function googleLogin(){
  if(gReady)return show();toast('Loading Google sign-in…');initGoogle(show)}
 function doGoogle(e){e.preventDefault();const name=val('g-name'),email=val('g-email');if(!name||!isEmail(email))return toast('Enter your name and a valid Gmail address.');closeModal();googleSignIn(name,email)}
 function googleSignIn(name,email,dob0,skipCloud){
- email=email.toLowerCase();let u=db.users.find(x=>x.email===email);
+ email=email.toLowerCase();let u=db.users.find(x=>x.email===email&&!x.remote)||db.users.find(x=>!x.remote&&!isDemoUser(x)&&(lowE(x.gmail)===email||(x.oldEmails||[]).some(o=>lowE(o)===email)));
  if(!u&&!skipCloud&&cloudOn()&&window._gCred){const cred=window._gCred;window._gCred=null;toast('Signing in…');gsPost({action:'gLogin',credential:cred,clientId:gClientId()}).then(r=>{tokSet(r.id,r.token);cloudMerge(r.data);save();googleSignIn(name,email,dob0,true)}).catch(er=>{if(cloudErr(er)==='employer_email')return toast('This email belongs to an employer account. Log in with your password.');googleSignIn(name,email,dob0,true)});return}
  if(u&&u.role!=='candidate')return toast('This email belongs to an employer account. Log in with your password.');
  if(u&&u.status!=='active')return toast('This account is suspended. Contact support.');
@@ -3167,14 +3170,12 @@ async function saveProfile(e){
  if(!val('p-state')||!val('p-city'))return toast('Choose the state and city where you want to work.');
  if(pin&&!/^\d{6}$/.test(pin))return toast('Pincode should be 6 digits.');
  const em=val('p-email').toLowerCase(),p1=val('p-pass'),p2=val('p-pass2');
- if(mob!==(u.mobile||'')){if(!isMobile(mob))return toast('Enter a valid 10-digit mobile number.');if(!otpOk('p-mobile'))return toast('Verify your new mobile number with the OTP.');if(db.users.some(x=>x.id!==u.id&&x.mobile===mob))return toast('Another account already uses this mobile number.')}
- if(em!==u.email){if(!isEmail(em))return toast('Enter a valid email address.');if(!otpOk('p-email'))return toast('Verify your new email with the OTP.');if(db.users.some(x=>x.id!==u.id&&x.email===em))return toast('Another account already uses this email.')}
+ if(mob!==(u.mobile||'')){if(!isMobile(mob))return toast('Enter a valid 10-digit mobile number.');if(!otpOk('p-mobile'))return toast('Verify your new mobile number with the OTP.');if(takenBy('mobile',mob,u.id)||(await takenCloud('',mob,u.id)).mobile)return toast('Another account already uses this mobile number.')}
+ if(em!==lowE(u.email)){if(!isEmail(em))return toast('Enter a valid email address.');if(!otpOk('p-email'))return toast('Verify your new email with the OTP.');if(takenBy('email',em,u.id)||(await takenCloud(em,'',u.id)).email)return toast('Another account already uses this email.')}
  if(p1||p2){if(p1.length<6)return toast('New password needs at least 6 characters.');if(p1!==p2)return toast('The two passwords don\'t match.')}
  const newDocs={};for(const[k]of CAND_DOCS){const f=$('#pd-'+k).files[0];if(f){try{newDocs[k]=await readDoc(f,1024)}catch(m){return toast(m)}}}
- u.mobile=mob;u.email=em;if(p1)u.password=p1;u.marketing=checked('p-mk');
  let res=null;const rf=$('#p-res').files[0];if(rf){try{res=await readResumeFile(rf)}catch(m){return toast(m)}}
  const old=u.profile||{};
- u.name=val('p-name');
  const ind=val('p-ind'),jts=pickedJobTypes('p'),yr=val('p-eyr');
  if(!ind)return toast('Choose an industry type.');
  if(!jts.length)return toast('Choose at least one job type.');
@@ -3185,6 +3186,7 @@ async function saveProfile(e){
  if(exps.some(x=>!x.company))return toast('Enter the company name for each experience.');
  if(exps.some(x=>x.from&&x.to&&x.from>x.to))return toast('An experience ends before it starts. Check the dates.');
  if(edus.some(x=>!x.degree))return toast('Choose the course for each education you added.');
+ u.mobile=mob;u.email=em;if(p1)u.password=p1;u.marketing=checked('p-mk');u.name=val('p-name');
  u.profile={dob:val('p-dob'),industry:ind,tech:ind===TECH_IND?val('p-tech'):'',jobTypes:jts,about:val('p-about'),skills:val('p-skills'),education:val('p-edu'),degree:val('p-deg'),degreeOther:val('p-deg')==='Other'?val('p-dego'):'',university:val('p-uni'),eduYear:yr,edus,workStatus:ws,
   company:ws==='Experienced'?val('p-co'):'',exps:ws==='Experienced'?exps:[],
   designation:ws==='Experienced'?val('p-des'):'',salary:ws==='Experienced'?val('p-sal'):'',expYears:ws==='Experienced'?val('p-ey'):'0',expMonths:ws==='Experienced'?val('p-em'):'0',
@@ -4718,7 +4720,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='109';
+const WEB_BUILD='110';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7766,6 +7768,30 @@ document.addEventListener('paste',e=>{const t=e.target;if(!t||t.tagName!=='TEXTA
  const lines=txt.replace(/\r/g,'').split('\n').map(l=>l.replace(BUL_RE,'').replace(/^\s*\d+[.)]\s+/,'').trim()).filter(Boolean);if(!lines.length)return;
  const onBul=/^\s*•\s*$/.test(before),atStart=!before.trim();let ins=lines.map((l,i)=>i===0&&!atStart?l:(i===0&&onBul?l:BUL+l)).join('\n');
  const nv=v.slice(0,s)+ins+v.slice(en);t.value=nv;const p=s+ins.length;t.setSelectionRange(p,p);t.dispatchEvent(new Event('input',{bubbles:true}))});
+
+/* ==================================================================
+   V110: email change never makes a second account; "another account
+   already uses this email" only for a real other account; admin sees
+   duplicate accounts
+   ================================================================== */
+const lowE=v=>String(v||'').trim().toLowerCase();
+/* real accounts only (not demo, not a read-only copy of a company) */
+const realAcc=x=>x&&!isDemoUser(x)&&!x.remote&&!x.deleteReq;
+function emailOwners(e){e=lowE(e);if(!e)return [];return db.users.filter(x=>realAcc(x)&&(lowE(x.email)===e||lowE(x.gmail)===e||(x.oldEmails||[]).some(o=>lowE(o)===e)))}
+function takenBy(kind,v,selfId){v=kind==='email'?lowE(v):String(v||'').trim();if(!v)return false;
+ return kind==='email'?emailOwners(v).some(x=>x.id!==selfId&&lowE(x.email)===v):db.users.some(x=>realAcc(x)&&x.id!==selfId&&String(x.mobile||'')===v)}
+async function takenCloud(email,mobile,selfId){if(!cloudOn())return {};try{return await gsPost({action:'exists',email:email||'',mobile:mobile||'',excludeId:selfId})}catch(e){return {}}}
+/* keep the Gmail used for "Continue with Google", so it always opens the same account */
+function gmailKeep(){let ch=false;db.users.forEach(u=>{if(u&&u.google&&!u.gmail&&u.email&&!u.remote){u.gmail=lowE(u.email);ch=true}});if(ch)save()}
+{const _gs110=googleSignIn;googleSignIn=function(name,email){const e=lowE(email);try{if(!db.users.some(x=>lowE(x.email)===e)){const o=emailOwners(e).find(x=>x.role==='candidate');if(o){arguments[1]=o.email}}}catch(x){}const r=_gs110.apply(this,arguments);setTimeout(gmailKeep,50);return r}}
+/* remember the old email when it is changed in Edit profile */
+function wrapSave(fn){return async function(){const u=me(),old=u&&u.email;const r=await fn.apply(this,arguments);try{const n=me();if(n&&old&&n.email&&lowE(n.email)!==lowE(old)){n.oldEmails=[...new Set([...(n.oldEmails||[]),lowE(old)])].filter(x=>x!==lowE(n.email)).slice(-5);if(n.google&&!n.gmail)n.gmail=lowE(old);save()}}catch(x){}return r}}
+saveProfile=wrapSave(saveProfile);saveCompanyProfile=wrapSave(saveCompanyProfile);
+/* admin: accounts that share an email or mobile */
+function dupGroups(role){const by=new Map();db.users.filter(x=>realAcc(x)&&x.role===role).forEach(u=>{[lowE(u.email)&&'e:'+lowE(u.email),u.mobile&&'m:'+u.mobile].filter(Boolean).forEach(k=>{if(!by.has(k))by.set(k,[]);by.get(k).push(u)})});
+ const seen=new Set(),out=[];by.forEach((L,k)=>{if(L.length<2)return;const key=L.map(u=>u.id).sort().join('|');if(seen.has(key))return;seen.add(key);out.push({k,L})});return out}
+{const _r110=route;route=function(){const r=_r110.apply(this,arguments);try{gmailKeep()}catch(e){}
+ try{const m=/^#\/admin\/(candidates|employers)/.exec(location.hash||'');if(m&&isAdminNow()&&!$('#dup-p')){const role=m[1]==='employers'?'employer':'candidate',G=dupGroups(role);if(G.length){const t=document.querySelector('#app .panel');if(t)t.insertAdjacentHTML('beforebegin',`<div class="panel warnp" id="dup-p" style="margin-bottom:14px"><b>⚠ ${G.length} possible duplicate account${G.length>1?'s':''}</b> <span class="hint">(same ${'email or mobile'}). Keep the right one and delete the extra.</span>${G.map(g=>`<div class="dup-g"><span class="hint">${g.k.startsWith('e:')?'Email':'Mobile'}: <b>${esc(g.k.slice(2))}</b></span>${g.L.map(u=>`<div class="dup-r"><span>${esc(role==='employer'?(u.company?.name||u.name):u.name)} · ${esc(u.email||'')} · ${esc(u.mobile||'')} · joined ${fmtDate(u.createdAt)}</span><button class="btn danger sm" onclick="delUser('${u.id}')">Delete</button></div>`).join('')}</div>`).join('')}</div>`)}}}catch(e){}return r}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
