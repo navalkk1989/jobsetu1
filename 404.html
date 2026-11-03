@@ -4716,7 +4716,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='107';
+const WEB_BUILD='108';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7718,6 +7718,28 @@ document.addEventListener('keydown',e=>{const t=e.target;if(!t||t.tagName!=='TEX
  e.preventDefault();const v=t.value,s=t.selectionStart,en=t.selectionEnd,ls=v.lastIndexOf('\n',s-1)+1,cur=v.slice(ls,s);
  if(/^\s*•\s*$/.test(cur)&&!v.slice(s,(v.indexOf('\n',s)+1||v.length+1)-1).trim()){t.value=v.slice(0,ls)+v.slice(s);t.setSelectionRange(ls,ls);return}
  const ins='\n'+BUL;t.value=v.slice(0,s)+ins+v.slice(en);t.setSelectionRange(s+ins.length,s+ins.length);t.dispatchEvent(new Event('input',{bubbles:true}))});
+
+/* ==================================================================
+   V108: company logo shows on every device (job cards, job page,
+   company page) — a small copy of the logo travels with the company
+   record in the Google Sheet
+   ================================================================== */
+async function logoSmall(src){try{let d=await shrinkPicture(src,160,true);if(d.length>40000)d=await shrinkPicture(src,110,false,true);return d.length<=40000?d:''}catch(e){return ''}}
+let _logoBusy=false;
+async function logoSync(){if(_logoBusy)return;_logoBusy=true;try{let ch=false;
+ for(const u of db.users){if(u.role!=='employer'||!u.company||u.cloud&&!(session&&session.id===u.id))continue;const L=u.company.docs&&u.company.docs.logo;
+  if(!L||!L.data||L.fromCloud){continue}const key=String(L.data.length)+':'+L.data.slice(-40);if(u.company.logoKey===key&&u.company.logoSm)continue;
+  const sm=await logoSmall(L.data);if(sm){u.company.logoSm=sm;u.company.logoKey=key;ch=true}}
+ if(ch){save();try{gsQueue()}catch(e){}}}finally{_logoBusy=false}}
+/* push: the small logo goes with the company record */
+{const _gc108=gsCollections;gsCollections=function(){const C=_gc108.apply(this,arguments);try{if(C.companies)C.companies=C.companies.map(r=>{const u=db.users.find(x=>x.id===r.id);const s=u&&u.company&&u.company.logoSm;return s?Object.assign({},r,{logoSm:s}):r})}catch(e){}return C}}
+/* pull: other devices use it as the company logo */
+{const _ca108=cloudApply;cloudApply=function(c,r){const u=_ca108.apply(this,arguments);try{if(c==='companies'&&u&&u.company&&r&&r.logoSm&&/^data:image\//.test(String(r.logoSm))){const d=u.company.docs=u.company.docs||{};if(!d.logo||!d.logo.data||d.logo.fromCloud)d.logo={name:'logo',data:String(r.logoSm),fromCloud:1};u.company.logoSm=String(r.logoSm)}}catch(e){}return u}}
+/* if only the small copy is there, still show it */
+{const _cm108=coMark;coMark=function(e,cls){try{const c=e&&e.company;if(c&&c.logoSm&&!(c.docs&&c.docs.logo&&c.docs.logo.data)){c.docs=c.docs||{};c.docs.logo={name:'logo',data:c.logoSm,fromCloud:1}}}catch(x){}return _cm108.apply(this,arguments)}}
+{const _r108=route;route=function(){const r=_r108.apply(this,arguments);setTimeout(logoSync,400);return r}}
+setTimeout(logoSync,2500);
+{const _cl108=coLogo;coLogo=function(empId,cls){try{const e=getUser(empId),c=e&&e.company;if(c&&c.logoSm&&!(c.docs&&c.docs.logo&&c.docs.logo.data)){c.docs=c.docs||{};c.docs.logo={name:'logo',data:c.logoSm,fromCloud:1}}}catch(x){}return _cl108.apply(this,arguments)}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
