@@ -1833,6 +1833,20 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .adz-tr{transition:height .5s ease}
 .ad-img-p img{max-height:140px;width:auto}
 @media(min-width:701px){.adz:not(.adz-side) .adz-tr{display:block;overflow:hidden}.adz:not(.adz-side) .adz-i{position:absolute;inset:0}}
+/* ===== V99: ad box fits the picture, slides ===== */
+.adz{width:auto;max-width:100%;margin:14px auto;background:none!important;border:0!important;border-radius:0;overflow:visible;display:block}
+.adz .adz-tr{position:relative;display:block!important;overflow:hidden;border-radius:12px;background:none!important;margin:0 auto;box-shadow:0 4px 18px rgba(15,23,42,.14);height:110px;width:440px;max-width:100%;transition:width .6s ease,height .6s ease}
+.adz .adz-i{position:absolute!important;inset:0;display:block!important;width:100%;height:100%;opacity:1;visibility:visible;transform:translateX(100%);transition:transform .7s ease}
+.adz .adz-i.on{transform:translateX(0)}
+.adz .adz-i.out{transform:translateX(-100%)}
+.adz .adz-i img{display:block;width:100%!important;height:100%!important;max-width:none;max-height:none!important;object-fit:cover}
+.adz-cap{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px}
+.adz .adz-l{position:static;background:none;color:var(--muted,#6b7385);font-size:.68rem;padding:0;border-radius:0}
+.adz .adz-l b{font-weight:600}
+.adz .adz-dots{position:static;display:flex;gap:5px}
+.adz-wrap{text-align:center}.adz-wrap .adz{text-align:left}
+@media(max-width:700px){.adz .adz-tr{max-width:100%}}
+.adz .adz-cap .adz-l{background:rgba(255,255,255,.88);color:#4b5466;padding:1px 8px;border-radius:20px}
 </style>
 </head>
 <body>
@@ -4614,7 +4628,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='98';
+const WEB_BUILD='99';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7396,6 +7410,32 @@ async function adSpeed(v){if(!isAdminNow())return;db.settings=db.settings||{};db
 {const _gc98=gsCollections;gsCollections=function(){const C=_gc98.apply(this,arguments);try{if(C.settings&&C.settings[0])C.settings[0]=Object.assign({},C.settings[0],{adCfg:(db.settings||{}).adCfg||null})}catch(e){}return C}}
 {const _ca98=cfgApply;cfgApply=function(x){const r=_ca98.apply(this,arguments);if(r&&x&&'adCfg' in x){try{db.settings.adCfg=typeof x.adCfg==='string'?JSON.parse(x.adCfg||'null'):x.adCfg}catch(e){}save()}return r}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInterval(_adTimer);_adTimer=null}else{const s=adCfg().sec;if(s&&!_adTimer&&document.querySelector('.adz .adz-i+.adz-i'))_adTimer=setInterval(adTick,s*1000)}});
+
+/* ==================================================================
+   V99: ad box = exactly the picture (no white sides), ads always slide
+   ================================================================== */
+function adCfg(){const c=(db.settings||{}).adCfg||{};return {sec:[3,5,7,10,15].includes(+c.sec)?+c.sec:5}}
+function adItem(a,on,i){return `<a class="adz-i${on?' on':''}" data-i="${i}" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" data-co="${esc(a.co||'')}" data-h="${adHt(a)}" data-w="${adWd(a)}" onclick="return adOpen(event,'${esc(a.id)}')"><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" onload="adFit(this.closest('.adz'))"></a>`}
+function adSlot(L,kind){if(!L.length)return '';const S=L.length===1?[L[0],L[0]]:L;
+ return `<div class="adz adz-${kind}" data-ad="${esc(L[0].id)}"><div class="adz-tr">${S.map((a,i)=>adItem(a,!i,i)).join('')}</div><div class="adz-cap"><span class="adz-l">Sponsored · <b>${esc(L[0].co||'')}</b></span>${L.length>1?`<span class="adz-dots">${L.map((_,i)=>`<button type="button" class="${i?'':'on'}" aria-label="Ad ${i+1}" onclick="adGo(this.closest('.adz'),${i})"></button>`).join('')}</span>`:''}</div></div>`}
+function adHtml(a,kind){return adSlot([a],kind)}
+/* make the box exactly the size of the picture now showing */
+function adFit(box){if(!box)return;const tr=box.querySelector('.adz-tr'),it=box.querySelector('.adz-i.on')||box.querySelector('.adz-i');if(!tr||!it)return;const im=it.querySelector('img');
+ const r=im&&im.naturalWidth&&im.naturalHeight?im.naturalWidth/im.naturalHeight:4,pw=Math.max(120,(box.parentElement||box).clientWidth||300);
+ let w,h;if(box.classList.contains('adz-side')){w=pw;h=w/r}else{h=+it.dataset.h||110;w=h*r;const mx=pw*(+it.dataset.w||100)/100;if(w>mx){w=mx;h=w/r}}
+ tr.style.setProperty('width',Math.round(w)+'px','important');tr.style.setProperty('height',Math.round(h)+'px','important');box.style.setProperty('width',Math.round(w)+'px','important')}
+function adGo(box,i){if(!box)return;const it=[...box.querySelectorAll('.adz-i')],n=it.length;if(n<2)return;const cur=box._i||0;i=((i%n)+n)%n;if(i===cur)return;
+ it.forEach((x,k)=>{x.classList.remove('on','out');if(k===cur)x.classList.add('out')});it[i].classList.add('on');
+ const d=[...box.querySelectorAll('.adz-dots button')];d.forEach((x,k)=>x.classList.toggle('on',k===i%Math.max(1,d.length)));
+ const l=box.querySelector('.adz-l b');if(l)l.textContent=it[i].dataset.co||'';box._i=i;adFit(box);
+ setTimeout(()=>{const o=it[cur];if(o&&!o.classList.contains('on'))o.classList.remove('out')},800)}
+function adTick(){document.querySelectorAll('.adz').forEach(b=>adGo(b,(b._i||0)+1))}
+{const _ap99=adPaint;adPaint=function(){_ap99.apply(this,arguments);clearInterval(_adTimer);_adTimer=null;document.querySelectorAll('#app .adz').forEach(adFit);
+ if(document.querySelector('#app .adz'))_adTimer=setInterval(adTick,adCfg().sec*1000)}}
+window.addEventListener('resize',()=>document.querySelectorAll('.adz').forEach(adFit));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!_adTimer&&document.querySelector('#app .adz'))_adTimer=setInterval(adTick,adCfg().sec*1000)});
+{const _pa99=pgAdsAdmin;pgAdsAdmin=function(){return _pa99.apply(this,arguments).replace(/<option value="0"[^>]*>Off \(show one ad\)<\/option>/,'').replace('When a place has more than one ad, they change by themselves. Stops while the mouse is on the ad.','Ads keep sliding all the time. With one ad, it slides in again and again; with more ads, they change one after another.')}}
+{const _pv99=adPrev;adPrev=function(){_pv99.apply(this,arguments);const b=document.querySelector('#ad-prev .adz');if(b)adFit(b)}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
