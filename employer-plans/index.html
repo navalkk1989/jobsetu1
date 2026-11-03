@@ -1930,6 +1930,10 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .ac-it b{font-weight:700}
 .ac-it em{font-style:normal;font-size:.72rem;color:#9aa3b5;flex:none}
 .ac-it:hover,.ac-it.on{background:#f3f5f9}
+/* ===== V107 ===== */
+.bul-h{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.bul-t{border:1px solid #d6dbe6;background:#fff;color:#5b6478;border-radius:999px;font-size:.75rem;padding:3px 10px;cursor:pointer;flex:none;margin-bottom:6px}
+.bul-t.on{background:#eef3ff;border-color:#2457d6;color:#2457d6;font-weight:600}
 </style>
 </head>
 <body>
@@ -3302,9 +3306,10 @@ function pgPostJob(editId){
   <div class="fld"><label for="j-to">Shift timing to</label><input id="j-to" type="time" value="${esc(v.shiftTo||'18:30')}"></div>
   <div class="fld"><span class="l">Work status</span><div class="radios"><label><input type="radio" name="j-ws" value="Fresher" ${v.workStatus==='Fresher'?'checked':''} onchange="document.getElementById('j-exp').value=0"> Fresher</label><label><input type="radio" name="j-ws" value="Experienced" ${v.workStatus==='Experienced'?'checked':''}> Experienced</label></div></div>
   <div class="fld"><label for="j-exp">Minimum experience required (years)</label><input id="j-exp" type="number" min="0" max="40" value="${esc(v.minExp)}"></div>
-  <div class="fld full"><label for="j-hl">Job highlights</label><textarea id="j-hl" style="min-height:80px" placeholder="One per line, e.g. PF and ESI">${esc(v.highlights)}</textarea></div>
-  <div class="fld full"><label for="j-req">Job requirements <span class="hint">(one per line — each line shows as a bullet point)</span></label><textarea id="j-req" style="min-height:100px" placeholder="e.g. 2+ years of experience in accounts&#10;Good knowledge of Tally and GST&#10;Good communication in Hindi and English">${esc(v.requirements||'')}</textarea></div>
-  <div class="fld full"><label for="j-desc">Job description</label><textarea id="j-desc" style="min-height:140px" placeholder="Daily work, targets, who the person reports to. Start a line with - to make a bullet point.">${esc(v.description)}</textarea></div>
+  ${bulField('j-hl','Job highlights','(press Enter for the next point)',v.highlights,'e.g. PF and ESI from day one',80)}
+  ${bulField('j-desc','Job description','',v.description,'Daily work, targets, who the person reports to',140)}
+  ${bulField('j-roles','Roles &amp; Responsibilities','(press Enter for the next point)',v.roles,'e.g. Manage day-to-day accounts and GST filing',110)}
+  ${bulField('j-req','Desired Candidate Profile','(press Enter for the next point)',v.requirements,'e.g. 2+ years of experience in accounts',100)}
   <div class="fld full row-btns"><button class="btn">${j?'Save changes':'Publish job'}</button><a class="btn ghost" href="#/employer">Cancel</a></div>
  </form></div></section>`}
 function saveJob(e,editId){
@@ -3312,7 +3317,7 @@ function saveJob(e,editId){
  if(!db.services.jobPosting)return toast('Job posting is paused right now.');
  if(!employerAccess(u).ok)return toast('Choose a plan to post jobs.');
  const d={pincode:val('j-pin'),geo:val('j-lat')?{lat:+val('j-lat'),lng:+val('j-lng')}:null,title:val('j-title'),state:val('j-state'),city:val('j-city'),address:val('j-addr'),openings:+val('j-open'),salary:+val('j-sal'),contact:val('j-phone'),whatsapp:val('j-wa'),email:val('j-email'),
-  jobType:jPrimary(jpPicked('j-mode')),jobTypes:jpPicked('j-mode'),empTypes:jpPicked('j-et'),dept:val('j-dept'),requirements:val('j-req'),education:jpEduVal(),languages:val('j-lang'),skills:val('j-skills'),shift:radio('j-shift'),shiftFrom:val('j-from'),shiftTo:val('j-to'),workStatus:radio('j-ws'),minExp:+val('j-exp')||0,highlights:val('j-hl'),description:val('j-desc')};
+  jobType:jPrimary(jpPicked('j-mode')),jobTypes:jpPicked('j-mode'),empTypes:jpPicked('j-et'),dept:val('j-dept'),requirements:val('j-req'),roles:val('j-roles'),education:jpEduVal(),languages:val('j-lang'),skills:val('j-skills'),shift:radio('j-shift'),shiftFrom:val('j-from'),shiftTo:val('j-to'),workStatus:radio('j-ws'),minExp:+val('j-exp')||0,highlights:val('j-hl'),description:val('j-desc')};
  const need=[['title','job title'],['state','job state'],['city','job city'],['address','job address'],['jobType','work mode (tick at least one)'],['education','education required'],['skills','key skills'],['shift','shift'],['workStatus','work status'],['description','job description']];
  for(const[k,l]of need)if(!d[k])return toast('Add the '+l+'.');if(!d.empTypes.length)return toast('Tick at least one job type (Full time, Part time…).');
  if(!(d.openings>=1))return toast('Number of openings should be at least 1.');
@@ -4711,7 +4716,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='106';
+const WEB_BUILD='107';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7146,7 +7151,8 @@ function pgJob(id){
  <div class="panel jd-body">
   ${hl.length||m!==null?`<div class="jd-hl">${hl.length?`<h3>Job highlights</h3><ul>${hl.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}${m!==null?`<h4>Job match score</h4><div class="jd-ms">${jdMatch(j,u).map(([ok,l])=>`<span class="${ok?'ok':''}">${ok?'✔':'○'} ${l}</span>`).join('')}</div>`:''}</div>`:''}
   <h2>Job description</h2><div class="jd-desc">${descHtml(j.description)}</div>
-  ${rq.length?`<h4 class="jd-sub">Requirements</h4><ul class="jd-ul">${rq.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
+  ${jLines(j.roles).length?`<h4 class="jd-sub">Roles &amp; Responsibilities</h4><ul class="jd-ul">${jLines(j.roles).map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
+  ${rq.length?`<h4 class="jd-sub">Desired Candidate Profile</h4><ul class="jd-ul">${rq.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
   <dl class="jd-dl">${row('Role',esc(tagSplit(j.title,'/')[0]||j.title))}${row('Industry Type',esc(c.industry||''))}${row('Department',esc(j.dept||''))}${row('Employment Type',esc(ets.join(', ')))}${row('Work mode',esc(modesTxt(j)))}${row('Shift timing',esc(j.shift||'')+(j.shiftFrom?', '+esc(j.shiftFrom)+' to '+esc(j.shiftTo||''):''))}${row('Languages',esc(j.languages||''))}${row('Company type',esc(c.type||''))}${j.tech?row('Trade',esc(j.tech)):''}</dl>
   <h4 class="jd-sub">Education</h4><p class="jd-edu">${esc(j.education||'Any')}</p>
   ${sk.length?`<h4 class="jd-sub">Key Skills</h4><div class="jd-sk">${sk.map(s=>`<span>${esc(s)}</span>`).join('')}</div>`:''}
@@ -7692,6 +7698,26 @@ document.addEventListener('keydown',e=>{const i=e.target;if(!i||!AC_KIND[i.id]||
  else if(e.key==='Escape')acHide()},true);
 window.addEventListener('resize',acHide);
 {const _r106=route;route=function(){acHide();return _r106.apply(this,arguments)}}
+
+/* ==================================================================
+   V107: bullet points by themselves in job text boxes
+   (Job highlights, Job description, Roles & Responsibilities,
+    Desired Candidate Profile). Enter = new bullet; Enter on an empty
+   bullet = no bullet; "Bullets on/off" button adds or removes them.
+   ================================================================== */
+const BUL='• ',BUL_RE=/^\s*[•●▪\-*]\s?/;
+function bulBtn(id,on){return `<button type="button" class="bul-t ${on?'on':''}" data-for="${id}" onclick="bulToggle('${id}')">${on?'• Bullets on':'Bullets off'}</button>`}
+function bulField(id,label,hint,val,ph,h){const on=!val||String(val).split('\n').filter(x=>x.trim()).every(x=>BUL_RE.test(x))||/^\s*•/m.test(val);
+ return `<div class="fld full"><div class="bul-h"><label for="${id}">${label} ${hint?`<span class="hint">${hint}</span>`:''}</label>${bulBtn(id,on)}</div><textarea id="${id}" data-bul="${on?1:0}" style="min-height:${h||100}px" placeholder="${ph}">${esc(val||'')}</textarea></div>`}
+function bulToggle(id){const t=document.getElementById(id);if(!t)return;const on=t.dataset.bul!=='1';t.dataset.bul=on?1:0;
+ t.value=t.value.split('\n').map(l=>{const c=l.replace(BUL_RE,'');return !c.trim()?'':on?BUL+c:c}).join('\n');
+ const b=document.querySelector(`.bul-t[data-for="${id}"]`);if(b){b.classList.toggle('on',on);b.textContent=on?'• Bullets on':'Bullets off'}t.focus()}
+document.addEventListener('focusin',e=>{const t=e.target;if(t&&t.tagName==='TEXTAREA'&&t.dataset.bul==='1'&&!t.value){t.value=BUL;setTimeout(()=>t.setSelectionRange(t.value.length,t.value.length),0)}});
+document.addEventListener('focusout',e=>{const t=e.target;if(t&&t.tagName==='TEXTAREA'&&t.dataset.bul==='1'&&/^\s*•\s*$/.test(t.value))t.value=''});
+document.addEventListener('keydown',e=>{const t=e.target;if(!t||t.tagName!=='TEXTAREA'||t.dataset.bul!=='1'||e.key!=='Enter'||e.shiftKey||e.isComposing)return;
+ e.preventDefault();const v=t.value,s=t.selectionStart,en=t.selectionEnd,ls=v.lastIndexOf('\n',s-1)+1,cur=v.slice(ls,s);
+ if(/^\s*•\s*$/.test(cur)&&!v.slice(s,(v.indexOf('\n',s)+1||v.length+1)-1).trim()){t.value=v.slice(0,ls)+v.slice(s);t.setSelectionRange(ls,ls);return}
+ const ins='\n'+BUL;t.value=v.slice(0,s)+ins+v.slice(en);t.setSelectionRange(s+ins.length,s+ins.length);t.dispatchEvent(new Event('input',{bubbles:true}))});
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
