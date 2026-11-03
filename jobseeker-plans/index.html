@@ -1728,6 +1728,94 @@ html.app .hdr-rf:not(.need){color:#fff;background:rgba(255,255,255,.14)!importan
 .af-othin{display:flex;gap:6px;margin-top:2px}.af-othin[hidden]{display:none}
 .af-othin input{flex:1;min-width:0;font-size:12.5px;height:32px;min-height:0;padding:4px 8px;border-radius:8px}
 .af-othin button{border:0;border-radius:8px;background:#2563EB;color:#fff;font:inherit;font-size:12px;font-weight:700;padding:0 10px;cursor:pointer}
+
+/* ===== V97 ===== */
+.jp-ticks{display:flex;flex-wrap:wrap;gap:8px 18px}
+.jp-ticks .check{margin:0}
+/* job page (Naukri style) */
+.jd .detail{grid-template-columns:minmax(0,1fr) 330px;align-items:start}
+.jd-head{padding:22px 24px}
+.jd-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.jd-tt h1{margin:0;font-size:1.45rem;line-height:1.25}
+.jd-co{margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-weight:600}
+.jd-co a{color:var(--ink,#1b2333)}
+.jd-v{font-size:.75rem;color:#16a34a;background:#e9f9ef;border-radius:20px;padding:2px 8px}
+.jd-logo{width:64px;height:64px;border-radius:12px;object-fit:contain;flex:none;border:1px solid var(--line,#e3e7ef)}
+.jd-meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;color:var(--muted,#5b6478);font-size:.93rem}
+.jd-meta>span{display:inline-block}
+.jd-yr{color:var(--muted,#5b6478);font-size:.85em}
+.jd-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.jd-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line,#e3e7ef)}
+.jd-stats{font-size:.88rem;color:var(--muted,#5b6478)}
+.jd-stats b{color:var(--ink,#1b2333);font-weight:600}
+.jd-stats i{margin:0 10px;color:#cbd2de;font-style:normal}
+.jd-btns{display:flex;gap:10px}
+.jd-btns .btn{border-radius:999px;min-width:96px}
+.jd-save.on{border-color:#2457d6;color:#2457d6}
+.jd-body{padding:22px 24px}
+.jd-body h2{font-size:1.1rem;margin:18px 0 8px}
+.jd-hl{background:#f4f6fa;border-radius:14px;padding:16px 18px}
+.jd-hl h3{margin:0 0 8px;font-size:1rem}
+.jd-hl h4{margin:14px 0 8px;font-size:.95rem}
+.jd-hl ul,.jd-ul{margin:0;padding-left:20px}
+.jd-hl li,.jd-ul li{margin:4px 0;line-height:1.5}
+.jd-ms{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.88rem;color:var(--muted,#5b6478)}
+.jd-ms .ok{color:#16a34a;font-weight:600}
+.jd-desc p{margin:6px 0;line-height:1.6}
+.jd-sub{margin:16px 0 6px;font-size:.98rem}
+.jd-dl{margin:16px 0 0;display:grid;gap:6px}
+.jd-dl>div{display:flex;gap:6px;flex-wrap:wrap}
+.jd-dl dt{color:var(--muted,#5b6478);margin:0}
+.jd-dl dd{margin:0;font-weight:600}
+.jd-edu{margin:0}
+.jd-sk{display:flex;flex-wrap:wrap;gap:8px}
+.jd-sk span{border:1px solid var(--line,#d9dee8);border-radius:999px;padding:4px 12px;font-size:.86rem}
+.jd-contact .jd-dl{margin-top:4px}
+.jd-side{display:grid;gap:14px;position:static}
+.jd-sim h3{margin:0 0 8px;font-size:1rem}
+.jd-si{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid var(--line,#e3e7ef);color:inherit;text-decoration:none}
+.jd-si:first-of-type{border-top:0}
+.jd-si div{display:grid;gap:2px;min-width:0}
+.jd-si b{font-size:.93rem}
+.jd-si span{font-size:.84rem;color:var(--muted,#5b6478)}
+.jd-si-logo{width:40px;height:40px;border-radius:8px;object-fit:contain;flex:none}
+@media(max-width:900px){.jd .detail{grid-template-columns:1fr}.jd-head,.jd-body{padding:16px}.jd-logo{width:48px;height:48px}.jd-btns{width:100%}.jd-btns .btn{flex:1}}
+/* ads */
+.adz{position:relative;margin:18px 0;border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--line,#e3e7ef)}
+.adz a{display:block}
+.adz img{display:block;width:100%;height:auto;max-height:260px;object-fit:cover}
+.adz-l{position:absolute;top:6px;left:8px;background:rgba(15,23,42,.62);color:#fff;font-size:.68rem;padding:2px 8px;border-radius:20px;z-index:1}
+.adz-wrap{margin-top:8px;margin-bottom:8px}
+.adz-side img{max-height:none}
+.adz-list{margin:12px 0}
+.ad-how{margin-top:10px}.ad-how summary{cursor:pointer;font-weight:600}.ad-how ol{padding-left:20px;line-height:1.6}
+.ad-img-p img,.ad-prev img{max-width:100%;border-radius:10px;margin-top:8px}
+.ad-url{margin-top:8px}.ad-url summary{cursor:pointer;font-size:.88rem}
+.ad-list{display:grid;gap:12px}
+.ad-row{display:grid;grid-template-columns:160px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line,#e3e7ef);border-radius:12px;padding:10px}
+.ad-th img{width:160px;height:56px;object-fit:cover;border-radius:8px}
+.ad-in{min-width:0;word-break:break-word}
+.ad-acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+@media(max-width:760px){.ad-row{grid-template-columns:1fr}.ad-th img{width:100%;height:auto}.ad-acts{justify-content:flex-start}}
+/* sizes */
+.szl b{font-weight:700}.szl em{color:#16a34a;font-style:normal}
+.shrink-n{display:block;margin-top:4px;color:var(--muted,#5b6478)}
+.inv-sz{display:inline-block;margin-left:6px;color:var(--muted,#5b6478);font-size:.78rem}
+/* app pop-up / Play Store */
+.appask{text-align:center}
+.appask-ic svg,.appask-ic img{height:42px;width:auto}
+.appask h2{margin:10px 0 6px}
+.appask-b{justify-content:center}
+.appask-b .btn{min-width:130px}
+.gp-btn{display:inline-flex;align-items:center;gap:6px;background:#111!important;color:#fff!important;border-color:#111!important}
+.gp-ic{vertical-align:-3px}
+.gp-badge img{height:48px;width:auto;display:block}
+/* admin register user */
+.au-done .au-pw{font-family:ui-monospace,monospace;background:#fff;padding:1px 6px;border-radius:6px}
+.mail-now{background:#f4f6fa;border-radius:12px;padding:12px 14px;margin:6px 0 14px}
+.otp-paste{margin-left:6px}
+input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
+.grid>.adz,.cgrid>.adz{grid-column:1/-1;margin:4px 0}
 </style>
 </head>
 <body>
@@ -1739,11 +1827,11 @@ html.app .hdr-rf:not(.need){color:#fff;background:rgba(255,255,255,.14)!importan
     <div class="fbrand"><a class="logo" href="#/" id="flogo" aria-label="JobSetu1 home"></a><p>Connecting job seekers and employers across India. JobSetu1 never asks job seekers to pay an employer for a job.</p><div class="fcontact" id="fcontact"></div></div>
     <div><h4>Job seekers</h4><a href="#/jobs">Find jobs</a><a href="#/companies">Browse companies</a><a href="#/register/candidate">Create free profile</a><a href="#/plans/jobseeker">Job seeker plans</a></div>
     <div><h4>Employers</h4><a href="#/register/employer">Register free</a><a href="#/post-job">Post a job</a><a href="#/plans/employer">Employer plans</a></div>
-    <div><h4>Company</h4><a href="#/guide" class="f-guide">📘 User Guide</a><a href="#/about">About us</a><a href="#/contact">Contact us</a><a href="#/refund">Refund policy</a><a href="JobSetu1.apk?v=2.9" download="JobSetu1.apk">📱 Android app</a></div>
+    <div><h4>Company</h4><a href="#/guide" class="f-guide">📘 User Guide</a><a href="#/about">About us</a><a href="#/contact">Contact us</a><a href="#/refund">Refund policy</a><a href="JobSetu1.apk?v=3.0" download="JobSetu1.apk">📱 Android app</a></div>
   </div>
   <div class="wrap fbottom"><span>© <span id="fyear">2026</span> JobSetu1. All rights reserved.<span id="fventure" class="fventure"></span></span><nav aria-label="Legal"><a href="#/privacy">Privacy policy</a><a href="#/terms">Terms &amp; conditions</a><a href="#/refund">Refund policy</a><a href="#/terms">Fraud alert</a></nav></div>
 </footer>
-<datalist id="cities"></datalist>
+<datalist id="cities"></datalist><datalist id="des-list"><option value="Owner / Director"><option value="HR Manager"><option value="HR Executive"><option value="Recruiter"><option value="Talent Acquisition Lead"><option value="Hiring Manager"><option value="Operations Manager"><option value="Office Manager"><option value="Accounts Manager"><option value="Founder / CEO"></datalist>
 <div id="modal" class="modal" hidden onclick="if(event.target===this)closeModal()"><div class="modal-card" id="modal-card" role="dialog" aria-modal="true"></div></div>
 <div id="toasts" aria-live="polite"></div>
 
@@ -1766,7 +1854,7 @@ const TECH_ALIAS={'Facility Electrician':'Electrician','Automobile Mechanic':'Ca
 function techOf(t){t=String(t||'').trim();if(TECH_TYPES.includes(t))return t;if(TECH_ALIAS[t]!==undefined)return TECH_ALIAS[t];const l=t.toLowerCase();return TECH_TYPES.find(x=>l.includes(x.toLowerCase()))||(/\b(plumber|electrician|mechanic|technician|carpenter|welder)\b/.test(l)?(TECH_TYPES.find(x=>x.toLowerCase().includes(l.match(/\b(plumber|electrician|mechanic|technician|carpenter|welder)\b/)[1]))||'Other Technician'):'')}
 const INDUSTRIES=['IT Services & Consulting','Software Product','BPO / Call Centre','Banking & Finance','Insurance','Logistics & Supply Chain','E-commerce & Retail','Manufacturing','Automobile','Construction & Real Estate','Healthcare & Hospitals','Pharma & Life Sciences','Education & Training','Hospitality & Travel','FMCG','Textile & Apparel','Telecom','Media & Advertising','Electronics','Agriculture','Security Services','Facility Management','Technician & Repair Services','Other'];
 const TECH_IND='Technician & Repair Services',JOB_TYPES=['Work From Office','Work From Home','Field Job'],FIELD_RE=/\b(field|delivery|collection|driver|technician|plumber|electrician|mechanic|carpenter|painter|welder|surveyor|medical representative|sales executive|sales officer)\b/i;
-const DEGREES=['10th (SSC)','12th (HSC)','ITI','Diploma','B.A.','B.Com','B.Sc','BBA','BCA','B.Tech / B.E.','B.Pharm','B.Ed','MBBS','LLB','Nursing (GNM / B.Sc)','M.A.','M.Com','M.Sc','MBA / PGDM','MCA','M.Tech / M.E.','M.Pharm','CA','CS','Ph.D','Other'];
+const DEGREES=['10th (SSC)','12th (HSC)','ITI','Diploma','B.A.','B.Com','B.Sc','BBA','BCA','B.Tech / B.E.','B.Pharm','B.Ed','B.Arch','B.Des','BDS','BAMS / BHMS','BHM (Hotel Management)','BJMC (Mass Communication)','BPT (Physiotherapy)','B.Voc','MBBS','LLB','Nursing (GNM / B.Sc)','M.A.','M.Com','M.Sc','MBA / PGDM','MCA','M.Tech / M.E.','M.Pharm','M.Ed','LLM','MSW','MD / MS','PG Diploma','CA','CS','CMA','Ph.D','Certificate course','Other'];
 const EDU=["Below 10th","10th pass","12th pass","ITI","Diploma","Graduate","Post Graduate","Any"];
 const EMP_SIZES=["1-10","11-50","51-200","201-500","501-1000","1000+"];
 const SERVICES=[
@@ -2062,10 +2150,10 @@ function renderHeader(cur){
  if(r==='manager')links+=`<a href="#/manager" data-k="manager">Manager panel</a>`;
  if(!u)links+=`<a href="#/register/employer" data-k="register">For employers</a>`;
  links+=`<a href="#/plans" data-k="plans">Plans</a>`;
- if(!u&&!APP)links+=`<a class="nav-app" href="JobSetu1.apk?v=2.9" download="JobSetu1.apk">📱 Download App</a>`;
+ if(!u&&!APP)links+=`<a class="nav-app" href="JobSetu1.apk?v=3.0" download="JobSetu1.apk">📱 Download App</a>`;
  const right=u?`${r==='employer'?`<a class="btn sm postjob-btn${cur==='post-job'?' on':''}" href="#/post-job" aria-label="Post a job"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Post a job</span></a>`:''}${(r==='candidate'||r==='employer')?goldBtn(u):''}${u?`<a class="btn ghost sm bell" href="#/notifications" aria-label="Notifications, ${unread} unread">${BELL}${unread?`<b>${unread}</b>`:''}</a>`:''}${userMenu(u)}`
   :`<a class="btn ghost sm" href="#/login">Log in</a><a class="btn sm" href="#/register">Register free</a>`;
- const dlApp=APP||u?'':`<a class="btn sm app-dl" href="JobSetu1.apk?v=2.9" download="JobSetu1.apk" title="Download the JobSetu1 Android app" aria-label="Download mobile app"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 7.5v7M9 11.5l3 3 3-3M10.5 18.5h3"/></svg><span>Download App</span></a>`;
+ const dlApp=APP||u?'':`<a class="btn sm app-dl" href="JobSetu1.apk?v=3.0" download="JobSetu1.apk" title="Download the JobSetu1 Android app" aria-label="Download mobile app"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 7.5v7M9 11.5l3 3 3-3M10.5 18.5h3"/></svg><span>Download App</span></a>`;
  $('#top').innerHTML=`<div class="wrap nav"><a class="logo" href="#/" aria-label="JobSetu1 home">${LOGO}</a><a class="ltf-badge" href="${u?'#/plans':'#/register'}" title="JobSetu1 is life time free to search, apply and post jobs" aria-label="Life time free"><img src="${LTF_IMG}" alt="Life Time Free"></a><nav class="links" aria-label="Main">${links}</nav><div class="spacer"></div><div class="right">${dlApp}${right}</div></div>`;
  document.querySelectorAll('.links a').forEach(a=>{if(a.dataset.k===cur)a.classList.add('on')});
  const pb=$('#planbar');
@@ -2191,7 +2279,7 @@ function jobCard(j){
  return `<a class="job ${isWalkin(j)?'walkin':''}" href="#/job/${j.id}">${isWalkin(j)?`<span class="wbadge">${WALK_IC}Walk-in${walkinText(j)?' · '+walkinText(j):''}</span>`:''}<div class="job-top"><div style="min-width:0"><h3>${esc(j.title)}</h3><div class="co" style="margin-top:4px">${coLogo(j.employerId)}<span>${esc(j.company)}</span></div>${c.industry?`<div class="ind">${esc(c.industry)}${c.type?' · '+esc(c.type):''}</div>`:''}</div>${m!==null?`<span class="match">${m}% match</span>`:''}</div>
  <div class="meta">${ico('bag',j.workStatus==='Fresher'?'Fresher':esc(j.minExp)+'+ yrs')}${ico('rupee','Up to '+rupee(j.salary).slice(1)+'/month')}${ico('pin',esc(j.city)+esc(distTxt(j)))}</div>
  ${sk.length?`<div class="skills">${sk.map(esc).join(' · ')}</div>`:''}
- <div class="job-foot"><div class="tags">${jobFlag(j)}<span class="chip">${j.jobType==='Work From Home'?'Work from home':'Work from office'}</span><span class="chip">${esc(j.shift)} shift</span>${j.tech?`<span class="chip tech">🔧 ${esc(j.tech)}</span>`:''}</div><span class="hint">${me()?'':'<span class="lockhint">Log in to view</span> · '}${ago(j.createdAt)}</span></div></a>`}
+ <div class="job-foot"><div class="tags">${jobFlag(j)}<span class="chip">${esc(modesTxt(j))}</span><span class="chip">${esc(j.shift)} shift</span>${j.tech?`<span class="chip tech">🔧 ${esc(j.tech)}</span>`:''}</div><span class="hint">${me()?'':'<span class="lockhint">Log in to view</span> · '}${ago(j.createdAt)}</span></div></a>`}
 function coLogo(empId,cls){const e=getUser(empId);const d=e?.company?.docs?.logo?.data;return d?`<img class="${cls||'co-logo'}" src="${d}" alt="${esc(e.company.name)} logo">`:''}
 const HERO=[
  {src:"m/d5f80b4b3bb3.webp",k:'For job seekers',t:'Find jobs that match your skills and city',p:'Free profile, matched alerts, and one-click apply.'},
@@ -2275,7 +2363,7 @@ function userMenu(u){
  if(r==='candidate')items=`<a href="#/profile">Edit profile</a><button onclick="openResume()">Update resume</button>${u.profile?.resume?`<button onclick="downloadResume('${u.id}')">Download resume</button>`:''}<button onclick="openPhoto()">${u.photo?'Change profile photo':'Add profile photo'}</button><hr><a href="#/dashboard">My dashboard</a><a href="#/premium">${hasPremium(u)?'Premium tools':'Get Premium Service'}</a>${hasPremium(u)?'<a href="javascript:void 0" onclick="openUpgrade()">⬆ Upgrade Premium</a>':''}<a href="#/invoices">Payments &amp; invoices</a><a href="#/notifications">Notifications</a>`;
  else if(r==='employer')items=`<a href="#/employer">Dashboard</a><a href="#/company-profile">Edit profile</a><a href="#/post-job">Post a job</a><a href="#/premium">${hasPremium(u)?'Premium tools':'Get Premium Service'}</a>${hasPremium(u)?'<a href="javascript:void 0" onclick="openUpgrade()">⬆ Upgrade Premium</a>':''}<a href="#/invoices">Payments &amp; invoices</a><a href="#/notifications">Notifications</a>`;
  else items=`<a href="#/${r}">${r==='admin'?'Admin panel':'Manager panel'}</a><a href="#/notifications">Notifications</a>${r==='admin'?'<a href="#/admin/settings">⚙ Site settings (upload video)</a>':''}`;
- if(!APP)items+=`<a href="JobSetu1.apk?v=2.9" download="JobSetu1.apk">📱 Download Android app</a>`;
+ if(!APP)items+=`<a href="JobSetu1.apk?v=3.0" download="JobSetu1.apk">📱 Download Android app</a>`;
  const pic=r==='employer'&&u.company?.docs?.logo?.data?`<img class="avatar" src="${u.company.docs.logo.data}" alt="">`:avatar(u);
  return `<details class="umenu"><summary aria-label="Account menu">${pic}<span class="who">${esc(u.name)}</span></summary><div class="umenu-list">${items}<hr><button onclick="logout()">Log out</button></div></details>`}
 document.addEventListener('click',e=>{document.querySelectorAll('details.umenu[open]').forEach(d=>{if(!d.contains(e.target)||e.target.closest('.umenu-list a,.umenu-list button'))d.removeAttribute('open')})});
@@ -2317,7 +2405,8 @@ function pgCompanyProfile(){
  return `<section class="wrap narrow"><div class="page-h"><h1>Edit profile</h1><p class="lead">Update everything you entered at registration, and attach company documents.</p></div>
  <div class="panel"><form class="form" onsubmit="saveCompanyProfile(event)" novalidate>
   <h3 class="form-sec" style="border:0;padding-top:0;margin-top:0">Account</h3>
-  <div class="fld full"><label for="cp-name">Your name</label><input id="cp-name" value="${esc(u.name)}"></div>
+  <div class="fld"><label for="cp-name">Your name</label><input id="cp-name" value="${esc(u.name)}"></div>
+  <div class="fld"><label for="cp-des">Your designation</label><input id="cp-des" list="des-list" value="${esc(u.designation||'')}" placeholder="e.g. HR Manager"></div>
   ${otpField('cp-mobile','Mobile number','tel','10-digit mobile number',u.mobile)}
   <p class="hint" style="grid-column:1/-1;margin-top:-8px">Changed your mobile? Send and verify an OTP before saving.</p>
   <div class="fld full"><label for="cp-email">Email address</label><input id="cp-email" type="email" value="${esc(u.email)}"></div>
@@ -2354,7 +2443,7 @@ async function saveCompanyProfile(e){
  if(gst&&!/^[0-9]{2}[A-Z0-9]{13}$/.test(gst))return toast('GST number should be 15 characters, starting with the 2-digit state code.');
  const nd={};for(const[k]of EMP_DOCS){const f=$('#cd-'+k).files[0];if(f){if(k==='logo'&&!f.type.startsWith('image/'))return toast('Logo should be an image.');try{nd[k]=await readDoc(f,k==='logo'?300:1024)}catch(m){return toast(m)}}}
  const old=c.name;
- Object.assign(u,{name,mobile:mob,email:em,marketing:checked('cp-mk')});if(p1)u.password=p1;
+ Object.assign(u,{name,designation:val('cp-des'),mobile:mob,email:em,marketing:checked('cp-mk')});if(p1)u.password=p1;
  Object.assign(c,{name:co,type:val('cp-type'),industry:val('cp-ind'),employees:val('cp-size'),state:val('cp-state'),city:val('cp-city'),website:val('cp-web'),gst,about:val('cp-about')});
  c.docs=Object.assign({},c.docs||{},nd);if(Object.keys(nd).some(k=>k!=='logo'))c.verified=false;
  if(old!==co)db.jobs.forEach(j=>{if(j.employerId===u.id)j.company=co});
@@ -2533,7 +2622,7 @@ function catSection(cats){const fmt=n=>n.toLocaleString('en-IN');
  </section>`}
 function homeExtras(){
  const open=openJobs(),cnt=f=>open.filter(f).length;
- const cats=[['Walk-in jobs','#/jobs?wi=1',cnt(isWalkin)],['Work from home','#/jobs?type=Work+From+Home',cnt(j=>j.jobType==='Work From Home')],['Freshers','#/jobs?ws=Fresher',cnt(j=>j.workStatus==='Fresher')],['Experienced','#/jobs?ws=Experienced',cnt(j=>j.workStatus==='Experienced')],['Night shift','#/jobs?shift=Night',cnt(j=>j.shift==='Night')],['Day shift','#/jobs?shift=Day',cnt(j=>j.shift==='Day')]];
+ const cats=[['Walk-in jobs','#/jobs?wi=1',cnt(isWalkin)],['Work from home','#/jobs?type=Work+From+Home',cnt(j=>jModes(j).includes('Work From Home'))],['Freshers','#/jobs?ws=Fresher',cnt(j=>j.workStatus==='Fresher')],['Experienced','#/jobs?ws=Experienced',cnt(j=>j.workStatus==='Experienced')],['Night shift','#/jobs?shift=Night',cnt(j=>j.shift==='Night')],['Day shift','#/jobs?shift=Day',cnt(j=>j.shift==='Day')]];
  INDUSTRIES.forEach(i=>{const n=cnt(j=>emp(j.employerId)?.company?.industry===i);if(n)cats.push([i,'#/jobs?ind='+encodeURIComponent(i),n])});
  const cos=activeEmployers().filter(e=>showCo(e)&&jobCount(e.id)).sort(coSort).slice(0,16);
  const types=COMPANY_TYPES.map(t=>[t,activeEmployers().filter(e=>showCo(e)&&e.company?.type===t).length]).filter(x=>x[1]);
@@ -2562,7 +2651,7 @@ function pgJobs(q){
  if(kw)list=list.filter(j=>[j.title,j.skills,j.company,j.description].join(' ').toLowerCase().includes(kw));
  if(loc)list=list.filter(j=>(j.city+' '+j.state+' '+j.address).toLowerCase().includes(loc));
  if(st)list=list.filter(j=>j.state===st);
- if(type)list=list.filter(j=>j.jobType===type);
+ if(type)list=list.filter(j=>jModes(j).includes(type));
  if(ws)list=list.filter(j=>j.workStatus===ws);
  if(shift)list=list.filter(j=>j.shift===shift);
  if(q.get('wi')==='1')list=list.filter(isWalkin);
@@ -2774,7 +2863,8 @@ function pgRegEmp(){
  return `<section class="wrap narrow"><div class="page-h"><h1>Register as an employer</h1><p class="lead">Registration is free. ${freeRight('employer','post')?'Post unlimited jobs free of cost.':'Choose a plan after registering to start posting jobs.'}</p></div>
  <div class="panel"><form class="form" onsubmit="submitEmp(event)" novalidate>
   <h3 class="form-sec" style="border:0;padding-top:0;margin-top:0">Account</h3>
-  <div class="fld full"><label for="e-name">Your name</label><input id="e-name" autocomplete="name"></div>
+  <div class="fld"><label for="e-name">Your name</label><input id="e-name" autocomplete="name"></div>
+  <div class="fld"><label for="e-des">Your designation</label><input id="e-des" list="des-list" placeholder="e.g. HR Manager, Owner, Recruiter" autocomplete="organization-title"></div>
   ${otpField('e-mobile','Mobile number','tel','10-digit mobile number')}
   ${otpField('e-email','Email address','email','you@company.com')}
   <p class="otp-one">ℹ️ OTP verify one of them only <span>(mobile or email)</span></p>
@@ -2822,7 +2912,7 @@ async function submitEmp(e){
  let docs;try{docs={logo:await readDoc($('#d-logo').files[0],300),gstReg:await readDoc($('#d-gst').files[0]),pan:await readDoc($('#d-pan').files[0]),card:await readDoc($('#d-card').files[0]),udyam:await readDoc($('#d-udyam').files[0])}}catch(m){return toast(m)}
  if(!checked('e-agree'))return toast('Accept the Privacy policy and Terms to continue.');
  Object.keys(docs).forEach(k=>{if(!docs[k])delete docs[k]});
- const u={id:uid('u'),role:'employer',name,mobile,email,password:pass,createdAt:now(),status:'active',marketing:checked('e-mk'),plan:null,company:{name:co,type:val('e-type'),industry:val('e-ind'),state:val('e-state'),city:val('e-city'),address:val('e-addr'),pincode:val('e-pin'),geo:val('e-lat')?{lat:+val('e-lat'),lng:+val('e-lng')}:null,about:val('e-about'),employees:size,website:web,gst,docs,verified:false}};
+ const u={id:uid('u'),role:'employer',name,designation:val('e-des'),mobile,email,password:pass,createdAt:now(),status:'active',marketing:checked('e-mk'),plan:null,company:{name:co,type:val('e-type'),industry:val('e-ind'),state:val('e-state'),city:val('e-city'),address:val('e-addr'),pincode:val('e-pin'),geo:val('e-lat')?{lat:+val('e-lat'),lng:+val('e-lng')}:null,about:val('e-about'),employees:size,website:web,gst,docs,verified:false}};
  db.users.push(u);notify(u.id,'Welcome to JobSetu1',freeRight('employer','post')?`Post unlimited jobs free of cost. We'll review your documents shortly.`:'Choose a plan to start posting jobs. We\'ll review your documents shortly.','#/post-job');save();
  setSession({kind:'user',id:u.id});toast(freeRight('employer','post')?'Company registered. You can post jobs free of cost.':'Company registered. Choose a plan to start posting jobs.');go('#/employer');
 }
@@ -3067,7 +3157,7 @@ function pgPostJob(editId){
  ${accessBanner(u)}
  <div class="panel"><form class="form" onsubmit="saveJob(event,'${j?j.id:''}')" novalidate>
   <div class="fld full"><label for="j-co">Company name</label><input id="j-co" value="${esc(u.company?.name)}" readonly></div>
-  <div class="fld full"><label for="j-title-in">Job title <span class="hint">(choose or type; you can add more than one)</span></label>${tagBox('j-title',v.title||'',titleSugg,'e.g. Accounts Executive, AC Technician',{sep:'/',max:5,label:'Job title'})}</div>
+  <div class="fld full"><label for="j-title-in">Job title <span class="hint">(choose or type; you can add more than one)</span></label>${tagBox('j-title',v.title||'',titleSugg,'e.g. Accounts Executive, HR Executive',{sep:'/',max:5,label:'Job title'})}</div>
   ${stateSel('j',v.state,'Job state')}
   ${cityPick('j',v.state,v.city,'Job city')}
   <div class="fld full"><span class="l">Location on map</span><div class="row-btns" style="margin:0;align-items:center"><button type="button" class="btn alt" id="geo-btn" onclick="GEO_P='j';useMyLocation()">📍 Use my current location</button><button type="button" class="btn ghost" onclick="GEO_P='j';openMapPicker()">🗺️ Add location from Google Map</button><span id="geo-st">${geoChip(v.geo)}</span></div><div id="geo-msg" class="geomsg" role="status" aria-live="polite" hidden></div><small class="hint">Use your current location, or pick the place on Google Maps. The city, state, address and pincode fill in automatically. Job seekers can get directions to it.</small><input type="hidden" id="j-lat" value="${v.geo?v.geo.lat:''}"><input type="hidden" id="j-lng" value="${v.geo?v.geo.lng:''}"></div>
@@ -3080,7 +3170,7 @@ function pgPostJob(editId){
   <div class="fld"><label for="j-wa">WhatsApp number</label><input id="j-wa" type="tel" maxlength="10" value="${esc(v.whatsapp)}"></div>
   <div class="fld full"><label for="j-email">Email ID</label><input id="j-email" type="email" value="${esc(v.email)}"><small class="hint">Contact details are shown only to job seekers with an active plan.</small></div>
   <h3 class="form-sec">Requirements</h3>
-  <div class="fld full"><span class="l">Job type</span><div class="radios"><label><input type="radio" name="j-type" value="Work From Office" ${v.jobType==='Work From Office'?'checked':''}> Work from office</label><label><input type="radio" name="j-type" value="Work From Home" ${v.jobType==='Work From Home'?'checked':''}> Work from home</label><label><input type="radio" name="j-type" value="Field Job" ${v.jobType==='Field Job'?'checked':''}> Field job</label></div></div>
+  ${jpModes(v)}
   <div class="fld full"><span class="l">Walk-in interview?</span><div class="radios"><label><input type="radio" name="j-wi" value="No" ${isWalkin(v)?'':'checked'} onchange="toggleBlock('wi-b',false)"> No</label><label><input type="radio" name="j-wi" value="Yes" ${isWalkin(v)?'checked':''} onchange="toggleBlock('wi-b',true)"> Yes, this is a walk-in</label></div><small class="hint">Walk-in jobs stand out in green in job search.</small></div>
   <div id="wi-b" class="form full" style="grid-column:1/-1" ${isWalkin(v)?'':'hidden'}>
    <div class="fld"><label for="w-from">Walk-in from date</label><input id="w-from" type="date" value="${esc(v.walkin?.from||isoDay(now()))}"></div>
@@ -3090,16 +3180,17 @@ function pgPostJob(editId){
    <div class="fld full"><label for="w-venue">Walk-in venue</label><textarea id="w-venue" style="min-height:60px" placeholder="Leave blank to use the job address">${esc(v.walkin?.venue||'')}</textarea></div>
    <div class="fld"><label for="w-person">Contact person</label><input id="w-person" value="${esc(v.walkin?.person||'')}" placeholder="e.g. Priya, HR"></div>
   </div>
-  <div class="fld"><label for="j-edu">Education required</label><select id="j-edu">${sel(EDU,v.education,'Select')}</select></div>
+  ${jpEdu(v)}
   <div class="fld full"><label for="j-lang-in">Languages</label>${tagBox('j-lang',j?(v.languages||''):(v.languages||'Hindi, English'),LANG_LIST,'Add a language',{max:8,label:'Languages'})}</div>
-  <div class="fld full"><label for="j-skills-in">Key skills <span class="hint">(choose or type, press Enter to add)</span></label>${tagBox('j-skills',v.skills||'',skillSugg,'e.g. Tally, GST filing, Excel',{max:25,label:'Key skills'})}</div>
+  <div class="fld full"><label for="j-skills-in">Key skills <span class="hint">(choose or type, press Enter to add)</span></label>${tagBox('j-skills',v.skills||'',officeSkills,'e.g. Tally, GST filing, Excel',{max:25,label:'Key skills'})}</div>
   <div class="fld full"><span class="l">Shift</span><div class="radios">${['Day','Night','Rotational'].map(s=>`<label><input type="radio" name="j-shift" value="${s}" ${v.shift===s?'checked':''}> ${s}</label>`).join('')}</div></div>
   <div class="fld"><label for="j-from">Shift timing from</label><input id="j-from" type="time" value="${esc(v.shiftFrom||'09:30')}"></div>
   <div class="fld"><label for="j-to">Shift timing to</label><input id="j-to" type="time" value="${esc(v.shiftTo||'18:30')}"></div>
   <div class="fld"><span class="l">Work status</span><div class="radios"><label><input type="radio" name="j-ws" value="Fresher" ${v.workStatus==='Fresher'?'checked':''} onchange="document.getElementById('j-exp').value=0"> Fresher</label><label><input type="radio" name="j-ws" value="Experienced" ${v.workStatus==='Experienced'?'checked':''}> Experienced</label></div></div>
   <div class="fld"><label for="j-exp">Minimum experience required (years)</label><input id="j-exp" type="number" min="0" max="40" value="${esc(v.minExp)}"></div>
   <div class="fld full"><label for="j-hl">Job highlights</label><textarea id="j-hl" style="min-height:80px" placeholder="One per line, e.g. PF and ESI">${esc(v.highlights)}</textarea></div>
-  <div class="fld full"><label for="j-desc">Job description</label><textarea id="j-desc" style="min-height:140px" placeholder="Daily work, targets, who the person reports to">${esc(v.description)}</textarea></div>
+  <div class="fld full"><label for="j-req">Job requirements <span class="hint">(one per line — each line shows as a bullet point)</span></label><textarea id="j-req" style="min-height:100px" placeholder="e.g. 2+ years of experience in accounts&#10;Good knowledge of Tally and GST&#10;Good communication in Hindi and English">${esc(v.requirements||'')}</textarea></div>
+  <div class="fld full"><label for="j-desc">Job description</label><textarea id="j-desc" style="min-height:140px" placeholder="Daily work, targets, who the person reports to. Start a line with - to make a bullet point.">${esc(v.description)}</textarea></div>
   <div class="fld full row-btns"><button class="btn">${j?'Save changes':'Publish job'}</button><a class="btn ghost" href="#/employer">Cancel</a></div>
  </form></div></section>`}
 function saveJob(e,editId){
@@ -3107,9 +3198,9 @@ function saveJob(e,editId){
  if(!db.services.jobPosting)return toast('Job posting is paused right now.');
  if(!employerAccess(u).ok)return toast('Choose a plan to post jobs.');
  const d={pincode:val('j-pin'),geo:val('j-lat')?{lat:+val('j-lat'),lng:+val('j-lng')}:null,title:val('j-title'),state:val('j-state'),city:val('j-city'),address:val('j-addr'),openings:+val('j-open'),salary:+val('j-sal'),contact:val('j-phone'),whatsapp:val('j-wa'),email:val('j-email'),
-  jobType:radio('j-type'),education:val('j-edu'),languages:val('j-lang'),skills:val('j-skills'),shift:radio('j-shift'),shiftFrom:val('j-from'),shiftTo:val('j-to'),workStatus:radio('j-ws'),minExp:+val('j-exp')||0,highlights:val('j-hl'),description:val('j-desc')};
- const need=[['title','job title'],['state','job state'],['city','job city'],['address','job address'],['jobType','job type'],['education','education required'],['skills','key skills'],['shift','shift'],['workStatus','work status'],['description','job description']];
- for(const[k,l]of need)if(!d[k])return toast('Add the '+l+'.');
+  jobType:jPrimary(jpPicked('j-mode')),jobTypes:jpPicked('j-mode'),empTypes:jpPicked('j-et'),dept:val('j-dept'),requirements:val('j-req'),education:jpEduVal(),languages:val('j-lang'),skills:val('j-skills'),shift:radio('j-shift'),shiftFrom:val('j-from'),shiftTo:val('j-to'),workStatus:radio('j-ws'),minExp:+val('j-exp')||0,highlights:val('j-hl'),description:val('j-desc')};
+ const need=[['title','job title'],['state','job state'],['city','job city'],['address','job address'],['jobType','work mode (tick at least one)'],['education','education required'],['skills','key skills'],['shift','shift'],['workStatus','work status'],['description','job description']];
+ for(const[k,l]of need)if(!d[k])return toast('Add the '+l+'.');if(!d.empTypes.length)return toast('Tick at least one job type (Full time, Part time…).');
  if(!(d.openings>=1))return toast('Number of openings should be at least 1.');
  if(!(d.salary>0))return toast('Enter the monthly in-hand salary.');
  if(!isMobile(d.contact))return toast('Contact number should be a valid 10-digit mobile number.');
@@ -3447,7 +3538,7 @@ async function downloadInvoice(id){const x=(db.payments||[]).find(p=>p.id===id);
  const d=invoiceData(x),fname='JobSetu1-Invoice-'+x.invoiceNo.replace(/[^\w]+/g,'-');toast('Preparing invoice…');
  const ok=await loadPDF();
  if(!ok)return saveBlob(fname+'.html',new Blob([invoiceHtml(d)],{type:'text/html'}),'Invoice');
- const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4'}),W=210,M=14;let y=0;
+ const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4',compress:true}),W=210,M=14;let y=0;
  const T=(t,xx,yy,o)=>doc.text(String(t??''),xx,yy,o||{});const font=(sz,st,c)=>{doc.setFontSize(sz);doc.setFont('helvetica',st||'normal');doc.setTextColor(...(c||[27,35,51]))};
  doc.setFillColor(14,47,122);doc.rect(0,0,W,30,'F');doc.setFillColor(233,162,59);doc.rect(0,30,W,1.6,'F');
  font(22,'bold',[255,255,255]);T(d.s.legal||'JobSetu1',M,15);font(9,'normal',[214,224,250]);T('Your Career | Our Priority'+(ventureTxt()?'   ·   '+ventureTxt():''),M,22);
@@ -3504,7 +3595,7 @@ function pgStaff(role,tab,q){q=q||new URLSearchParams();
  const g=gate([role]);if(g.block)return g.block;const isAdmin=role==='admin';tab=tab||'overview';
  const openSup=(db.support||[]).filter(x=>x.status!=='Resolved').length;
  const tabs=[['overview','Overview'],['registrations','Daily registrations'],['candidates','Job seekers'],['employers','Employers'],['priority','Top priority'],['activity','Employer activity'],['support','Support requests'+(openSup?' ('+openSup+')':'')],['jobs','Jobs'],['applications','Applications'],['payments','Revenue dashboard'],['paylist','💳 Payments'],['services','Services']];
- if(isAdmin){tabs.splice(1,0,['settings','⚙ Site settings'],['motp','📱 Mobile OTP']);tabs.push(['notify','🔔 Notifications'],['offers','🎁 Offers'],['plans','Plans & pricing'],['staff','Office staff & roles'])}
+ if(isAdmin){tabs.splice(1,0,['settings','⚙ Site settings'],['motp','📱 Mobile OTP'],['emailotp','✉️ Email OTP'],['adduser','➕ Register user']);tabs.push(['notify','🔔 Notifications'],['offers','🎁 Offers'],['ads','📢 Ads'],['appdl','📲 App download'],['plans','Plans & pricing'],['staff','Office staff & roles'])}
  else{const keep=tabs.filter(t=>staffCan(t[0]));tabs.length=0;keep.forEach(t=>tabs.push(t));if(!tabs.some(t=>t[0]===tab))tab=tabs.length?tabs[0][0]:'none'}
  let body='';
  const cands=db.users.filter(u=>u.role==='candidate'),emps=db.users.filter(u=>u.role==='employer');
@@ -3590,6 +3681,14 @@ function pgStaff(role,tab,q){q=q||new URLSearchParams();
   body=`<div class="tbl"><table><thead><tr><th>Candidate</th><th>Job</th><th>Company</th><th>Match</th><th>Applied</th><th>Status</th><th>Employer sees</th>${isAdmin||staffCan('delete')?'<th></th>':''}</tr></thead><tbody>${[...db.apps].sort((a,b)=>b.at-a.at).map(a=>{const c=getUser(a.candId),j=db.jobs.find(x=>x.id===a.jobId);return `<tr><td>${c?`<a href="#/candidate/${c.id}?job=${a.jobId}">${esc(c.name)}</a>`:'Deleted'}</td><td>${esc(j?.title||a.jobTitle||'Removed')}</td><td>${esc(j?.company||a.company||'—')}</td><td>${a.score}%</td><td>${fmtDate(a.at)}</td><td>${statusChip(a.status)}</td><td>${appVisible(a)?'<span class="chip good">Yes</span>':'<span class="chip warn">Hidden (free limit)</span>'}</td>${isAdmin||staffCan('delete')?`<td><button class="btn danger sm" onclick="delApp('${a.id}')">Delete</button></td>`:''}</tr>`}).join('')||'<tr><td colspan="8">No applications yet.</td></tr>'}</tbody></table></div>`;
  }else if(tab==='notify'&&isAdmin){
   body=pgNotifyAdmin();
+ }else if(tab==='ads'&&isAdmin){
+  body=pgAdsAdmin();
+ }else if(tab==='adduser'&&isAdmin){
+  body=pgAddUserAdmin();
+ }else if(tab==='emailotp'&&isAdmin){
+  body=pgMailAdmin();
+ }else if(tab==='appdl'&&isAdmin){
+  body=pgAppDlAdmin();
  }else if(tab==='offers'&&isAdmin){
   body=pgOffersAdmin();
  }else if(tab==='paylist'&&staffCan('payments')){
@@ -3798,7 +3897,7 @@ function pgAbout(){return `<section class="wrap sec legal"><h1>About us</h1>
 <h2>For job seekers</h2><ul><li>Free registration, job search and applications.</li><li>Profiles matched to jobs that fit your skills, industry and location.</li><li>Job alerts and direct company contact details.</li><li>Optional Premium plans that put your resume at the top for employers.</li></ul>
 <h2>For employers</h2><ul><li>Post jobs and download resumes free of cost.</li><li>Verified company profiles that job seekers can trust.</li><li>Premium tools: refined resumes, applicant management, analytics and job boost.</li></ul>
 <h2>What we stand for</h2><ul><li><b>Safe hiring:</b> JobSetu1 never asks job seekers to pay an employer for a job. We review company documents to reduce fake job posts.</li><li><b>Privacy:</b> your personal data is protected and never sold.</li><li><b>Simple and fair:</b> clear prices, GST invoices and quick support.</li></ul>
-<div class="row-btns" style="margin-top:18px"><a class="btn" href="#/jobs">Find jobs</a><a class="btn ghost" href="#/register/employer">Hire with JobSetu1</a><a class="btn ghost" href="#/contact">Contact us</a>${APP?'':'<a class="btn ghost" href="JobSetu1.apk?v=2.9" download="JobSetu1.apk">📱 Get the Android app</a>'}</div></section>`}
+<div class="row-btns" style="margin-top:18px"><a class="btn" href="#/jobs">Find jobs</a><a class="btn ghost" href="#/register/employer">Hire with JobSetu1</a><a class="btn ghost" href="#/contact">Contact us</a>${APP?'':'<a class="btn ghost" href="JobSetu1.apk?v=3.0" download="JobSetu1.apk">📱 Get the Android app</a>'}</div></section>`}
 function pgContact(){const c=supportInfo(),g=grvInfo(),k=co(),wa=(c.whatsapp||c.phone).replace(/\D/g,''),waNum=wa.length===10?'91'+wa:wa;
  const addr=[k.address,[k.city,k.state].filter(Boolean).join(', ')].filter(Boolean).join(', ');
  return `<section class="wrap sec"><div class="page-h"><h1>Contact us</h1><p class="lead">We're here to help job seekers and employers. Reach us any way you like.</p></div>
@@ -4153,7 +4252,7 @@ const CB_INTENTS=[
  {id:'apply',k:['apply','application','how to apply','kaise apply','applied','application status'],a:()=>`Open any job and click <strong>Apply for this job</strong>. You need to be logged in, with your skills, work status and preferred city on your profile. Track your applications on ${cbLink('#/dashboard?tab=applied','My dashboard → Applied')}; employers move them through Applied, Shortlisted, Interview and Hired, and you get a notification each time.`},
  {id:'search',k:['search','find job','how to find','filter','sort','salary range','naukri dhoond','job dhund'],a:()=>`Use ${cbLink('#/jobs','Find jobs')}: type a title or skill and a city, then narrow by salary (drag the slider), industry, company type, state, job type, work status, shift or walk-in. Technician trades (AC, plumber, electrician…) are under the industry “${TECH_IND}”. Sort by Recommended, Relevance or Date. Tip: you can also ask me, e.g. <em>"accountant jobs in Delhi"</em>.`},
  {id:'walkin',k:['walk-in','walkin','walk in','direct interview'],a:()=>{const n=openJobs().filter(isWalkin).length;return `There are <strong>${n}</strong> walk-in jobs right now. They're marked in green with the dates. ${cbLink('#/jobs?wi=1','See walk-in jobs')}.`}},
- {id:'wfh',k:['work from home','wfh','remote','ghar se'],a:()=>{const n=openJobs().filter(j=>j.jobType==='Work From Home').length;return `There are <strong>${n}</strong> work-from-home jobs. ${cbLink('#/jobs?type=Work+From+Home','See them')}.`}},
+ {id:'wfh',k:['work from home','wfh','remote','ghar se'],a:()=>{const n=openJobs().filter(j=>jModes(j).includes('Work From Home')).length;return `There are <strong>${n}</strong> work-from-home jobs. ${cbLink('#/jobs?type=Work+From+Home','See them')}.`}},
  {id:'fresher',k:['fresher','no experience','first job','experience nahi'],a:()=>{const n=openJobs().filter(j=>j.workStatus==='Fresher').length;return `<strong>${n.toLocaleString('en-IN')}</strong> jobs welcome freshers. ${cbLink('#/jobs?ws=Fresher','See fresher jobs')}.`}},
  {id:'tech',k:['technician','plumber','electrician','ac repair','mechanic','carpenter','painter','welder','cctv'],a:()=>{const n=openJobs().filter(j=>getUser(j.employerId)?.company?.industry===TECH_IND).length;return `There are <strong>${n}</strong> technician jobs (AC, plumber, electrician, appliance repair and more) in the industry <strong>${esc(TECH_IND)}</strong>. Pick a trade after choosing that industry in Find jobs. ${cbLink('#/jobs?ind='+encodeURIComponent(TECH_IND),'See jobs in '+TECH_IND)}.`}},
  {id:'companies',k:['companies','company list','which companies','top companies'],a:()=>`<strong>${activeEmployers().length.toLocaleString('en-IN')}</strong> companies are hiring. See ${cbLink('#/companies?grp=mnc','Top MNCs')}, ${cbLink('#/companies?grp=bpo','Top BPO')} and ${cbLink('#/companies?grp=it','IT companies')}, or ${cbLink('#/companies','Browse companies')} by industry and company type.`},
@@ -4204,7 +4303,7 @@ function cbKnowledge(){return `JobSetu1 is a job portal in India.
 - Login: email/mobile + password, remember me, forgot password via mobile OTP, Google sign-in for job seekers.
 - Employers can mark candidates as Contacted. Admin can see profile views, resume downloads and contacts.
 - JobSetu1 never asks job seekers to pay an employer for a job.
-- Live: ${openJobs().length} open jobs, ${activeEmployers().length} companies, ${openJobs().filter(isWalkin).length} walk-in jobs, ${openJobs().filter(j=>j.jobType==='Work From Home').length} work-from-home jobs.`}
+- Live: ${openJobs().length} open jobs, ${activeEmployers().length} companies, ${openJobs().filter(isWalkin).length} walk-in jobs, ${openJobs().filter(j=>jModes(j).includes('Work From Home')).length} work-from-home jobs.`}
 async function cbAI(q){if(!sampleFn)return null;try{const r=await sampleFn.json(`You are the JobSetu1 website assistant. Answer the visitor's question using ONLY the facts below. Keep it under 70 words, friendly and plain. Reply in the same language style as the question (English or Hinglish). If the facts do not answer it, set known to false. Return JSON exactly like {"known":true,"answer":"..."}.\n\nFACTS:\n${cbKnowledge()}\n\nQUESTION: ${q}`,{modelTier:'quick'});if(r&&r.known&&String(r.answer||'').trim())return esc(String(r.answer).trim()).replace(/\n/g,'<br>');return null}catch(e){return null}}
 function cbFallback(q){document.querySelectorAll('.cb-lead').forEach(x=>x.remove());const c=contactHtml();return `I'm not sure about that one. ${c?`Please contact the JobSetu1 team:<br>${c}<br><br>Or `:''}${c?'l':'L'}eave your number and our team will call you back.<div class="cb-lead"><input id="cb-ln" placeholder="Your name" aria-label="Your name" value="${esc(me()?.name||'')}"><input id="cb-lp" type="tel" inputmode="numeric" maxlength="10" placeholder="Mobile number" aria-label="Mobile number" value="${esc(me()?.mobile||'')}"><button type="button" class="btn sm" onclick="cbLead(${esc(JSON.stringify(q))})">Request a call back</button></div>`}
 function cbLead(q){const n=val('cb-ln'),p=val('cb-lp');if(!n)return toast('Enter your name.');if(!isMobile(p))return toast('Enter a valid 10-digit mobile number.');const u=me();db.support=db.support||[];
@@ -4440,7 +4539,7 @@ if(!db.staffSecV1){(db.staff||[]).forEach(x=>{const OLD=['240be518fabd2724ddb6f0
 const AIC={home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',building:'<path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h3a1 1 0 0 1 1 1v11M3 21h18M8 7h4M8 11h4M8 15h4"/>',star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',bell:'<path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.3 0 4 1.2 4.6 3.5"/>',plus:'<path d="M12 5v14M5 12h14"/>',grid:'<rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/>',rupee:'<path d="M7 4h11M7 8.5h11M9 4c4 0 6 1.8 6 4.5S13 13 9 13H7l8 7"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',chat:'<path d="M4 5h16v11H8l-4 4z"/>',chev:'<path d="m9 6 6 6-6 6"/>',out:'<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/>',refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>',cog:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',crown:'<path d="M3 17.5h18l-1.7-9.6-4.7 4L12 4.5 9.4 11.9l-4.7-4z"/>'};
 const aic=(k,sz)=>`<svg viewBox="0 0 24 24" width="${sz||22}" height="${sz||22}" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${AIC[k]||''}</svg>`;
 function staffTabList(){const u=me(),r=u?.role,isA=r==='admin';const t=[['overview','Overview','grid'],['registrations','Daily registrations','doc'],['candidates','Job seekers','users'],['employers','Employers','building'],['priority','Top priority','star'],['activity','Employer activity','brief'],['support','Support requests','chat'],['jobs','Jobs','brief'],['applications','Applications','doc'],['payments','Revenue dashboard','rupee'],['paylist','Payments','rupee'],['services','Services','cog']];
- if(isA){t.splice(1,0,['settings','Site settings','cog'],['motp','Mobile OTP','chat']);t.push(['notify','Notifications','bell'],['offers','Offers','star'],['plans','Plans & pricing','star'],['staff','Office staff & roles','users'])}
+ if(isA){t.splice(1,0,['settings','Site settings','cog'],['motp','Mobile OTP','chat'],['emailotp','Email OTP','chat'],['adduser','Register user','plus']);t.push(['notify','Notifications','bell'],['offers','Offers','star'],['ads','Ads','star'],['appdl','App download','refresh'],['plans','Plans & pricing','star'],['staff','Office staff & roles','users'])}
  return isA?t:t.filter(x=>staffCan(x[0]))}
 function appTabs(){const u=me(),r=u?.role;
  if(!u)return [['#/','Home','home'],['#/jobs','Jobs','search'],['#/companies','Companies','building'],['#/plans','Plans','star'],['#/login','Log in','user']];
@@ -4498,7 +4597,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='96';
+const WEB_BUILD='97';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -4666,7 +4765,7 @@ async function cloudPullNow(){toast('Getting data from all devices…');const n=
    V59: live sync, roles & rights, staff email/mobile, mobile OTP,
    app home + intro, details boxes, registrations report and more
    ================================================================== */
-const APK_LATEST='2.9',SITE_URL='https://jobsetu1.com/';
+const APK_LATEST='3.0',SITE_URL='https://jobsetu1.com/';
 function verLess(a,b){const x=String(a||'0').split('.').map(Number),y=String(b||'0').split('.').map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d<0}return false}
 function safeRerender(){const a=document.activeElement;return !(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))&&$('#modal').hidden&&!document.querySelector('.intro.on')}
 
@@ -5887,14 +5986,14 @@ let _webpOk=null;function webpOk(){if(_webpOk===null){try{const c=document.creat
 /* picture: smaller size + modern format, keeps transparency for logos */
 async function shrinkPicture(src,max,keepAlpha,jpegOnly){const im=await imgFrom(src);const s=Math.min(1,max/Math.max(im.width,im.height)),w=Math.max(1,Math.round(im.width*s)),h=Math.max(1,Math.round(im.height*s));
  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');if(!keepAlpha){x.fillStyle='#fff';x.fillRect(0,0,w,h)}x.drawImage(im,0,0,w,h);
- const outs=[];if(webpOk()&&!jpegOnly)outs.push(c.toDataURL('image/webp',.74));outs.push(keepAlpha?c.toDataURL('image/png'):c.toDataURL('image/jpeg',.72));
+ const outs=[];if(webpOk()&&!jpegOnly)outs.push(c.toDataURL('image/webp',.62));outs.push(keepAlpha?c.toDataURL('image/png'):c.toDataURL('image/jpeg',.62));
  return outs.sort((a,b)=>a.length-b.length)[0]}
 /* PDF: each page becomes a clear, light picture inside a new PDF (only used when it is really smaller) */
 async function shrinkPdf(f,data){const L=await pdfLib();const okJ=await loadPDF();if(!L||!okJ)return null;
  const doc=await L.getDocument({data:new Uint8Array(await fileBuf(f))}).promise;const n=Math.min(doc.numPages,20);let out=null;
  for(let i=1;i<=n;i++){const pg=await doc.getPage(i);const v0=pg.getViewport({scale:1});const sc=Math.min(2,1240/Math.max(v0.width,v0.height));const vp=pg.getViewport({scale:sc});
   const c=document.createElement('canvas');c.width=Math.round(vp.width);c.height=Math.round(vp.height);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);await pg.render({canvasContext:x,viewport:vp}).promise;
-  const jpg=c.toDataURL('image/jpeg',.62),pw=v0.width,ph=v0.height,o=pw>ph?'l':'p';
+  const jpg=c.toDataURL('image/jpeg',.55),pw=v0.width,ph=v0.height,o=pw>ph?'l':'p';
   if(!out)out=new jspdf.jsPDF({orientation:o,unit:'pt',format:[pw,ph],compress:true});else out.addPage([pw,ph],o);
   out.addImage(jpg,'JPEG',0,0,pw,ph,undefined,'FAST')}
  if(doc.numPages>n)return null;
@@ -5903,16 +6002,16 @@ async function shrinkPdf(f,data){const L=await pdfLib();const okJ=await loadPDF(
 async function shrinkDocx(f){const ok=await loadLib('zip',CDN.zip,()=>window.JSZip);if(!ok)return null;const z=await JSZip.loadAsync(await fileBuf(f));
  const media=Object.keys(z.files).filter(n=>/^word\/media\/.+\.(jpe?g|png)$/i.test(n));
  for(const n of media){const raw=await z.file(n).async('uint8array');if(raw.length<60000)continue;const isJ=/\.jpe?g$/i.test(n);
-  try{const src='data:image/'+(isJ?'jpeg':'png')+';base64,'+await z.file(n).async('base64');const im=await imgFrom(src);const s=Math.min(1,1400/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));const x=c.getContext('2d');if(isJ){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}x.drawImage(im,0,0,c.width,c.height);
-   const d=isJ?c.toDataURL('image/jpeg',.7):c.toDataURL('image/png');const b=d.slice(d.indexOf(',')+1);if(b.length*3/4<raw.length)z.file(n,b,{base64:true})}catch(e){}}
+  try{const src='data:image/'+(isJ?'jpeg':'png')+';base64,'+await z.file(n).async('base64');const im=await imgFrom(src);const s=Math.min(1,1100/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));const x=c.getContext('2d');if(isJ){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}x.drawImage(im,0,0,c.width,c.height);
+   const d=isJ?c.toDataURL('image/jpeg',.6):c.toDataURL('image/png');const b=d.slice(d.indexOf(',')+1);if(b.length*3/4<raw.length)z.file(n,b,{base64:true})}catch(e){}}
  const blob=await z.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:9},mimeType:f.type||'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
  return blobData(blob)}
 /* one place for every upload: returns {name,size,type,data,at,orig} */
 async function compressUpload(f,opt){opt=opt||{};const orig=f.size,name=f.name;let data=await fileData(f),type=f.type||'';
  try{
-  if(/^image\//.test(type)||/\.(jpe?g|png|webp)$/i.test(name)){const keep=!!opt.alpha||/png$/i.test(type)&&opt.logo;const d=await shrinkPicture(data,opt.max||1600,keep,!opt.logo);if(d.length<data.length){data=d;type=d.slice(5,d.indexOf(';'))}}
-  else if(/\.pdf$/i.test(name)&&orig>250*1024){const d=await shrinkPdf(f,data);if(d&&d.length<data.length*.8){data=d;type='application/pdf'}}
-  else if(/\.docx$/i.test(name)&&orig>120*1024){const d=await shrinkDocx(f);if(d&&d.length<data.length*.95)data=d.replace(/^data:[^;]*/,'data:'+(type||'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))}
+  if(/^image\//.test(type)||/\.(jpe?g|png|webp)$/i.test(name)){const keep=!!opt.alpha||/png$/i.test(type)&&opt.logo;const d=await shrinkPicture(data,opt.max||1280,keep,!opt.logo);if(d.length<data.length){data=d;type=d.slice(5,d.indexOf(';'))}}
+  else if(/\.pdf$/i.test(name)&&orig>80*1024){const d=await shrinkPdf(f,data);if(d&&d.length<data.length*.92){data=d;type='application/pdf'}}
+  else if(/\.docx$/i.test(name)&&orig>50*1024){const d=await shrinkDocx(f);if(d&&d.length<data.length*.95)data=d.replace(/^data:[^;]*/,'data:'+(type||'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))}
  }catch(e){}
  const size=dataSize(data);let nm=name;if(type==='image/webp'&&!/\.webp$/i.test(nm))nm=nm.replace(/\.[^.]+$/,'')+'.webp';else if(type==='image/jpeg'&&!/\.jpe?g$/i.test(nm))nm=nm.replace(/\.[^.]+$/,'')+'.jpg';
  shrinkNote(f,orig,size);return {name:nm,size,type,data,at:now(),orig}}
@@ -5921,10 +6020,10 @@ function shrinkNote(f,a,b){try{const inp=[...document.querySelectorAll('input[ty
 const BIG='This file is too large even after making it smaller. Please upload a smaller file.';
 /* documents at registration / company profile (GST, PAN, Udyam, visiting card, logo) */
 function readDoc(f,maxKB){return (async()=>{if(!f)return null;if(!/\.(pdf|docx?|jpe?g|png|webp)$/i.test(f.name))throw f.name+': use PDF, Word, JPG or PNG.';if(f.size>15*1024*1024)throw f.name+' is larger than 15 MB. Upload a smaller file.';
- const logo=(maxKB||1024)<=300;const r=await compressUpload(f,logo?{max:500,alpha:true,logo:true}:{max:1600});if(r.size>(maxKB||1024)*1024)throw f.name+': '+BIG+' (now '+kb(r.size)+')';return r})()}
+ const logo=(maxKB||1024)<=300;const r=await compressUpload(f,logo?{max:400,alpha:true,logo:true}:{max:1280});if(r.size>(maxKB||1024)*1024)throw f.name+': '+BIG+' (now '+kb(r.size)+')';return r})()}
 /* resume */
 function readResumeFile(f){return (async()=>{if(!/\.(pdf|docx?)$/i.test(f.name))throw 'Resume should be a PDF or Word file.';if(f.size>15*1024*1024)throw 'Resume is larger than 15 MB. Upload a smaller file.';
- const r=await compressUpload(f,{max:1600});if(r.size>2*1024*1024)throw 'Resume: '+BIG+' (now '+kb(r.size)+')';return r})()}
+ const r=await compressUpload(f,{max:1280});if(r.size>2*1024*1024)throw 'Resume: '+BIG+' (now '+kb(r.size)+')';return r})()}
 /* profile photo: small and light */
 function readPhoto(file){return (async()=>{if(!file||!/^image\//.test(file.type))throw new Error('type');const src=await fileData(file);const im=await imgFrom(src);
  const S=240,c=document.createElement('canvas');c.width=c.height=S;const m=Math.min(im.width,im.height),x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,S,S);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);
@@ -6517,11 +6616,11 @@ downloadInvoice=async function(id){const x=(db.payments||[]).find(p=>p.id===id);
  const d=invoiceData(x),fname='JobSetu1-Invoice-'+x.invoiceNo.replace(/[^\w]+/g,'-');toast('Preparing invoice…');
  const [ok,logo]=await Promise.all([loadPDF(),invLogo()]);
  if(!ok)return saveBlob(fname+'.html',new Blob([invoiceHtml(d,logo)],{type:'text/html'}),'Invoice');
- const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4'}),W=210,M=14,BL=[24,58,140],OR=[240,140,30],INK=[27,35,51],GR=[100,110,130],LN=[226,231,240];
+ const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4',compress:true}),W=210,M=14,BL=[24,58,140],OR=[240,140,30],INK=[27,35,51],GR=[100,110,130],LN=[226,231,240];
  const T=(t,xx,yy,o)=>doc.text(String(t??''),xx,yy,o||{});const F=(sz,st,c)=>{doc.setFontSize(sz);doc.setFont('helvetica',st||'normal');doc.setTextColor(...(c||INK))};
  const sup=supportInfo(),[stTxt,stCol]=invStatus(x);
  /* header */
- if(logo){try{doc.addImage(logo,'PNG',M,11,56,19)}catch(e){F(20,'bold',BL);T('JobSetu1',M,22)}}else{F(20,'bold',BL);T('JobSetu1',M,22)}
+ if(logo){try{doc.addImage(logo,/^data:image\/jpe?g/.test(logo)?'JPEG':'PNG',M,11,56,19,'invlogo','FAST')}catch(e){F(20,'bold',BL);T('JobSetu1',M,22)}}else{F(20,'bold',BL);T('JobSetu1',M,22)}
  F(8,'normal',GR);T([ventureTxt(),'jobsetu1.com'].filter(Boolean).join('  ·  '),M,35);
  F(22,'bold',BL);T(d.gst?'TAX INVOICE':'INVOICE',W-M,19,{align:'right'});
  F(9,'normal',GR);T('Invoice no.',W-M-46,26);T('Invoice date',W-M-46,31);F(9,'bold');T(x.invoiceNo,W-M,26,{align:'right'});T(fmtDate(x.at),W-M,31,{align:'right'});
@@ -6562,7 +6661,7 @@ downloadInvoice=async function(id){const x=(db.payments||[]).find(p=>p.id===id);
  if(d.gst){F(7.5,'normal',GR);T(d.intra?`Supply within ${d.s.state}: SGST @ ${d.rate/2}% + CGST @ ${d.rate/2}% charged.`:`Supply outside ${d.s.state}: IGST @ ${d.rate}% charged.`,W/2,fy+17,{align:'center'})}
  F(7.5,'normal',GR);T('This is a computer-generated invoice and does not need a signature.',W/2,fy+21.5,{align:'center'});
  doc.setFillColor(...BL);doc.rect(0,293,W*0.72,4,'F');doc.setFillColor(...OR);doc.rect(W*0.72,293,W*0.28,4,'F');
- saveBlob(fname+'.pdf',doc.output('blob'),'Invoice')};
+ {const ib=doc.output('blob');invSzSet(x.id,ib.size);saveBlob(fname+'.pdf',ib,'Invoice ('+kb(ib.size)+')')}};
 invoiceHtml=function(d,logo){const x=d.x,sup=supportInfo(),[st]=invStatus(x),r=(k,v)=>`<tr><td>${k}</td><td class="r">${v}</td></tr>`;
  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Invoice ${esc(x.invoiceNo)}</title><style>
  body{font-family:Arial,Helvetica,sans-serif;color:#1b2333;margin:0;background:#eef1f6}.pg{max-width:780px;margin:24px auto;background:#fff;padding:34px 38px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
@@ -6700,9 +6799,9 @@ const UG_BTN=(cls,txt,href)=>`<a class="ug-btn ${cls||''}" href="${href||'#/guid
 /* ==================================================================
    V96: yearly salary ranges (Lakhs) and the full education list with "Other"
    ================================================================== */
-const EDU_ALL=['Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma','B.A.','B.Com','B.Sc','BBA','BCA','B.Tech / B.E.','B.Pharm','B.Ed','MBBS','LLB','Nursing (GNM / B.Sc)','CA','CS','M.A.','M.Com','M.Sc','MBA / PGDM','MCA','M.Tech / M.E.','M.Pharm','Ph.D'];
-const EDU_LVL=o=>o==='Below 10th'?0:o==='10th (SSC)'?1:o==='12th (HSC)'||o==='ITI'?2:o==='Diploma'?3:/^(M\.|MBA|MCA|Ph\.D)/.test(o)?5:4;
-const JOB_LVL=e=>({'Below 10th':0,'10th pass':1,'12th pass':2,'ITI':2,'Diploma':3,'Graduate':4,'Post Graduate':5})[e]??-1;
+const EDU_ALL=['Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma','B.A.','B.Com','B.Sc','BBA','BCA','B.Tech / B.E.','B.Pharm','B.Ed','B.Arch','B.Des','BDS','BAMS / BHMS','BHM (Hotel Management)','BJMC (Mass Communication)','BPT (Physiotherapy)','B.Voc','MBBS','LLB','Nursing (GNM / B.Sc)','CA','CS','CMA','M.A.','M.Com','M.Sc','MBA / PGDM','MCA','M.Tech / M.E.','M.Pharm','M.Ed','LLM','MSW','MD / MS','PG Diploma','Ph.D'];
+const EDU_LVL=o=>o==='Below 10th'?0:o==='10th (SSC)'?1:o==='12th (HSC)'||o==='ITI'?2:o==='Diploma'?3:/^(M\.|MBA|MCA|MSW|MD |LLM|PG |Ph\.D)/.test(o)?5:4;
+const JOB_LVL=e=>{const m=({'Below 10th':0,'10th pass':1,'12th pass':2,'ITI':2,'Diploma':3,'Graduate':4,'Any Graduate':4,'Post Graduate':5,'Any Postgraduate':5})[e];if(m!=null)return m;return EDU_ALL.includes(e)?EDU_LVL(e):-1};
 function eduOk(j,opt){const r=JOB_LVL(j.education);return r<0||EDU_LVL(opt)>=r}
 function eduOther(base,k,q){const v=q.get(k)||'';return `<label class="af-o af-oth"><input type="checkbox" ${v?'checked':''} onchange="if(!this.checked)afSet('${base}','${k}','');else this.closest('.af-oth').nextElementSibling.hidden=false"><span>Other</span></label><div class="af-othin" ${v?'':'hidden'}><input placeholder="Type your course, e.g. Hotel Management" value="${esc(v)}" onkeydown="if(event.key==='Enter'){event.preventDefault();afSet('${base}','${k}',this.value.trim())}"><button type="button" onclick="afSet('${base}','${k}',this.previousElementSibling.value.trim())">Apply</button></div>`}
 function eduSec(base,title,k,ok,list,q,hint){const on=afList(q,k),cnt=EDU_ALL.map(o=>[o,list.filter(x=>ok(x,o)).length]);const show=window._eduAll?cnt:cnt.slice(0,6);
@@ -6738,20 +6837,22 @@ function afPanel(base,inner,active,keys){return `<aside class="af"><details clas
 /* ---------------- job filters ---------------- */
 const SAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10-15','10 – 15 Lakhs',1000000,1500000],['15-25','15 – 25 Lakhs',1500000,2500000],['25-50','25 – 50 Lakhs',2500000,5000000],['50+','50+ Lakhs',5000000,1e13]];
 const FRESH=[['1','Last 24 hours'],['3','Last 3 days'],['7','Last 7 days'],['15','Last 15 days'],['30','Last 30 days']];
-const JMODE=j=>j.jobType==='Work From Home'?'Work from home':j.jobType==='Field Job'?'Field job':'Work from office';
+const JMODE=j=>jModes(j).map(modeLbl);
 const JIND=j=>emp(j.employerId)?.company?.industry||'';
 const JCT=j=>emp(j.employerId)?.company?.type||'';
 const JSAL=j=>{const s=(+j.salary||0)*12;const b=SAL_B.find(([,, lo,hi])=>s>lo&&s<=hi)||(s===0?SAL_B[0]:null);return b?b[0]:''};
-const JKEYS=['fx','fm','fl','fs','fi','ft','fe','feo','fw','fd','fwi'];
+const JKEYS=['fx','fm','fet','fdp','fl','fs','fi','ft','fe','feo','fw','fd','fwi'];
 function jobFilter(list,q){const t=now(),fx=q.get('fx'),L=k=>afList(q,k);
  return list.filter(j=>{if(fx!==null&&fx!==''&&+fx<31&&(+j.minExp||0)>+fx)return false;
-  const chk=(k,v)=>{const a=L(k);return !a.length||a.includes(String(v))};
-  if(!chk('fm',JMODE(j))||!chk('fl',j.city)||!chk('fs',JSAL(j))||!chk('fi',JIND(j))||!chk('ft',JCT(j))||!chk('fw',j.workStatus))return false;
+  const chk=(k,v)=>{const a=L(k);return !a.length||[].concat(v).some(x=>a.includes(String(x)))};
+  if(!chk('fm',JMODE(j))||!chk('fet',(j.empTypes&&j.empTypes.length)?j.empTypes:['Full Time'])||!chk('fdp',j.dept||'')||!chk('fl',j.city)||!chk('fs',JSAL(j))||!chk('fi',JIND(j))||!chk('ft',JCT(j))||!chk('fw',j.workStatus))return false;
   {const fe=L('fe');if(fe.length&&!fe.some(o=>eduOk(j,o)))return false;const fo=q.get('feo');if(fo&&!eduTxt([j.education,j.title,j.description,j.highlights].join(' '),fo))return false}if(q.get('fd')&&t-(+j.createdAt||0)>(+q.get('fd'))*DAY)return false;if(q.get('fwi')==='1'&&!isWalkin(j))return false;return true})}
 function jobFilters(base,all,q){const active=JKEYS.filter(k=>q.get(k)).length,fx=q.get('fx');const xv=fx===null||fx===''?31:+fx;
  const sal=SAL_B.map(([k,l])=>[k,all.filter(j=>JSAL(j)===k).length,l]).filter(x=>x[1]);
  const inner=`<div class="af-sec af-exp"><div class="af-t">Experience <span class="hint">${xv>=31?'Any':xv===0?'Fresher':xv+' yrs'}</span></div><input type="range" min="0" max="31" value="${xv}" aria-label="Your experience in years" oninput="this.previousElementSibling.querySelector('span').textContent=this.value>=31?'Any':this.value==0?'Fresher':this.value+' yrs'" onchange="afSet('${base}','fx',this.value>=31?'':this.value)"><div class="af-rng"><span>0 Yrs</span><span>Any</span></div></div>
  ${afSecR(base,'Work mode','fm',afCount(all,JMODE),q)}
+ ${afSecR(base,'Job type','fet',afCount(all,j=>j.empTypes&&j.empTypes.length?j.empTypes:['Full Time']),q)}
+ ${afSecR(base,'Department','fdp',afCount(all,j=>j.dept),q,{closed:1})}
  ${afSecR(base,'Location','fl',afCount(all,j=>j.city),q)}
  ${afSecR(base,'Salary (yearly)','fs',sal,q)}
  ${afSecR(base,'Industry','fi',afCount(all,JIND),q)}
@@ -6769,7 +6870,7 @@ function toggleSaveJob(id,btn){const u=me();if(!u)return go('#/login');const s=s
 function njCard(j){const u=me(),m=u?.role==='candidate'?matchScore(j,u):null,e=emp(j.employerId),c=e?.company||{},sv=savedSet().has(j.id);
  const sk=String(j.skills||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,6),desc=String(j.highlights||j.description||'').replace(/\s+/g,' ').trim();
  return `<article class="nj ${isWalkin(j)?'walkin':''}"><a class="nj-a" href="#/job/${j.id}"><div class="nj-top"><div class="nj-tt"><h3>${esc(j.title)}</h3><div class="nj-co"><b>${esc(j.company||c.name||'')}</b>${c.verified?'<span class="nj-v" title="Documents verified">✔</span>':''}${isPremium(e)?'<span class="nj-f">★ Featured</span>':''}</div></div>${coMark(e,'nj-logo')}</div>
- <div class="nj-meta"><span>💼 ${j.workStatus==='Fresher'?'Fresher':esc(j.minExp||0)+'+ Yrs'}</span><span>₹ ${j.salary?'Up to '+(+j.salary).toLocaleString('en-IN')+'/month':'Not disclosed'}</span><span>📍 ${esc(j.city)}${esc(distTxt(j))}</span></div>
+ <div class="nj-meta"><span>💼 ${j.workStatus==='Fresher'?'Fresher':esc(j.minExp||0)+'+ Yrs'}</span><span>₹ ${j.salary?'Up to '+(+j.salary).toLocaleString('en-IN')+'/month':'Not disclosed'}</span><span>📍 ${esc(j.city)}${esc(distTxt(j))}</span><span>🏢 ${esc(modesTxt(j))}</span></div>
  ${desc?`<div class="nj-desc">📄 ${esc(desc.slice(0,120))}${desc.length>120?'…':''}</div>`:''}
  ${sk.length?`<div class="nj-sk">${sk.map(esc).join(' · ')}</div>`:''}</a>
  <div class="nj-foot"><span class="nj-ago">${isWalkin(j)?'<span class="nj-wi">Walk-in</span> ':''}${ago(j.createdAt)}${m!==null?` · <b class="nj-m">${m}% match</b>`:''}</span><button type="button" class="nj-save ${sv?'on':''}" onclick="toggleSaveJob('${j.id}',this)">${sv?'🔖 Saved':'🏷️ Save'}</button></div></article>`}
@@ -6860,6 +6961,383 @@ function empSide(u){const c=u.company||{},jobs=db.jobs.filter(j=>j.employerId===
  <aside class="nk-side">${empSide(u)}${proCard(u)}${sideLinks(u)}</aside></section>`}}
 /* phones: filters start folded */
 {const _r95=route;route=function(){const r=_r95.apply(this,arguments);try{const b=document.getElementById('af-box');if(b&&window.innerWidth<=900){const q=afQ();if(!JKEYS.concat(CKEYS).some(k=>q.get(k)))b.open=false}}catch(e){}return r}}
+
+/* ==================================================================
+   V97: ads, admin registers users (no OTP), app pop-up on mobile,
+        upload sizes, small invoices, employer designation, more
+        candidate filters, OTP auto-fill in the app, email OTP sender,
+        work mode ticks, office key skills, job type / education lists,
+        Naukri-style job page, job requirements, Play Store link
+   ================================================================== */
+
+/* ---------- work mode (tick one or more) and job type ---------- */
+const WMODES=['Work From Office','Work From Home','Field Job','Hybrid'];
+const ETYPES=['Full Time','Part Time','Permanent','Contract','Temporary','Internship','Freelance','Apprenticeship'];
+const DEPTS=['Sales & Business Development','Customer Success, Service & Operations','Finance & Accounting','Human Resources','Marketing & Communication','IT & Information Security','Engineering - Software & QA','Engineering - Hardware & Networks','Data Science & Analytics','Administration & Facilities','Procurement & Supply Chain','Production, Manufacturing & Engineering','Quality Assurance','Healthcare & Life Sciences','Teaching & Training','Legal & Regulatory','Banking & Insurance','Design & Creative','Content, Editorial & Journalism','Research & Development','Retail & Store Operations','Hospitality & Food Services','Construction & Site Engineering','Security Services','Other'];
+const modeLbl=t=>({'Work From Office':'Work from office','Work From Home':'Work from home','Field Job':'Field job','Hybrid':'Hybrid'})[t]||t;
+function jModes(j){const a=Array.isArray(j?.jobTypes)?j.jobTypes.filter(Boolean):[];return a.length?a:[j?.jobType||'Work From Office']}
+function modesTxt(j){return jModes(j).map(modeLbl).join(' · ')}
+function jPrimary(a){return ['Work From Office','Field Job','Hybrid','Work From Home'].find(x=>a.includes(x))||''}
+function jpPicked(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
+function jpTicks(name,list,cur,lbl){return `<div class="checks jp-ticks">${list.map(t=>`<label class="check"><input type="checkbox" name="${name}" value="${esc(t)}" ${cur.includes(t)?'checked':''}> ${esc(lbl?lbl(t):t)}</label>`).join('')}</div>`}
+function jpModes(v){const cur=v.jobTypes&&v.jobTypes.length?v.jobTypes:(v.jobType?[v.jobType]:['Work From Office']);
+ return `<div class="fld full"><span class="l">Work mode <span class="hint">(tick one or more)</span></span>${jpTicks('j-mode',WMODES,cur,modeLbl)}</div>
+ <div class="fld full"><span class="l">Job type <span class="hint">(tick one or more)</span></span>${jpTicks('j-et',ETYPES,v.empTypes&&v.empTypes.length?v.empTypes:['Full Time'])}</div>
+ <div class="fld"><label for="j-dept">Department</label><select id="j-dept">${sel(DEPTS,v.dept||'','Select department')}</select></div>`}
+/* job seeker side: the same ticks (register + profile) */
+jobTypePick=function(pre,cur){cur=cur||[];return `<div class="fld full"><span class="l">Work mode <span class="hint">(tick one or more)</span></span><div class="checks">${WMODES.map(t=>`<label class="check"><input type="checkbox" name="${pre}-jt" value="${t}" ${cur.includes(t)?'checked':''}> ${modeLbl(t)}</label>`).join('')}</div></div>`};
+
+/* ---------- education: full list + Other ---------- */
+const JOB_EDU=['Any','Below 10th','10th pass','12th pass','ITI','Diploma','Graduate','Any Graduate','Post Graduate','Any Postgraduate'].concat(EDU_ALL.filter(x=>!['Below 10th','10th (SSC)','12th (HSC)','ITI','Diploma'].includes(x)));
+function jpEdu(v){const e=v.education||'',known=!e||JOB_EDU.includes(e);
+ return `<div class="fld"><label for="j-edu">Education required</label><select id="j-edu" onchange="$('#j-eduo-b').hidden=this.value!=='Other'">${sel(JOB_EDU.concat(['Other']),known?e:'Other','Select')}</select></div>
+ <div class="fld" id="j-eduo-b" ${known?'hidden':''}><label for="j-eduo">Type the education</label><input id="j-eduo" value="${known?'':esc(e)}" placeholder="e.g. Hotel Management, CFA"></div>`}
+function jpEduVal(){const v=val('j-edu');return v==='Other'?val('j-eduo'):v}
+
+/* ---------- key skills for office jobs only ---------- */
+const OFFICE_SKILLS=['MS Excel','Advanced Excel','MS Word','MS Office','PowerPoint','Google Sheets','Tally','Tally Prime','GST filing','TDS','Income tax returns','Bookkeeping','Accounting','Accounts payable','Accounts receivable','Bank reconciliation','Payroll','Busy software','SAP','SAP FICO','Zoho Books','QuickBooks','Financial analysis','Budgeting','Auditing','Data entry','Typing','Hindi typing','English typing','MIS reporting','Report writing','Documentation','Back office','Front office','Reception','Office administration','Email writing','Business communication','Communication skills','English speaking','Hindi speaking','Customer handling','Customer service','Telecalling','Cold calling','Inbound calls','Outbound calls','CRM','Salesforce','Negotiation','Sales','Inside sales','B2B sales','Corporate sales','Lead generation','Business development','Key account management','Marketing','Digital marketing','SEO','SEM','Google Ads','Facebook Ads','Social media marketing','Email marketing','Content writing','Copywriting','Canva','Photoshop','Illustrator','CorelDRAW','Figma','UI/UX design','Video editing','Recruitment','Talent acquisition','Sourcing','Screening','Onboarding','HR operations','HR policies','Employee engagement','Performance management','Labour laws','Statutory compliance','Training and development','Purchase','Procurement','Vendor management','Inventory management','Supply chain','Logistics coordination','Operations management','Process improvement','Project management','Team handling','Team leadership','Leadership','Time management','Problem solving','Analytical skills','Presentation skills','Coordination','Escalation handling','Quality audit','KPI tracking','Banking operations','KYC','Loan processing','Insurance sales','Credit analysis','Collections','Compliance','Legal drafting','Contract management','Java','Python','JavaScript','TypeScript','React','Angular','Node.js','PHP','Laravel','HTML','CSS','SQL','MySQL','MongoDB','Android','Kotlin','Flutter','C++','.NET','AWS','Azure','Linux','Networking','Troubleshooting','Manual testing','Automation testing','Selenium','Power BI','Tableau','Data analysis','Excel dashboards','AutoCAD','Revit','Teaching','Lesson planning','Classroom management','Counselling','Nursing','Patient care','Pharmacy','Medical coding','Medical billing','Computer basics','Internet browsing'];
+function officeSkills(){return uniqCI(OFFICE_SKILLS)}
+
+/* ---------- Naukri-style job page ---------- */
+const jLines=t=>String(t||'').split(/\r?\n/).map(x=>x.replace(/^\s*([-*•·●▪]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+function descHtml(t){const L=String(t||'').split(/\r?\n/);let o='',ul=false;const close=()=>{if(ul){o+='</ul>';ul=false}};
+ L.forEach(r=>{const l=r.trim();if(!l){close();return}const b=/^([-*•·●▪]|\d+[.)])\s*(.+)$/.exec(l);
+  if(b){if(!ul){o+='<ul class="jd-ul">';ul=true}o+=`<li>${esc(b[2])}</li>`}
+  else if(l.length<=60&&/:$/.test(l)){close();o+=`<h4 class="jd-sub">${esc(l.replace(/:$/,''))}</h4>`}
+  else{close();o+=`<p>${esc(l)}</p>`}});close();return o||'<p class="hint">No description added.</p>'}
+function jdSal(j){const m=+j.salary||0;if(!m)return 'Not disclosed';const y=m*12;return `Up to ₹${m.toLocaleString('en-IN')}/month <span class="jd-yr">(₹${y>=100000?(Math.round(y/10000)/10).toLocaleString('en-IN')+' Lakhs':y.toLocaleString('en-IN')} a year)</span>`}
+function jdMatch(j,u){const p=u.profile||{},js=tokens(j.skills||''),ps=tokens(p.skills||''),n=(db.apps||[]).filter(a=>a.jobId===j.id).length;
+ return [[n<10,'Early applicant'],[js.some(s=>ps.includes(s)),'Keyskills'],[jModes(j).includes('Work From Home')||!!(p.city&&j.city&&p.city.toLowerCase()===String(j.city).toLowerCase()),'Location'],[j.workStatus==='Fresher'||CEXP(u)>=(+j.minExp||0),'Work experience']]}
+function jdSimilar(j){const tt=tokens(j.title||''),sk=tokens(j.skills||'');
+ return openJobs().filter(x=>x.id!==j.id).map(x=>{const a=tokens(x.title||''),b=tokens(x.skills||'');return {x,s:a.filter(t=>tt.includes(t)).length*3+b.filter(t=>sk.includes(t)).length+(x.city===j.city?1:0)}}).filter(o=>o.s>0).sort((a,b)=>b.s-a.s||b.x.createdAt-a.x.createdAt).slice(0,5).map(o=>o.x)}
+function pgJob(id){
+ const j=db.jobs.find(x=>x.id===id);if(!j)return notFound();
+ if(!me())return jobLoginGate(j);
+ logJobView(j);
+ const u=me(),emp=getUser(j.employerId)||{company:{}},c=emp.company||{};
+ const own=isStaffNow()||u?.id===j.employerId,full=own||(u?.role==='candidate'&&userCan(u,'candidate','contacts')),loc=own||(u?.role==='candidate'&&userCan(u,'candidate','location')),canApply=userCan(u,'candidate','apply');
+ const applied=u?.role==='candidate'&&db.apps.some(a=>a.jobId===j.id&&a.candId===u.id);
+ const m=u?.role==='candidate'?matchScore(j,u):null,hl=jLines(j.highlights),rq=jLines(j.requirements),nApps=(db.apps||[]).filter(a=>a.jobId===j.id).length;
+ const sk=String(j.skills||'').split(',').map(x=>x.trim()).filter(Boolean),wfh=jModes(j).length===1&&jModes(j)[0]==='Work From Home',ets=(j.empTypes||[]).length?j.empTypes:['Full Time'];
+ const sv=u?.role==='candidate'&&savedSet().has(j.id),sim=jdSimilar(j);
+ const apply=u?.role==='employer'||isStaffNow()?'':(applied?'<button class="btn jd-apply" disabled>Applied ✓</button>':(j.status==='open'?(canApply?`<button class="btn jd-apply" onclick="applyJob('${j.id}')">Apply</button>`:`<button class="btn alt jd-apply" onclick="openPlanPicker('candidate')">Buy a plan to apply</button>`):'<button class="btn jd-apply" disabled>Not accepting applications</button>'));
+ const save=u?.role==='candidate'?`<button type="button" class="btn ghost jd-save ${sv?'on':''}" onclick="toggleSaveJob('${j.id}',this)">${sv?'🔖 Saved':'🏷️ Save'}</button>`:'';
+ const row=(k,v)=>v?`<div><dt>${k}:</dt><dd>${v}</dd></div>`:'';
+ return `<section class="wrap jd"><div class="page-h"><a href="#/jobs">← Back to jobs</a></div><div class="detail"><div>
+ <div class="panel jd-head"><div class="jd-top"><div class="jd-tt"><h1>${esc(j.title)}</h1><div class="jd-co"><a href="#/company/${j.employerId}">${esc(j.company)}</a>${c.verified?'<span class="jd-v" title="Documents verified">✔ Verified</span>':''}</div></div>${coMark(emp,'jd-logo')}</div>
+  <div class="jd-meta"><span>💼 ${j.workStatus==='Fresher'?'Fresher':'Min. '+esc(j.minExp||0)+' year'+(j.minExp==1?'':'s')}</span><span>💰 ${jdSal(j)}</span></div>
+  <div class="jd-meta"><span>📍 ${esc(j.city)}, ${esc(j.state)}</span><span>🏢 ${esc(modesTxt(j))}</span><span>🕘 ${esc(j.shift||'Day')} shift</span></div>
+  <div class="jd-tags">${statusChip(j.status)}${isWalkin(j)?`<span class="wbadge">${WALK_IC}Walk-in</span>`:''}${ets.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}${m!==null?`<span class="match">${m}% match</span>`:''}</div>
+  <div class="jd-foot"><div class="jd-stats">Posted: <b>${ago(j.createdAt)}</b><i>|</i>Openings: <b>${esc(j.openings||1)}</b><i>|</i>Applicants: <b>${nApps}</b></div><div class="jd-btns">${save}${apply}</div></div></div>
+ <div class="panel jd-body">
+  ${hl.length||m!==null?`<div class="jd-hl">${hl.length?`<h3>Job highlights</h3><ul>${hl.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}${m!==null?`<h4>Job match score</h4><div class="jd-ms">${jdMatch(j,u).map(([ok,l])=>`<span class="${ok?'ok':''}">${ok?'✔':'○'} ${l}</span>`).join('')}</div>`:''}</div>`:''}
+  <h2>Job description</h2><div class="jd-desc">${descHtml(j.description)}</div>
+  ${rq.length?`<h4 class="jd-sub">Requirements</h4><ul class="jd-ul">${rq.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>`:''}
+  <dl class="jd-dl">${row('Role',esc(tagSplit(j.title,'/')[0]||j.title))}${row('Industry Type',esc(c.industry||''))}${row('Department',esc(j.dept||''))}${row('Employment Type',esc(ets.join(', ')))}${row('Work mode',esc(modesTxt(j)))}${row('Shift timing',esc(j.shift||'')+(j.shiftFrom?', '+esc(j.shiftFrom)+' to '+esc(j.shiftTo||''):''))}${row('Languages',esc(j.languages||''))}${row('Company type',esc(c.type||''))}${j.tech?row('Trade',esc(j.tech)):''}</dl>
+  <h4 class="jd-sub">Education</h4><p class="jd-edu">${esc(j.education||'Any')}</p>
+  ${sk.length?`<h4 class="jd-sub">Key Skills</h4><div class="jd-sk">${sk.map(s=>`<span>${esc(s)}</span>`).join('')}</div>`:''}
+ </div>
+ <div class="panel jd-contact"><h3>Company contact</h3><dl class="jd-dl"><div><dt>Contact number:</dt><dd>${full?esc(j.contact):mask(j.contact)}</dd></div><div><dt>WhatsApp:</dt><dd>${full?esc(j.whatsapp):mask(j.whatsapp)}</dd></div><div><dt>Email:</dt><dd>${full?esc(j.email):maskEmail(j.email)}</dd></div></dl>
+  ${full?'':'<p class="hint">Contact details are visible to job seekers with an active plan, starting at '+planFrom('candidate')+'.</p>'+(u?.role==='employer'?'':'<button class="btn alt sm" onclick="openPlanPicker(\'candidate\')">Buy plan &amp; pay</button>')}
+  <div class="row-btns"><button class="btn ghost sm" onclick="viewCompany('${j.id}')">View company details</button></div></div>
+ ${isWalkin(j)?`<div class="panel wpanel"><h2 style="display:flex;gap:10px;align-items:center"><span class="wbadge">${WALK_IC}Walk-in</span> Walk-in interview details</h2><dl class="dl"><dt>Dates</dt><dd>${esc(walkinText(j))}</dd><dt>Timing</dt><dd>${esc(j.walkin.timeFrom||'')} to ${esc(j.walkin.timeTo||'')}</dd><dt>Venue</dt><dd>${loc?esc(j.walkin.venue||j.address):'<span class="lockhint">Venue visible with a plan</span>'}</dd>${j.walkin.person?`<dt>Contact person</dt><dd>${esc(j.walkin.person)}</dd>`:''}</dl><p class="hint" style="margin-top:10px">Carry a copy of your resume and an ID proof.</p></div>`:''}
+ ${wfh?'':`<div class="panel"><h2>Job location</h2>${loc?`<p style="margin:0 0 12px"><strong>${esc(j.address)}</strong>${j.pincode?' – '+esc(j.pincode):''}<br><span class="hint">${esc(j.city)}, ${esc(j.state)}</span></p>
+  ${!window.claude?`<div class="mapbox"><iframe title="Map of job location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=${mapsQuery(j)}&z=15&output=embed"></iframe></div>`:''}
+  <div class="row-btns"><a class="btn alt" href="${dirLink(j)}" target="_blank" rel="noopener">🧭 Get directions</a><a class="btn ghost" href="${mapsLink(j)}" target="_blank" rel="noopener">Open in Google Maps</a></div>`
+  :`<div class="maplock"><div><b>🔒 Exact location and directions are locked</b><span class="hint">You can see the city (${esc(j.city)}). Buy a plan to see the full address, map pin and turn-by-turn directions.</span>${u?.role==='candidate'?`<div class="row-btns" style="justify-content:center"><button class="btn alt" onclick="openPlanPicker('candidate')">Buy plan &amp; unlock</button></div>`:''}</div></div>`}</div>`}
+ ${c.about?`<div class="panel"><h2>About ${esc(c.name||j.company)}</h2><p class="prose">${esc(c.about)}</p></div>`:''}
+ </div><aside class="jd-side">
+  <div class="panel jd-sim"><h3>Jobs you might be interested in</h3>${sim.length?sim.map(x=>{const e=getUser(x.employerId);return `<a class="jd-si" href="#/job/${x.id}"><div><b>${esc(x.title)}</b><span>${esc(x.company||'')}</span><span class="hint">📍 ${esc(x.city)} · ${ago(x.createdAt)}</span></div>${coMark(e,'jd-si-logo')}</a>`}).join(''):'<p class="hint">No similar jobs right now.</p>'}</div>
+ </aside></div></section>`}
+
+/* ---------- more candidate filters for employers ---------- */
+const NOTICE_B=[['0-15','Immediate / up to 15 days',0,15],['16-30','16 – 30 days',16,30],['31-60','1 – 2 months',31,60],['61+','More than 2 months',61,9999]];
+const AGE_B=[['18-25','18 – 25 years',18,25],['26-30','26 – 30 years',26,30],['31-40','31 – 40 years',31,40],['41+','41 years and above',41,200]];
+const CSAL_B=[['0-3','0 – 3 Lakhs',0,300000],['3-6','3 – 6 Lakhs',300000,600000],['6-10','6 – 10 Lakhs',600000,1000000],['10+','10+ Lakhs',1000000,1e13]];
+const UPD_B=[['7','Joined in last 7 days'],['30','Joined in last 30 days'],['90','Joined in last 3 months']];
+const bucket=(B,v)=>{if(v===null||v===undefined||v===''||isNaN(+v))return '';const b=B.find(([,, lo,hi])=>+v>=lo&&+v<=hi);return b?b[0]:''};
+const cNotice=c=>{const p=c.profile||{};return p.working==='Yes'?bucket(NOTICE_B,+p.notice||0):''};
+const cAge=c=>bucket(AGE_B,ageOf(c.profile?.dob));
+const cSal=c=>{const s=(+c.profile?.salary||0)*12;return s?bucket(CSAL_B,s<300000?s:s-1):''};
+const cSkills=c=>tagSplit(c.profile?.skills||'').slice(0,25);
+const fixedCnt=(B,C,fn)=>B.map(([k,l])=>[k,C.filter(c=>fn(c)===k).length,l]);
+CKEYS.push('cst','csk','cjt','cdg','ctr','cag','cwk','csl','cn2','crs','cph','cjd');
+function candFilter(list,q){const cx=q.get('cx'),L=k=>afList(q,k);return list.filter(({c})=>{const p=c.profile||{};
+ if(cx!==null&&cx!==''&&+cx<31&&CEXP(c)<+cx)return false;const chk=(k,v)=>{const a=L(k);return !a.length||[].concat(v).some(x=>a.includes(String(x)))};
+ const ce=L('ce');if(ce.length&&!ce.some(o=>candEdu(c,o)))return false;
+ if(q.get('ceo')&&!eduTxt([p.degree,p.degreeOther,p.education,p.university,(p.edus||[]).map(e=>[e.degree,e.course,e.name].join(' ')).join(' ')].join(' '),q.get('ceo')))return false;
+ if(!(chk('cw',p.workStatus)&&chk('cl',p.city)&&chk('cst',p.state)&&chk('ci',p.industry)&&chk('ctr',p.tech)&&chk('cdg',p.designation)&&chk('cn2',cNotice(c))&&chk('cag',cAge(c))&&chk('csl',cSal(c))&&chk('cwk',p.working==='Yes'?'Yes':'No')))return false;
+ if(L('csk').length&&!cSkills(c).some(s=>L('csk').includes(s)))return false;
+ if(L('cjt').length&&!(p.jobTypes||[]).some(t=>L('cjt').includes(t)))return false;
+ if(q.get('crs')==='1'&&!p.resume)return false;if(q.get('cph')==='1'&&!c.photo&&!p.photo)return false;
+ if(q.get('cjd')&&now()-(+c.createdAt||0)>(+q.get('cjd'))*DAY)return false;
+ return q.get('cp')!=='1'||isPremium(c)})}
+function candFilters(base,all,q){const active=CKEYS.filter(k=>q.get(k)).length,cx=q.get('cx'),xv=cx===null||cx===''?31:+cx,C=all.map(x=>x.c);
+ const inner=`<div class="af-sec af-exp"><div class="af-t">Minimum experience <span class="hint">${xv>=31?'Any':xv===0?'Fresher':xv+'+ yrs'}</span></div><input type="range" min="0" max="31" value="${xv}" aria-label="Minimum experience in years" oninput="this.previousElementSibling.querySelector('span').textContent=this.value>=31?'Any':this.value==0?'Fresher':this.value+'+ yrs'" onchange="afSet('${base}','cx',this.value>=31?'':this.value)"><div class="af-rng"><span>0 Yrs</span><span>Any</span></div></div>
+ ${afSecR(base,'Fresher / Experienced','cw',[['Fresher',C.filter(c=>c.profile?.workStatus==='Fresher').length],['Experienced',C.filter(c=>c.profile?.workStatus==='Experienced').length]],q)}
+ ${afSecR(base,'Key skills','csk',afCount(C,cSkills),q)}
+ ${afSecR(base,'Location (city)','cl',afCount(C,c=>c.profile?.city),q)}
+ ${afSecR(base,'State','cst',afCount(C,c=>c.profile?.state),q)}
+ ${eduSec(base,'Education','ce',candEdu,C,q)}
+ ${afSecR(base,'Work mode wanted','cjt',WMODES.map(t=>[t,C.filter(c=>(c.profile?.jobTypes||[]).includes(t)).length,modeLbl(t)]),q)}
+ ${afSecR(base,'Industry','ci',afCount(C,c=>c.profile?.industry),q)}
+ ${afSecR(base,'Current designation','cdg',afCount(C,c=>c.profile?.designation),q)}
+ ${afSecR(base,'Current salary (yearly)','csl',fixedCnt(CSAL_B,C,cSal),q)}
+ ${afSecR(base,'Currently working','cwk',[['Yes',C.filter(c=>c.profile?.working==='Yes').length,'Yes, working now'],['No',C.filter(c=>c.profile?.working!=='Yes').length,'Not working now']],q)}
+ ${afSecR(base,'Notice period','cn2',fixedCnt(NOTICE_B,C,cNotice),q)}
+ ${afSecR(base,'Age','cag',fixedCnt(AGE_B,C,cAge),q)}
+ ${afSecR(base,'Trade','ctr',afCount(C,c=>c.profile?.tech),q)}
+ <details class="af-sec" open><summary>Joined JobSetu1</summary><div class="af-opts">${UPD_B.map(([v,l])=>`<label class="af-o"><input type="radio" name="af-cjd" ${q.get('cjd')===v?'checked':''} onchange="afSet('${base}','cjd','${v}')"><span>${l}</span><em>(${C.filter(c=>now()-(+c.createdAt||0)<=(+v)*DAY).length})</em></label>`).join('')}${q.get('cjd')?`<button type="button" class="af-more" onclick="afSet('${base}','cjd','')">Any time</button>`:''}</div></details>
+ <label class="af-o af-wi"><input type="checkbox" ${q.get('crs')==='1'?'checked':''} onchange="afSet('${base}','crs',this.checked?'1':'')"><span>📄 With resume only</span><em>(${C.filter(c=>c.profile?.resume).length})</em></label>
+ <label class="af-o af-wi"><input type="checkbox" ${q.get('cph')==='1'?'checked':''} onchange="afSet('${base}','cph',this.checked?'1':'')"><span>🖼 With photo only</span><em>(${C.filter(c=>c.photo||c.profile?.photo).length})</em></label>
+ <label class="af-o af-wi"><input type="checkbox" ${q.get('cp')==='1'?'checked':''} onchange="afSet('${base}','cp',this.checked?'1':'')"><span>★ Premium job seekers only</span><em>(${C.filter(isPremium).length})</em></label>`;
+ return afPanel(base,inner,active,CKEYS)}
+/* every section shows, even with 0 matches, so employers see all the choices */
+{const _as97=afSec;afSec=function(base,title,k,entries,q,opt){if(String(k).startsWith('c')&&(!entries||!entries.length))return `<details class="af-sec"><summary>${title}</summary><div class="af-opts"><p class="hint" style="margin:4px 0">No job seekers with this yet.</p></div></details>`;return _as97.apply(this,arguments)}}
+
+/* ==================================================================
+   Ads of other companies (Admin → Ads)
+   ================================================================== */
+const AD_PAGES=[['home','Home page'],['jobs','Job search & job lists'],['job','Job details page'],['companies','Companies'],['dash','Dashboards'],['profile','Profiles'],['plans','Plans & payments'],['other','All other pages']];
+const AD_SPOTS=[['bottom','Bottom of the page (above footer)'],['list','Inside job / candidate lists (after the 5th card)'],['side','Side column (computer screens)']];
+const AD_BUCKETS=8,AD_CELL=44000,AD_IMG_MAX=30000;
+function adAll(){return ((db.settings||{}).ads||[]).filter(a=>a&&a.id)}
+function adState(a,t){t=t||now();if(a.paused)return ['Paused','warn'];if(+a.from>t)return ['Scheduled','info'];if(a.to&&+a.to<=t)return ['Ended','bad'];return ['Live','good']}
+function adPageKey(){const k=(location.hash.replace(/^#\/?/,'').split(/[\/?]/)[0])||'';
+ return k===''?'home':k==='jobs'?'jobs':k==='job'?'job':(k==='companies'||k==='company')?'companies':['dashboard','employer','candidates'].includes(k)?'dash':['profile','company-profile','candidate'].includes(k)?'profile':['plans','premium','invoices'].includes(k)?'plans':'other'}
+function adsFor(spot){const pk=adPageKey(),t=now();return adAll().filter(a=>adState(a,t)[0]==='Live'&&a.img&&/^https?:\/\//.test(a.link||'')&&(a.spots||['bottom']).includes(spot)&&(!Array.isArray(a.pages)||!a.pages.length||a.pages.includes(pk)))}
+let _adN=0;function adPick(spot,skip){const L=adsFor(spot).filter(a=>!skip||a.id!==skip);if(!L.length)return null;_adN++;return L[_adN%L.length]}
+function adHtml(a,kind){return `<div class="adz adz-${kind}" data-ad="${esc(a.id)}"><span class="adz-l">Sponsored · ${esc(a.co||'')}</span><a href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" onclick="return adOpen(event,'${esc(a.id)}')"><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" loading="lazy"></a></div>`}
+function adOpen(e,id){const a=adAll().find(x=>x.id===id);if(!a)return true;
+ try{const k='js1_adc';const m=JSON.parse(localStorage.getItem(k)||'{}');m[id]=(m[id]||0)+1;localStorage.setItem(k,JSON.stringify(m))}catch(x){}
+ if(APP&&window.AndroidApp&&AndroidApp.openExternal){try{e.preventDefault();AndroidApp.openExternal(a.link);return false}catch(x){}}
+ return true}
+function adPaint(){const app=$('#app');if(!app)return;app.querySelectorAll('.adz,.adz-wrap').forEach(x=>x.remove());
+ if(/^#\/(admin|manager|office|gauth|gdone)/.test(location.hash||''))return;
+ const b=adPick('bottom');if(b)app.insertAdjacentHTML('beforeend',`<div class="wrap adz-wrap">${adHtml(b,'bottom')}</div>`);
+ let cards=[...app.querySelectorAll('.nj')];if(cards.length<6){const g=[...app.querySelectorAll('.grid,.cgrid')].sort((x,y)=>y.children.length-x.children.length)[0];if(g)cards=[...g.children]}
+ if(cards.length>=6){const a=adPick('list');if(a)cards[4].insertAdjacentHTML('afterend',adHtml(a,'list'))}
+ const side=app.querySelector('.jd-side')||app.querySelector('.nk3 > aside:last-of-type');if(side&&window.innerWidth>900){const a=adPick('side',b&&b.id);if(a)side.insertAdjacentHTML('beforeend',adHtml(a,'side'))}}
+
+/* ads travel to every device inside the settings row; pictures are split into a few cells (each cell ≤ 44 000 letters) */
+function adPack(){const out={ads:[]},bk=[];for(let i=0;i<AD_BUCKETS;i++){bk.push({});out['adimg'+i]=''}const len=[];
+ adAll().forEach(a=>{const m=Object.assign({},a);if(/^data:/.test(a.img||'')){let i=bk.findIndex((b,ix)=>(len[ix]||2)+a.img.length+a.id.length+6<AD_CELL);if(i<0){m.img='';m.noimg=1}else{bk[i][a.id]=a.img;len[i]=(len[i]||2)+a.img.length+a.id.length+6;m.img='@'+i}}out.ads.push(m)});
+ bk.forEach((b,i)=>{if(Object.keys(b).length)out['adimg'+i]=JSON.stringify(b)});return out}
+function adUnpack(x){const arr=v=>{if(Array.isArray(v))return v;try{const a=JSON.parse(v||'[]');return Array.isArray(a)?a:[]}catch(e){return []}};
+ const obj=v=>{if(v&&typeof v==='object')return v;try{return JSON.parse(v||'{}')||{}}catch(e){return {}}};
+ return arr(x.ads).map(a=>{a=Object.assign({},a);const m=/^@(\d)$/.exec(a.img||'');if(m)a.img=obj(x['adimg'+m[1]])[a.id]||'';return a})}
+{const _cp97=cfgPick;cfgPick=function(){return Object.assign(_cp97.apply(this,arguments),adPack(),{play:(db.settings||{}).play||null})}}
+{const _gc97=gsCollections;gsCollections=function(){const C=_gc97.apply(this,arguments);try{if(C.settings&&C.settings[0])C.settings[0]=Object.assign({},C.settings[0],adPack(),{play:(db.settings||{}).play||null})}catch(e){}return C}}
+{const _ca97=cfgApply;cfgApply=function(x){const r=_ca97.apply(this,arguments);if(r&&x){db.settings=db.settings||{};if('ads' in x)db.settings.ads=adUnpack(x);if('play' in x){try{db.settings.play=typeof x.play==='string'?JSON.parse(x.play||'null'):x.play}catch(e){}}save()}return r}}
+
+/* ---------- admin: Ads tab ---------- */
+let _adEdit=null;
+function adNew(){_adEdit={id:'',co:'',title:'',link:'https://',img:'',from:now(),to:now()+30*DAY,spots:['bottom','list','side'],pages:[],paused:false};route();setTimeout(()=>$('#ad-form')?.scrollIntoView({block:'start'}),60)}
+function adEditId(id,copy){const a=adAll().find(x=>x.id===id);if(!a)return;_adEdit=Object.assign({},a,copy?{id:'',co:a.co+' (copy)',from:now(),to:Math.max(+a.to||0,now()+30*DAY),paused:false}:{});route();setTimeout(()=>$('#ad-form')?.scrollIntoView({block:'start'}),60)}
+const dtLocal=t=>{if(!t)return '';const d=new Date(+t);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
+function adFormVals(){return {co:val('ad-co'),title:val('ad-title'),link:val('ad-link'),img:(_adEdit&&_adEdit.img)||'',from:val('ad-from')?new Date(val('ad-from')).getTime():now(),to:val('ad-to')?new Date(val('ad-to')).getTime():0,spots:jpPicked('ad-spot'),pages:radio('ad-pw')==='some'?jpPicked('ad-page'):[],paused:false}}
+async function adShrink(f){const src=await fileData(f);const im=await imgFrom(src);let w=Math.min(1200,im.width),out='',q=.72;
+ for(let i=0;i<8;i++){const h=Math.max(1,Math.round(im.height*w/im.width)),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);
+  const a=webpOk()?c.toDataURL('image/webp',q):'',b=c.toDataURL('image/jpeg',q);out=a&&a.length<b.length?a:b;if(dataSize(out)<=AD_IMG_MAX)break;if(q>.5)q-=.1;else w=Math.round(w*.82)}
+ return out}
+async function adImgPick(inp){const f=inp.files&&inp.files[0],n=$('#ad-img-n');if(!f)return;if(!/^image\//.test(f.type)){if(n)n.textContent='Please choose a picture (JPG, PNG or WebP).';return}
+ if(n)n.innerHTML='<span class="spin"></span> Making the picture small…';
+ try{const d=await adShrink(f);_adEdit=Object.assign(_adEdit||{},adFormVals(),{img:d});if(n)n.innerHTML=sizeLine(f.size,dataSize(d));const p=$('#ad-img-p');if(p)p.innerHTML=`<img src="${d}" alt="Ad picture preview">`;adPrev()}catch(e){if(n)n.textContent='This picture could not be opened. Try another one.'}}
+function adUrlImg(){const u=val('ad-imgurl').trim();if(!/^https:\/\//.test(u))return toast('Paste a picture link that starts with https://');_adEdit=Object.assign(_adEdit||{},adFormVals(),{img:u});const p=$('#ad-img-p');if(p)p.innerHTML=`<img src="${esc(u)}" alt="Ad picture preview">`;const n=$('#ad-img-n');if(n)n.textContent='Picture link added (it stays on the advertiser\'s website, so it uses no space here).';adPrev()}
+function adPrev(){const el=$('#ad-prev');if(!el||!_adEdit)return;const v=Object.assign({},_adEdit,adFormVals(),{id:'prev'});el.innerHTML=v.img?adHtml(v,'bottom').replace('onclick="return adOpen(event,\'prev\')"','onclick="return false"'):'<p class="hint">Add the ad picture to see the preview.</p>'}
+async function adSave(){if(!isAdminNow())return toast('Only the admin can change ads.');const v=adFormVals();
+ if(!v.co)return toast('Add the company name.');if(!/^https?:\/\/[^\s.]+\.[^\s]+$/.test(v.link))return toast('Add the full website link of the company, starting with https://');
+ if(!v.img)return toast('Add the ad picture (upload it or paste a picture link).');if(!v.spots.length)return toast('Tick at least one place to show the ad.');
+ if(radio('ad-pw')==='some'&&!v.pages.length)return toast('Tick at least one page, or choose "Every page".');if(v.to&&v.to<=v.from)return toast('The end date must be after the start date.');
+ db.settings=db.settings||{};const prev=adAll(),L=prev.slice(),id=_adEdit&&_adEdit.id;
+ if(id){const i=L.findIndex(x=>x.id===id);if(i>=0)L[i]=Object.assign({},L[i],v,{id})}else L.push(Object.assign({id:uid('ad'),at:now()},v));
+ db.settings.ads=L;const pk=adPack();if(pk.ads.some(a=>a.noimg)){db.settings.ads=prev;return toast('Ad pictures are full. Delete an old ad, or use a picture link (https://) for this one.',8000)}
+ _adEdit=null;await publishNow('Ad');toast(v.from>now()?`Ad saved ✓ It shows from ${fmtDT(v.from)}${v.to?' until '+fmtDT(v.to):''}.`:`Ad is live ✓ ${v.to?'It hides by itself on '+fmtDT(v.to)+'.':''}`,7000);route()}
+async function adSet(id,patch,msg){if(!isAdminNow())return;db.settings.ads=adAll().map(a=>a.id===id?Object.assign({},a,patch):a);await publishNow('Ad');toast(msg);route()}
+async function adDel(id){if(!isAdminNow())return;if(!confirm('Delete this ad? It disappears from the website.'))return;db.settings.ads=adAll().filter(a=>a.id!==id);await publishNow('Ad');toast('Ad deleted.');route()}
+function sizeLine(a,b){const p=a>0?Math.max(0,Math.round((1-b/a)*100)):0;return `<span class="szl">Actual size: <b>${kb(a)}</b> → Compressed: <b>${kb(b)}</b>${p>0?` <em>(${p}% smaller)</em>`:''}</span>`}
+function pgAdsAdmin(){const L=adAll().slice().sort((a,b)=>(+b.from||0)-(+a.from||0)),t=now(),e=_adEdit,clicks=(()=>{try{return JSON.parse(localStorage.getItem('js1_adc')||'{}')}catch(x){return {}}})();
+ const used=JSON.stringify(adPack()).length,cap=AD_BUCKETS*AD_CELL;
+ const form=e?`<div class="panel" id="ad-form"><h2>${e.id?'Edit ad':'New ad'}</h2><div class="of-grid"><div class="form">
+  <div class="fld"><label for="ad-co">Company name (advertiser)</label><input id="ad-co" value="${esc(e.co)}" placeholder="e.g. ABC Computer Institute" oninput="adPrev()"></div>
+  <div class="fld"><label for="ad-title">Short ad text <span class="hint">(for screen readers / when the picture can't load)</span></label><input id="ad-title" value="${esc(e.title||'')}" placeholder="e.g. Learn Tally in 30 days" oninput="adPrev()"></div>
+  <div class="fld full"><label for="ad-link">Company website link <span class="hint">(opens in a new browser tab when the picture is clicked)</span></label><input id="ad-link" type="url" value="${esc(e.link||'https://')}" placeholder="https://www.company.com"></div>
+  <div class="fld full"><label for="ad-file">Ad picture <span class="hint">(best size 1200 × 300 px; JPG, PNG or WebP)</span></label><input id="ad-file" type="file" accept="image/*" onchange="adImgPick(this)"><small id="ad-img-n" class="hint">${e.img&&/^data:/.test(e.img)?'Current picture: '+kb(dataSize(e.img)):''}</small>
+   <details class="ad-url"><summary>Or paste a picture link</summary><div class="inline"><input id="ad-imgurl" placeholder="https://… .jpg" value="${/^https/.test(e.img||'')?esc(e.img):''}"><button type="button" class="btn ghost sm" onclick="adUrlImg()">Use link</button></div></details>
+   <div id="ad-img-p" class="ad-img-p">${e.img?`<img src="${esc(e.img)}" alt="Ad picture preview">`:''}</div></div>
+  <div class="fld"><label for="ad-from">Start showing from</label><input id="ad-from" type="datetime-local" value="${dtLocal(e.from)}"></div>
+  <div class="fld"><label for="ad-to">Stop showing on</label><input id="ad-to" type="datetime-local" value="${dtLocal(e.to)}"><small class="hint">Leave empty to show until you stop it.</small></div>
+  <div class="fld full"><span class="l">Where on the page</span>${jpTicks('ad-spot',AD_SPOTS.map(x=>x[0]),e.spots||[],k=>AD_SPOTS.find(x=>x[0]===k)[1])}<small class="hint">Ads never show at the top of a page or over the website's own buttons.</small></div>
+  <div class="fld full"><span class="l">Which pages</span><div class="radios"><label><input type="radio" name="ad-pw" value="all" ${(e.pages||[]).length?'':'checked'} onchange="$('#ad-pg').hidden=true"> Every page</label><label><input type="radio" name="ad-pw" value="some" ${(e.pages||[]).length?'checked':''} onchange="$('#ad-pg').hidden=false"> Only some pages</label></div>
+   <div id="ad-pg" ${(e.pages||[]).length?'':'hidden'}>${jpTicks('ad-page',AD_PAGES.map(x=>x[0]),e.pages||[],k=>AD_PAGES.find(x=>x[0]===k)[1])}</div></div>
+  <div class="row-btns"><button class="btn alt" onclick="adSave()">${e.id?'💾 Save ad':'🚀 Publish ad'}</button><button class="btn ghost" onclick="_adEdit=null;route()">Cancel</button></div></div>
+  <div><h3>Preview</h3><div id="ad-prev" class="ad-prev"></div></div></div></div>`:'';
+ return `<div class="panel"><div class="of-h"><div><h2>📢 Ads of other companies</h2><p class="hint">Run as many ads as you want. Each ad picture opens the advertiser's website in a new browser tab. Ads show at the bottom of pages, inside long lists and in the side column — never at the top of the page.</p></div><button class="btn" onclick="adNew()">+ New ad</button></div>
+  <details class="ad-how"><summary>How to run an ad (step by step)</summary><ol>
+   <li>Get from the advertiser: their <b>company name</b>, <b>website link</b> and an <b>ad picture</b> (best 1200 × 300 px, wide banner).</li>
+   <li>Press <b>+ New ad</b>, fill the name and link, and upload the picture. The site makes it small by itself and shows the size before → after.</li>
+   <li>Choose the <b>start and end date</b>. The ad switches on and off by itself on those dates.</li>
+   <li>Tick <b>where</b> to show it (bottom of page, inside lists, side column) and <b>which pages</b> (every page, or only some).</li>
+   <li>Check the <b>Preview</b> and press <b>Publish ad</b>. Within a minute it shows on every phone, computer and in the app.</li>
+   <li>To stop it early press <b>Pause</b>; press <b>Resume</b> to show it again. <b>Duplicate</b> makes a copy for a new month.</li>
+  </ol><p class="hint">Picture space used: ${Math.round(used/1024)} KB of ${Math.round(cap/1024)} KB. For many ads, paste a picture link (https://) instead of uploading — links use no space.</p></details></div>
+ ${form}
+ <div class="panel"><h3>All ads (${L.length})</h3>${L.length?`<div class="ad-list">${L.map(a=>{const [st,cl]=adState(a,t);return `<div class="ad-row"><div class="ad-th">${a.img?`<img src="${esc(a.img)}" alt="">`:'<span class="hint">No picture</span>'}</div><div class="ad-in"><b>${esc(a.co)}</b> <span class="chip ${cl}">${st}</span><br><a href="${esc(a.link)}" target="_blank" rel="noopener" class="hint">${esc(a.link)}</a><br><span class="hint">${fmtDT(a.from)} → ${a.to?fmtDT(a.to):'no end date'} · ${(a.spots||[]).map(s=>({bottom:'bottom',list:'in lists',side:'side'})[s]).join(', ')} · ${(a.pages||[]).length?a.pages.map(p=>(AD_PAGES.find(x=>x[0]===p)||[,p])[1]).join(', '):'every page'}${clicks[a.id]?` · ${clicks[a.id]} click(s) on this device`:''}</span></div>
+  <div class="ad-acts"><button class="btn ghost sm" onclick="adEditId('${a.id}')">✏️ Edit</button>${a.paused?`<button class="btn ghost sm" onclick="adSet('${a.id}',{paused:false},'Ad resumed ✓')">▶ Resume</button>`:`<button class="btn ghost sm" onclick="adSet('${a.id}',{paused:true},'Ad paused.')">⏸ Pause</button>`}<button class="btn ghost sm" onclick="adEditId('${a.id}',true)">⧉ Duplicate</button><button class="btn ghost sm" onclick="adDel('${a.id}')">🗑 Delete</button></div></div>`}).join('')}</div>`:'<p class="hint">No ads yet. Press <b>+ New ad</b> to add the first one.</p>'}</div>`}
+
+/* ==================================================================
+   Admin → Register user (no OTP needed)
+   ================================================================== */
+let _auLast=null;
+function auPw(){const c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';let s='';const a=new Uint32Array(8);try{crypto.getRandomValues(a)}catch(e){a.forEach((_,i)=>a[i]=Math.random()*1e9)}a.forEach(x=>s+=c[x%c.length]);return s}
+function auRole(r){document.querySelectorAll('.au-c').forEach(x=>x.hidden=r!=='candidate');document.querySelectorAll('.au-e').forEach(x=>x.hidden=r!=='employer')}
+function pgAddUserAdmin(){const mine=db.users.filter(u=>u.byAdmin).sort((a,b)=>(+b.createdAt||0)-(+a.createdAt||0)).slice(0,15),r=_auLast;
+ return `<div class="panel"><h2>➕ Register a job seeker or employer</h2><p class="hint">For people who call or visit you. <b>No OTP is needed</b> when the admin registers someone — the mobile number and email are marked as checked by the admin. Share the login details with the person afterwards; they can change the password later.</p>
+ ${r?`<div class="banner good au-done"><p><b>✓ ${esc(r.name)} is registered as ${r.role==='employer'?'an employer':'a job seeker'}.</b><br>Login: <b>${esc(r.mobile)}</b>${r.email?' or <b>'+esc(r.email)+'</b>':''} · Password: <b class="au-pw">${esc(r.pw)}</b></p><div class="row-btns"><button class="btn sm" onclick="navigator.clipboard&&navigator.clipboard.writeText('JobSetu1 login\\nMobile: ${esc(r.mobile)}\\nPassword: ${esc(r.pw)}\\nhttps://jobsetu1.com/#/login').then(()=>toast('Copied ✓'))">📋 Copy login details</button><a class="btn ghost sm" target="_blank" rel="noopener" href="https://wa.me/91${esc(r.mobile)}?text=${encodeURIComponent('Welcome to JobSetu1! Your account is ready.\nLogin: '+r.mobile+'\nPassword: '+r.pw+'\nhttps://jobsetu1.com/#/login\nPlease change your password after logging in.')}">💬 Send on WhatsApp</a><button class="btn ghost sm" onclick="_auLast=null;route()">Register another</button></div></div>`:''}
+ <form class="form" onsubmit="auSubmit(event)" novalidate>
+  <div class="fld full"><span class="l">Register as</span><div class="radios"><label><input type="radio" name="au-role" value="candidate" checked onchange="auRole(this.value)"> Job seeker</label><label><input type="radio" name="au-role" value="employer" onchange="auRole(this.value)"> Employer</label></div></div>
+  <div class="fld"><label for="au-name">Full name</label><input id="au-name" autocomplete="off"></div>
+  <div class="fld"><label for="au-mob">Mobile number</label><input id="au-mob" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile"></div>
+  <div class="fld"><label for="au-email">Email <span class="hint">(optional for job seekers)</span></label><input id="au-email" type="email" autocomplete="off"></div>
+  <div class="fld"><label for="au-pw">Password</label><div class="inline"><input id="au-pw" value="${auPw()}" autocomplete="off"><button type="button" class="btn ghost sm" onclick="$('#au-pw').value=auPw()">New</button></div><small class="hint">At least 6 characters. Tell this to the person.</small></div>
+  ${stateSel('au','')}
+  ${cityPick('au','','')}
+  <div class="fld au-c"><span class="l">Fresher or experienced</span><div class="radios"><label><input type="radio" name="au-ws" value="Fresher" checked> Fresher</label><label><input type="radio" name="au-ws" value="Experienced"> Experienced</label></div></div>
+  <div class="fld au-c"><label for="au-edu">Highest education</label><select id="au-edu">${sel(EDU.filter(x=>x!=='Any'),'','Select')}</select></div>
+  <div class="fld full au-c"><label for="au-sk">Key skills <span class="hint">(comma separated)</span></label><input id="au-sk" placeholder="e.g. Excel, Tally, Telecalling"></div>
+  <div class="au-c" style="grid-column:1/-1">${jobTypePick('au',['Work From Office'])}</div>
+  <div class="fld au-e" hidden><label for="au-co">Company name</label><input id="au-co"></div>
+  <div class="fld au-e" hidden><label for="au-des">Designation</label><input id="au-des" list="des-list" placeholder="e.g. HR Manager"></div>
+  <div class="fld au-e" hidden><label for="au-type">Company type</label><select id="au-type">${sel(COMPANY_TYPES,'','Select company type')}</select></div>
+  <div class="fld au-e" hidden><label for="au-ind">Industry type</label><select id="au-ind">${sel(INDUSTRIES,'','Select industry type')}</select></div>
+  <div class="fld au-e" hidden><label for="au-size">Number of employees</label><select id="au-size">${sel(EMP_SIZES,'','Select')}</select></div>
+  <div class="fld full"><label class="check"><input type="checkbox" id="au-wel" checked> Send a welcome notification to the new account</label></div>
+  <div class="fld full row-btns"><button class="btn">Register now (no OTP)</button></div>
+ </form></div>
+ <div class="panel"><h3>Registered by admin (latest ${mine.length})</h3>${mine.length?`<div class="tablewrap"><table class="tbl"><thead><tr><th>Name</th><th>Type</th><th>Mobile</th><th>City</th><th>Date</th></tr></thead><tbody>${mine.map(u=>`<tr><td>${esc(u.role==='employer'?(u.company?.name||u.name):u.name)}</td><td>${u.role==='employer'?'Employer':'Job seeker'}</td><td>${esc(u.mobile)}</td><td>${esc(u.role==='employer'?u.company?.city||'':u.profile?.city||'')}</td><td>${fmtDate(u.createdAt)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="hint">Nobody registered by the admin yet.</p>'}</div>`}
+async function auSubmit(e){e.preventDefault();if(!isAdminNow())return toast('Only the admin can register users here.');
+ const role=radio('au-role'),name=val('au-name').trim(),mobile=val('au-mob').trim(),email=val('au-email').trim().toLowerCase(),pw=val('au-pw').trim(),state=val('au-state'),city=val('au-city');
+ if(!name)return toast('Enter the full name.');if(!isMobile(mobile))return toast('Enter a valid 10-digit mobile number.');
+ if(email&&!isEmail(email))return toast('Check the email address.');if(role==='employer'&&!email)return toast('Employers need an email address.');
+ if(pw.length<6)return toast('Password needs at least 6 characters.');if(!state||!city)return toast('Choose the state and city.');
+ if(role==='employer'&&!val('au-co'))return toast('Enter the company name.');
+ if(db.users.some(u=>!isDemoUser(u)&&u.role===role&&(u.mobile===mobile||(email&&u.email===email))))return toast('An account with this mobile or email already exists.');
+ if(cloudOn()){try{const r=await gsPost({action:'exists',email,mobile});if(r.email||r.mobile)return toast(`This ${r.mobile?'mobile number':'email'} is already registered.`,7000)}catch(err){}}
+ const by={by:session&&session.id,at:now()},base={id:uid('u'),role,name,mobile,email,password:pw,createdAt:now(),status:'active',marketing:false,plan:null,byAdmin:by,verified:{mobile:true,email:!!email,by:'admin'}};
+ const u=role==='employer'?Object.assign(base,{designation:val('au-des'),company:{name:val('au-co'),type:val('au-type'),industry:val('au-ind'),employees:val('au-size'),state,city,address:'',pincode:'',geo:null,about:'',website:'',gst:'',docs:{},verified:false}})
+  :Object.assign(base,{profile:{workStatus:radio('au-ws')||'Fresher',education:val('au-edu'),skills:val('au-sk'),jobTypes:pickedJobTypes('au'),state,city,address:'',pincode:'',geo:null}});
+ db.users.push(u);if(checked('au-wel'))notify(u.id,'Welcome to JobSetu1',role==='employer'?'Your company account is ready. Post your first job now.':'Your account is ready. Complete your profile to get matching jobs.',role==='employer'?'#/post-job':'#/profile');
+ save();try{gsQueue()}catch(x){}_auLast={name,role,mobile,email,pw};toast('Registered ✓ No OTP was needed.');route();setTimeout(()=>window.scrollTo(0,0),50)}
+
+/* ==================================================================
+   Admin → Email OTP (which email sends the codes)
+   ================================================================== */
+let _mail=null;
+function pgMailAdmin(){const ok=gsOn(),linked=!!myTok();
+ return `<div class="panel"><h2>✉️ Email OTP sender</h2><p class="hint">Choose the email address that sends OTP / verification codes to users. Right now codes go from the Gmail that owns your Google Sheet. Needs Sheet code <b>Version 23</b>.</p>
+ ${!ok?'<div class="banner warn"><p>Connect the Google Sheet first (Site settings → Google Sheet connection).</p></div>':!linked?'<div class="banner warn"><p>Link this device to the Google Sheet first.</p><button class="btn sm" onclick="staffClaimStart()">Link this device</button></div>':''}
+ <div id="mail-body">${ok&&linked?'<p class="hint"><span class="spin"></span> Loading…</p>':''}</div></div>`}
+function mailBody(r){const c=r.cfg||{},al=r.aliases;
+ return `<div class="mail-now"><b>Codes are sent from:</b> ${c.from?esc(c.from):esc(r.owner||'the Sheet owner\'s Gmail')} ${c.name?'· name shown: <b>'+esc(c.name)+'</b>':''}<br><span class="hint">Emails left today (Gmail limit): ${esc(r.left??'—')}</span></div>
+ <div class="form">
+  <div class="fld"><label for="ml-from">Send OTP from this email</label><input id="ml-from" type="email" value="${esc(c.from||'')}" placeholder="e.g. otp@jobsetu1.com"></div>
+  <div class="fld"><label for="ml-name">Sender name</label><input id="ml-name" value="${esc(c.name||'JobSetu1')}" maxlength="60"></div>
+  <div class="fld"><label for="ml-reply">Reply-to email <span class="hint">(optional)</span></label><input id="ml-reply" type="email" value="${esc(c.replyTo||'')}" placeholder="support@jobsetu1.com"></div>
+  <div class="fld full"><span class="l">How to send</span><div class="radios"><label><input type="radio" name="ml-via" value="gmail" ${c.via!=='brevo'?'checked':''} onchange="$('#ml-brevo').hidden=true"> Gmail "Send mail as" (free)</label><label><input type="radio" name="ml-via" value="brevo" ${c.via==='brevo'?'checked':''} onchange="$('#ml-brevo').hidden=false"> Brevo email service (free 300/day, any domain email)</label></div></div>
+  <div class="fld full" id="ml-brevo" ${c.via==='brevo'?'':'hidden'}><label for="ml-key">Brevo API key ${c.hasKey?'<span class="chip good">saved</span>':''}</label><input id="ml-key" type="password" autocomplete="off" placeholder="${c.hasKey?'Saved — leave empty to keep it':'xkeysib-…'}"><small class="hint">The key is saved only inside your Google Apps Script, never in the website.</small>${c.hasKey?'<label class="check"><input type="checkbox" id="ml-clear"> Remove the saved key</label>':''}</div>
+  <div class="row-btns full"><button class="btn" onclick="mailSave()">💾 Save sender</button></div>
+  <div class="fld full"><label for="ml-to">Send a test email to</label><div class="inline"><input id="ml-to" type="email" placeholder="your@email.com"><button type="button" class="btn ghost" onclick="mailTest()">Send test</button></div><small id="ml-res" class="hint"></small></div>
+ </div>
+ <details class="ad-how" open><summary>How to set it up</summary>
+  <p><b>Way 1 — Gmail "Send mail as" (free):</b></p><ol><li>Open Gmail of <b>${esc(r.owner||'the Sheet owner')}</b> → ⚙ Settings → See all settings → <b>Accounts and Import</b> → <b>Send mail as</b> → <b>Add another email address</b>.</li><li>Type the new email (for example your other Gmail or otp@yourdomain), verify it with the code Gmail sends there.</li><li>Come back here, type the same email in <b>Send OTP from this email</b>, choose Gmail, Save, then Send test.</li></ol>
+  <p class="hint">Gmail addresses already added: ${al===null?'<i>not readable yet — in Apps Script run <b>mailSetup</b> once and press Allow</i>':al&&al.length?al.map(esc).join(', '):'<i>none yet</i>'}</p>
+  <p><b>Way 2 — Brevo (best for a domain email like otp@jobsetu1.com):</b></p><ol><li>Make a free account on brevo.com, add and verify your sender email.</li><li>Brevo → SMTP &amp; API → API keys → Generate a new key, copy it.</li><li>Here choose <b>Brevo</b>, paste the key, type the verified sender email, Save, then Send test.</li></ol>
+  <p class="hint">If the chosen way doesn't work, codes still go from the Sheet owner's Gmail (with your sender name), so users always get their OTP.</p></details>`}
+async function mailLoad(){const b=$('#mail-body');if(!b||!gsOn()||!myTok()||b.dataset.ld)return;b.dataset.ld=1;
+ try{const r=await gsPost({action:'mailGet',token:myTok()});_mail=r;b.innerHTML=mailBody(r)}catch(e){const m=cloudErr(e);b.innerHTML=/unknown action/.test(m)?'<div class="banner warn"><p>Update the Google Sheet code to <b>Version 23</b> (it is in the download). Then come back here.</p></div>':`<div class="banner warn"><p>Could not load: ${esc(m)}</p></div>`}}
+async function mailSave(){if(!isAdminNow())return;const via=radio('ml-via'),from=val('ml-from').trim().toLowerCase();
+ if(from&&!isEmail(from))return toast('Check the sender email.');if(val('ml-reply')&&!isEmail(val('ml-reply').trim()))return toast('Check the reply-to email.');
+ if(via==='brevo'&&!val('ml-key')&&!(_mail&&_mail.cfg&&_mail.cfg.hasKey))return toast('Paste the Brevo API key.');if(via==='brevo'&&!from)return toast('Type the sender email you verified in Brevo.');
+ try{const r=await gsPost({action:'mailSave',token:myTok(),cfg:{from,name:val('ml-name'),replyTo:val('ml-reply').trim(),via,key:val('ml-key'),clearKey:checked('ml-clear')}});_mail=Object.assign({},_mail,{cfg:r.cfg});$('#mail-body').innerHTML=mailBody(_mail);toast('Email sender saved ✓ Press "Send test" to check it.')}catch(e){toast('Could not save: '+cloudErr(e),7000)}}
+async function mailTest(){const to=val('ml-to').trim(),o=$('#ml-res');if(!isEmail(to))return toast('Type an email to send the test to.');if(o)o.innerHTML='<span class="spin"></span> Sending…';
+ try{const r=await gsPost({action:'mailTest',token:myTok(),to});if(o)o.innerHTML=`✓ Sent from <b>${esc(r.from||'')}</b> (${r.via==='brevo'?'Brevo':r.via==='gmail_alias'?'Gmail Send mail as':'Sheet owner Gmail'}). Check the inbox and spam folder.${r.note?'<br><span class="err-t">Note: '+esc(r.note)+'</span>':''}`}catch(e){if(o)o.innerHTML='<span class="err-t">Not sent: '+esc(cloudErr(e))+'</span>'}}
+
+/* ==================================================================
+   Admin → App download (Play Store link + optional official badge)
+   ================================================================== */
+function playCfg(){const p=(db.settings||{}).play||{};return {on:!!p.on&&/^https:\/\/play\.google\.com\//.test(p.url||''),url:p.url||'',badge:p.badge||''}}
+function appDlHref(){const p=playCfg();return p.on?p.url:'JobSetu1.apk?v='+APK_LATEST}
+const PLAY_IC='<svg class="gp-ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.87l14-8.5a1 1 0 0 0 0-1.74l-14-8.5A1 1 0 0 0 5 3.5z" fill="currentColor"/></svg>';
+function pgAppDlAdmin(){const p=(db.settings||{}).play||{};
+ return `<div class="panel"><h2>📲 App download button</h2><p class="hint">While the app is not on Google Play, every "Download app" button gives the APK file. When the app is live on Google Play, paste its link here and switch it on — all download buttons on the website then open Google Play (with the Play Store mark) and app updates also come from Google Play.</p>
+ <div class="form"><div class="fld full"><label for="pl-url">Google Play link of the app</label><input id="pl-url" value="${esc(p.url||'https://play.google.com/store/apps/details?id=com.jobsetu1.app')}"><small class="hint">On Google Play open your app → Share → Copy link.</small></div>
+ <div class="fld full"><label class="check"><input type="checkbox" id="pl-on" ${p.on?'checked':''}> The app is live on Google Play — use this link for every download button</label></div>
+ <div class="fld full"><label for="pl-badge">Official "Get it on Google Play" badge <span class="hint">(optional, PNG)</span></label><input id="pl-badge" type="file" accept="image/png,image/webp,image/jpeg"><small class="hint">Download the official badge from Google's badge page (search "Google Play badge generator") and upload it here. Without it, a simple ▶ Google Play button is shown.</small>${p.badge?`<div style="margin-top:8px"><img src="${esc(p.badge)}" alt="Get it on Google Play" style="height:48px"> <button type="button" class="btn ghost sm" onclick="db.settings.play.badge='';playSave(true)">Remove badge</button></div>`:''}</div>
+ <div class="row-btns full"><button class="btn" onclick="playSave()">💾 Save</button></div></div>
+ <div class="hint" style="margin-top:12px">Now: buttons ${playCfg().on?'open <b>Google Play</b> ✓':'download the <b>APK file</b>'}. Preview: ${dlBtnHtml('btn sm')}</div></div>`}
+async function playSave(keep){if(!isAdminNow())return;db.settings=db.settings||{};const old=db.settings.play||{};let badge=old.badge||'';
+ if(!keep){const url=val('pl-url').trim(),on=checked('pl-on');if(on&&!/^https:\/\/play\.google\.com\/store\/apps\/details\?id=[\w.]+/.test(url))return toast('Paste the full Google Play link (https://play.google.com/store/apps/details?id=…).');
+  const f=$('#pl-badge')?.files?.[0];if(f){try{badge=await shrinkPicture(await fileData(f),360,true);if(dataSize(badge)>40000)return toast('Badge picture is too big. Use the PNG from Google\'s badge page.')}catch(e){return toast('Badge picture could not be read.')}}
+  db.settings.play={url,on,badge}}else db.settings.play=Object.assign({},old);
+ await publishNow('App download');toast(db.settings.play.on?'Saved ✓ Download buttons now open Google Play.':'Saved ✓ Download buttons give the APK file.');route()}
+function dlBtnHtml(cls){const p=playCfg();if(p.on&&p.badge)return `<a class="gp-badge" href="${esc(p.url)}" target="_blank" rel="noopener"><img src="${esc(p.badge)}" alt="Get it on Google Play"></a>`;
+ return p.on?`<a class="${cls||'btn'} gp-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${PLAY_IC} Get it on Google Play</a>`:`<a class="${cls||'btn'}" href="JobSetu1.apk?v=${APK_LATEST}" download="JobSetu1.apk">📱 Download the app</a>`}
+/* turn every APK link on the page into a Google Play link once the app is live there */
+function dlFix(){const p=playCfg();if(!p.on)return;document.querySelectorAll('a[href^="JobSetu1.apk"]').forEach(a=>{a.href=p.url;a.removeAttribute('download');a.target='_blank';a.rel='noopener';a.classList.add('gp-link');
+ if(!a.querySelector('.gp-ic')){a.innerHTML=a.innerHTML.replace(/📱\s*/,'');a.insertAdjacentHTML('afterbegin',PLAY_IC+' ')}})}
+{const _au97=typeof appUpdate==='function'?appUpdate:null;if(_au97)appUpdate=function(){const p=playCfg();if(p.on){try{if(window.AndroidApp&&AndroidApp.openExternal){AndroidApp.openExternal(p.url);return}}catch(e){}location.href=p.url;return}return _au97.apply(this,arguments)}}
+{const _aut97=typeof appUpdateTo==='function'?appUpdateTo:null;if(_aut97)appUpdateTo=function(){const p=playCfg();if(p.on){try{if(window.AndroidApp&&AndroidApp.openExternal){AndroidApp.openExternal(p.url);return}}catch(e){}location.href=p.url;return}return _aut97.apply(this,arguments)}}
+
+/* ---------- mobile website: "Download the app?" pop-up first ---------- */
+function appAsk(n){if(APP||!/Android/i.test(navigator.userAgent||'')||/bot|crawl|spider|lighthouse/i.test(navigator.userAgent||''))return;
+ if(/^#\/(gauth|gdone|admin|manager|office)/.test(location.hash||''))return;let seen=false;try{seen=sessionStorage.getItem('js1_appask')==='1'}catch(e){}if(seen)return;
+ if($('#modal')&&!$('#modal').hidden){if((n||0)<40)setTimeout(()=>appAsk((n||0)+1),1500);return}
+ try{sessionStorage.setItem('js1_appask','1')}catch(e){}
+ const p=playCfg();openModal(`<div class="appask"><div class="appask-ic">${typeof LOGO==='string'?LOGO:'📱'}</div><h2>Get the JobSetu1 app</h2><p>Faster, works on slow internet, and job alerts come with sound — even when the app is closed.</p>
+  <div class="row-btns appask-b"><button type="button" class="btn ghost" onclick="closeModal()">Cancel</button><a class="btn ${p.on?'gp-btn':''}" href="${esc(appDlHref())}" ${p.on?'target="_blank" rel="noopener"':'download="JobSetu1.apk"'} onclick="setTimeout(closeModal,300)">${p.on?PLAY_IC+' OK, open Google Play':'OK, download app'}</a></div>
+  <p class="hint">Press Cancel to continue on the website.</p></div>`)}
+
+/* ==================================================================
+   Uploads: show actual and compressed size right away, keep files small
+   ================================================================== */
+shrinkNote=function(f,a,b){try{const inp=[...document.querySelectorAll('input[type=file]')].find(i=>i.files&&[...i.files].includes(f));if(!inp)return;let s=inp.parentElement.querySelector('.shrink-n');if(!s){s=document.createElement('small');s.className='shrink-n';inp.after(s)}s.innerHTML='✓ '+sizeLine(a,b)}catch(e){}};
+{const _cu97=compressUpload;compressUpload=function(f,opt){const k=JSON.stringify(opt||{});try{f._cu=f._cu||{};if(!f._cu[k])f._cu[k]=_cu97.call(this,f,opt);return f._cu[k]}catch(e){return _cu97.call(this,f,opt)}}}
+document.addEventListener('change',e=>{const i=e.target;if(!i||i.type!=='file'||!i.files||!i.files[0])return;if(/^(co-qr|ad-file|pl-badge)$/.test(i.id)||i.multiple)return;
+ const f=i.files[0];if(f.size>15*1024*1024)return;let s=i.parentElement.querySelector('.shrink-n');if(!s){s=document.createElement('small');s.className='shrink-n';i.after(s)}s.innerHTML='<span class="spin"></span> Actual size: <b>'+kb(f.size)+'</b> — making it smaller…';
+ const photo=/photo|avatar|ph-/i.test(i.id)&&/^image\//.test(f.type),logo=/logo/i.test(i.id);
+ setTimeout(()=>{(photo?readPhoto(f):compressUpload(f,logo?{max:400,alpha:true,logo:true}:{max:1280})).catch(()=>{s.innerHTML='Actual size: <b>'+kb(f.size)+'</b>'})},30)},false);
+
+/* ---------- invoice: small PDF, size shown ---------- */
+let _invLogo97=null;
+invLogo=async function(){if(_invLogo97)return _invLogo97;try{const r=await fetch(INV_LOGO);const b=await r.blob();const src=await blobData(b);const im=await imgFrom(src);const w=420,h=Math.round(w*19/56),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);const s=Math.min(w/im.width,h/im.height),dw=im.width*s,dh=im.height*s;x.drawImage(im,(w-dw)/2,(h-dh)/2,dw,dh);_invLogo97=c.toDataURL('image/jpeg',.8)}catch(e){_invLogo97=null}return _invLogo97};
+function invSz(){try{return JSON.parse(localStorage.getItem('js1_invsz')||'{}')}catch(e){return {}}}
+function invSzSet(id,n){try{const m=invSz();m[id]=n;localStorage.setItem('js1_invsz',JSON.stringify(m))}catch(e){}invSzPaint()}
+function invSzPaint(){const m=invSz();document.querySelectorAll('[onclick*="downloadInvoice("]').forEach(b=>{const id=(/downloadInvoice\('([^']+)'/.exec(b.getAttribute('onclick')||'')||[])[1];if(!id)return;let t=b.nextElementSibling;if(!t||!t.classList.contains('inv-sz')){t=document.createElement('small');t.className='inv-sz';b.after(t)}t.textContent=m[id]?'PDF · '+kb(m[id]):'PDF · about 20 KB'})}
+
+/* ==================================================================
+   OTP: fill by itself in the app (copied code / SMS "Copy code"),
+   paste button on the website
+   ================================================================== */
+const OTP_SEL='input[id$="-code"]:not(#of-code)';
+let _clipTs=Date.now()-120000,_otpT=null;
+function otpBox(){return [...document.querySelectorAll(OTP_SEL)].find(i=>i.offsetParent!==null&&!i.value)}
+function otpFill(inp,code){inp.value=code;inp.dispatchEvent(new Event('input',{bubbles:true}));inp.classList.add('otp-auto');toast('OTP filled automatically ✓');
+ const b=inp.parentElement&&[...inp.parentElement.querySelectorAll('button')].find(x=>/verifyOtp|Verify/.test((x.getAttribute('onclick')||'')+x.textContent));if(b&&/verifyOtp\(/.test(b.getAttribute('onclick')||''))setTimeout(()=>b.click(),350)}
+function clipTry(){try{if(!APP||!window.AndroidApp||!AndroidApp.clipCode)return;const inp=otpBox();if(!inp)return;const r=String(AndroidApp.clipCode(String(_clipTs))||'');if(!r)return;const [code,ts]=r.split('|');if(+ts)_clipTs=+ts;if(/^\d{4,8}$/.test(code||''))otpFill(inp,code)}catch(e){}}
+function otpEnh(){document.querySelectorAll(OTP_SEL).forEach(i=>{if(i.dataset.otpx)return;i.dataset.otpx=1;i.setAttribute('autocomplete','one-time-code');i.setAttribute('inputmode','numeric');
+ i.addEventListener('focus',clipTry);
+ if(!APP&&navigator.clipboard&&navigator.clipboard.readText){const b=document.createElement('button');b.type='button';b.className='btn ghost sm otp-paste';b.textContent='📋 Paste';b.title='Paste the OTP you copied';b.onclick=async()=>{try{const t=await navigator.clipboard.readText();const m=/\b(\d{6})\b/.exec(t||'');if(m)otpFill(i,m[1]);else toast('No 6-digit OTP found in what you copied.')}catch(e){toast('Allow paste, or type the OTP.')}};i.after(b)}});
+ if(APP&&!_otpT){_otpT=setInterval(()=>{if(document.hidden)return;if(!document.querySelector(OTP_SEL)){clearInterval(_otpT);_otpT=null;return}clipTry()},1500)}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(clipTry,400)});
+/* OTP boxes are often shown after "Send OTP" without a page change */
+{const _so97=typeof sendOtp==='function'?sendOtp:null;if(_so97)sendOtp=async function(){_clipTs=Math.max(_clipTs,Date.now()-5000);const r=await _so97.apply(this,arguments);try{otpEnh()}catch(e){}return r}}
+new MutationObserver(()=>{if(document.querySelector(OTP_SEL+':not([data-otpx])'))otpEnh();if(playCfg().on&&document.querySelector('a[href^="JobSetu1.apk"]'))dlFix()}).observe(document.body,{childList:true,subtree:true});
+
+/* ---------- after every page draw ---------- */
+{const _r97=route;route=function(){const r=_r97.apply(this,arguments);try{adPaint()}catch(e){}try{dlFix()}catch(e){}try{otpEnh()}catch(e){}try{invSzPaint()}catch(e){}try{if($('#mail-body'))mailLoad()}catch(e){}try{if($('#ad-prev'))adPrev()}catch(e){}return r}}
+{const _sc97=staffCan;staffCan=function(k){if(['ads','adduser','emailotp','appdl'].includes(k))return isAdminNow();return _sc97.apply(this,arguments)}}
+setTimeout(()=>{try{appAsk()}catch(e){}},900);
+{const _isb97=isSaveBtn;isSaveBtn=function(b){if(b&&b.classList&&(b.classList.contains('jd-save')||b.classList.contains('nj-save')))return false;return _isb97.apply(this,arguments)}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
