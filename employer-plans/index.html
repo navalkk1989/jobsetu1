@@ -1862,6 +1862,46 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .adz-strip .adz-track.go{animation:none}
 .adz-strip .adz-track.cross{animation:adzCross linear 1 forwards}
 @keyframes adzCross{from{transform:translateX(var(--from,100vw))}to{transform:translateX(var(--to,-100%))}}
+/* ===== V102: ad card ===== */
+#ad-form .fld:has(#ad-sz),#ad-form .fld:has(#ad-w),#ad-hbox,.ad-speed:has(#ad-mode){display:none!important}
+.adz.adc{width:auto!important;max-width:980px;margin:18px auto!important;display:grid;gap:10px;padding:18px;border-radius:20px!important;border:1px solid #e6e9f2!important;
+ background:linear-gradient(160deg,#ffffff 0%,#f6f8ff 55%,#fff7ef 100%)!important;box-shadow:0 10px 30px rgba(20,40,110,.10);text-align:center;overflow:hidden;position:relative}
+.adc-txt{display:grid;gap:4px;justify-items:center}
+.adc-sp{font-size:.68rem;color:#8a93a6;letter-spacing:.02em}
+.adc-sp b{font-weight:600;color:#6b7385}
+.adc-h{margin:0;font-size:1.25rem;line-height:1.25;font-weight:800;background:linear-gradient(90deg,#2457d6,#7c3aed 55%,#f05a28);-webkit-background-clip:text;background-clip:text;color:transparent}
+.adc-p{margin:0;color:#4b5466;font-size:.92rem;line-height:1.4}
+.adc-deck{position:relative;height:280px;margin:4px auto;width:100%;max-width:330px;perspective:900px}
+.adc-c{position:absolute;top:0;left:50%;width:64%;height:100%;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px rgba(15,23,42,.22);transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s,filter .7s;background:#e9edf5;display:block}
+.adc-bg{position:absolute;inset:-12px;background-size:cover;background-position:center;filter:blur(14px) saturate(1.2);transform:scale(1.1)}
+.adc-c img{position:relative;display:block;width:100%;height:100%;object-fit:contain}
+.adc-c.p0{transform:translateX(-50%) scale(1);z-index:3;opacity:1}
+.adc-c.p1{transform:translateX(-12%) scale(.84) rotate(5deg);z-index:2;opacity:.85;filter:brightness(.92)}
+.adc-c.pl{transform:translateX(-88%) scale(.84) rotate(-5deg);z-index:2;opacity:.85;filter:brightness(.92)}
+.adc-c.ph{transform:translateX(-50%) scale(.7);z-index:1;opacity:0}
+.adc-deck.one .adc-c.p0{animation:adcFloat 6s ease-in-out infinite}
+@keyframes adcFloat{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-6px) scale(1.03)}}
+.adc-btn{justify-self:center;display:inline-flex;align-items:center;gap:6px;background:#2457d6;color:#fff!important;font-weight:700;border-radius:999px;padding:10px 26px;text-decoration:none;box-shadow:0 6px 16px rgba(36,87,214,.35);transition:transform .2s}
+.adc-btn:hover{transform:translateY(-1px)}
+.adc-dots{display:flex;justify-content:center;gap:6px}
+.adc-dots button{width:7px;height:7px;border:0;padding:0;border-radius:50%;background:#cfd6e4;cursor:pointer}
+.adc-dots button.on{width:18px;border-radius:6px;background:#2457d6}
+/* side column: tall card */
+.adc-tall{max-width:100%!important}
+.adc-tall .adc-deck{height:300px}
+/* bottom / lists: wide card — text + button left, pictures right */
+@media(min-width:701px){
+ .adc-wide{grid-template-columns:1fr 1.15fr;grid-template-areas:"txt deck" "btn deck" "dots deck";align-items:center;text-align:left;padding:22px 28px}
+ .adc-wide .adc-txt{grid-area:txt;justify-items:start;align-self:end}
+ .adc-wide .adc-h{font-size:1.5rem}
+ .adc-wide .adc-deck{grid-area:deck;height:230px;max-width:460px}
+ .adc-wide .adc-c{width:58%}
+ .adc-wide .adc-btn{grid-area:btn;justify-self:start;align-self:start}
+ .adc-wide .adc-dots{grid-area:dots;justify-content:flex-start;align-self:start}
+}
+@media(max-width:700px){.adz.adc{padding:14px;margin:14px 0!important}.adc-deck{height:240px}.adc-h{font-size:1.12rem}}
+.grid>.adz.adc,.cgrid>.adz.adc{grid-column:1/-1;max-width:none}
+.ad-prev .adz.adc{margin:0!important}
 </style>
 </head>
 <body>
@@ -4643,7 +4683,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='101';
+const WEB_BUILD='102';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7496,6 +7536,41 @@ function adStrip(box){if(!box||!box.classList.contains('adz-strip'))return;const
  if(!tr._end){tr._end=1;tr.addEventListener('animationend',()=>{let all=[];try{all=JSON.parse(decodeURIComponent(tr.dataset.all||'[]'))}catch(e){}
   if(all.length>1){const i=((+tr.dataset.i||0)+1)%all.length;tr.dataset.i=i;tr.innerHTML=all[i];const b=box.querySelector('.adz-l b'),a=tr.querySelector('a');if(b&&a)b.textContent=a.dataset.co||'';}
   else{tr.classList.remove('cross');void tr.offsetWidth;tr.classList.add('cross')}})}}
+
+/* ==================================================================
+   V102: ads as a proper "ad card" (like Naukri MINIs):
+   heading + text typed by the admin, a stack of pictures that turns by
+   itself, and a button. Shape is automatic: tall in the side column,
+   wide (text left, pictures right) at the bottom / inside lists,
+   stacked on mobile. No white around pictures (blurred fill behind).
+   ================================================================== */
+const adTxt=a=>({hd:String(a.hd||'').trim()||String(a.co||'').trim(),tx:String(a.tx||'').trim()||String(a.title||'').trim(),bt:String(a.bt||'').trim()||'Visit website'});
+function adCard(a,i,L){const n=(L||[]).length||1,cl=i===0?'p0':i===1?'p1':i===n-1?'pl':'ph';return `<a class="adc-c ${cl}" data-k="${i}" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" onclick="return adOpen(event,'${esc(a.id)}')" aria-label="${esc(a.co||'Advertisement')}"><span class="adc-bg" style="background-image:url('${esc(a.img)}')"></span><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" loading="lazy"></a>`}
+adSlot=function(L,kind){if(!L.length)return '';const t=adTxt(L[0]),wide=kind!=='side';
+ return `<div class="adz adc adc-${wide?'wide':'tall'}" data-ad="${esc(L[0].id)}" data-ads="${encodeURIComponent(JSON.stringify(L.map(a=>Object.assign(adTxt(a),{id:a.id,link:a.link,co:a.co||''}))))}">
+  <div class="adc-txt"><span class="adc-sp">Sponsored · <b>${esc(L[0].co||'')}</b></span><h4 class="adc-h">${esc(t.hd)}</h4>${t.tx?`<p class="adc-p">${esc(t.tx)}</p>`:'<p class="adc-p" hidden></p>'}</div>
+  <div class="adc-deck${L.length>1?'':' one'}">${L.map(adCard).join('')}</div>
+  <a class="adc-btn" href="${esc(L[0].link)}" target="_blank" rel="noopener sponsored nofollow" onclick="return adOpen(event,this.closest('.adc').dataset.ad)">▶ ${esc(t.bt)}</a>
+  ${L.length>1?`<div class="adc-dots">${L.map((_,i)=>`<button type="button" class="${i?'':'on'}" aria-label="Ad ${i+1}" onclick="adGo(this.closest('.adc'),${i})"></button>`).join('')}</div>`:''}</div>`};
+adHtml=function(a,kind){return adSlot([a],kind)};
+function adPos(box){const c=[...box.querySelectorAll('.adc-c')],n=c.length,i=box._i||0;c.forEach((x,k)=>{const d=(k-i+n)%n;x.className='adc-c '+(d===0?'p0':d===1?'p1':d===n-1?'pl':'ph')})}
+adGo=function(box,i){if(!box||!box.classList.contains('adc'))return;const c=box.querySelectorAll('.adc-c'),n=c.length;if(n<2)return;i=((i%n)+n)%n;box._i=i;adPos(box);
+ let L=[];try{L=JSON.parse(decodeURIComponent(box.dataset.ads||'[]'))}catch(e){}const a=L[i];if(a){box.dataset.ad=a.id;const s=box.querySelector('.adc-sp b'),h=box.querySelector('.adc-h'),p=box.querySelector('.adc-p'),b=box.querySelector('.adc-btn');
+  if(s)s.textContent=a.co;if(h)h.textContent=a.hd;if(p){p.textContent=a.tx;p.hidden=!a.tx}if(b){b.href=a.link;b.textContent='▶ '+a.bt}}
+ box.querySelectorAll('.adc-dots button').forEach((x,k)=>x.classList.toggle('on',k===i))};
+adFit=function(box){if(box&&box.classList.contains('adc')&&!box._pos){box._pos=1;adPos(box)}};
+adTick=function(){document.querySelectorAll('.adc').forEach(b=>{if(b.querySelectorAll('.adc-c').length>1)adGo(b,(b._i||0)+1)})};
+adStrip=function(){};
+/* admin: heading / text / button for each ad; size is automatic now */
+{const _fv102=adFormVals;adFormVals=function(){return Object.assign(_fv102.apply(this,arguments),{hd:val('ad-hd'),tx:val('ad-tx'),bt:val('ad-bt')})}}
+{const _pa102=pgAdsAdmin;pgAdsAdmin=function(){const e=_adEdit||{};let h=_pa102.apply(this,arguments);
+ h=h.replace('<div class="fld full"><label for="ad-link">',`<div class="fld full"><label for="ad-hd">Heading <span class="hint">(shows above the picture, big)</span></label><input id="ad-hd" maxlength="60" value="${esc(e.hd||'')}" placeholder="e.g. Learn Tally in 30 days" oninput="adPrev()"></div>
+  <div class="fld full"><label for="ad-tx">Text <span class="hint">(shows under the heading, small)</span></label><input id="ad-tx" maxlength="110" value="${esc(e.tx||'')}" placeholder="e.g. Admissions open · Job support after the course" oninput="adPrev()"></div>
+  <div class="fld"><label for="ad-bt">Button text</label><input id="ad-bt" maxlength="24" value="${esc(e.bt||'')}" placeholder="Visit website" oninput="adPrev()"></div>
+  <div class="fld full"><label for="ad-link">`);
+ return h.replace('<div class="ad-speed">','<p class="hint ad-auto">📐 The ad size is automatic: a tall card in the side column, a wide card at the bottom of pages and inside lists, and a stacked card on mobile. Pictures always show fully (no white space).</p><div class="ad-speed">')}}
+
+{const _pa102b=pgAdsAdmin;pgAdsAdmin=function(){return _pa102b.apply(this,arguments).replace('(best size 1200 × 300 px; JPG, PNG or WebP)','(any shape works — square, tall or wide; JPG, PNG or WebP)')}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
