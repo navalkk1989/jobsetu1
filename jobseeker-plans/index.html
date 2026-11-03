@@ -1816,6 +1816,23 @@ html.app .hdr-rf:not(.need){color:#fff;background:rgba(255,255,255,.14)!importan
 .otp-paste{margin-left:6px}
 input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .grid>.adz,.cgrid>.adz{grid-column:1/-1;margin:4px 0}
+/* ===== V98: ad size + slider ===== */
+.adz{width:var(--adw,100%);max-width:100%;margin:14px auto;background:var(--panel,#fff)}
+.adz img{max-height:none}
+.adz-tr{position:relative;display:grid;align-items:center;justify-items:center;background:#f4f6fa}
+.adz-i{grid-area:1/1;display:flex!important;justify-content:center;align-items:center;width:100%;height:100%;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility .6s}
+.adz-i.on{opacity:1;visibility:visible}
+.adz .adz-i img{width:auto!important;max-width:100%;object-fit:contain;display:block}
+.adz-side .adz-i img{width:100%!important;height:auto!important}
+.adz-dots{position:absolute;right:8px;bottom:6px;display:flex;gap:5px;z-index:2}
+.adz-dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.65);box-shadow:0 0 0 1px rgba(0,0,0,.25);cursor:pointer}
+.adz-dots button.on{background:#2457d6;width:18px;border-radius:6px}
+.ad-speed{margin:10px 0 4px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.ad-speed select{width:auto}
+@media(max-width:700px){.adz{width:100%}.adz-tr{height:auto!important}.adz .adz-i img{height:auto!important;max-height:var(--adh,110px);max-width:100%}}
+.adz-tr{transition:height .5s ease}
+.ad-img-p img{max-height:140px;width:auto}
+@media(min-width:701px){.adz:not(.adz-side) .adz-tr{display:block;overflow:hidden}.adz:not(.adz-side) .adz-i{position:absolute;inset:0}}
 </style>
 </head>
 <body>
@@ -4597,7 +4614,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='97';
+const WEB_BUILD='98';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7338,6 +7355,47 @@ new MutationObserver(()=>{if(document.querySelector(OTP_SEL+':not([data-otpx])')
 {const _sc97=staffCan;staffCan=function(k){if(['ads','adduser','emailotp','appdl'].includes(k))return isAdminNow();return _sc97.apply(this,arguments)}}
 setTimeout(()=>{try{appAsk()}catch(e){}},900);
 {const _isb97=isSaveBtn;isSaveBtn=function(b){if(b&&b.classList&&(b.classList.contains('jd-save')||b.classList.contains('nj-save')))return false;return _isb97.apply(this,arguments)}}
+
+/* ==================================================================
+   V98: ad size chosen by the admin (height + width), ads slide by themselves
+   ================================================================== */
+const AD_SZ=[['sm','Small',70],['md','Medium',110],['lg','Large',170],['custom','Custom size',0]];
+const AD_W=[[100,'Full width'],[75,'3/4 width'],[50,'Half width'],[35,'Small box']];
+const adHt=a=>Math.max(40,Math.min(320,+a.h||110));
+const adWd=a=>[100,75,50,35].includes(+a.w)?+a.w:100;
+function adCfg(){const c=(db.settings||{}).adCfg||{};return {sec:[0,3,5,7,10,15].includes(+c.sec)?+c.sec:5}}
+function adItem(a,on){return `<a class="adz-i${on?' on':''}" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" data-co="${esc(a.co||'')}" onclick="return adOpen(event,'${esc(a.id)}')" style="--adh:${adHt(a)}px"><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" loading="lazy" style="height:${adHt(a)}px"></a>`}
+function adSlot(L,kind){if(!L.length)return '';const h=Math.max(...L.map(adHt)),w=Math.max(...L.map(adWd));
+ return `<div class="adz adz-${kind}" data-ad="${esc(L[0].id)}" style="--adw:${kind==='side'?100:w}%"><span class="adz-l">Sponsored · <b>${esc(L[0].co||'')}</b></span><div class="adz-tr" style="height:${kind==='side'?'auto':adHt(L[0])+'px'}">${L.map((a,i)=>adItem(a,!i)).join('')}</div>${L.length>1?`<div class="adz-dots">${L.map((_,i)=>`<button type="button" class="${i?'':'on'}" aria-label="Ad ${i+1}" onclick="adGo(this.closest('.adz'),${i})"></button>`).join('')}</div>`:''}</div>`}
+function adHtml(a,kind){return adSlot([a],kind)}
+function adGo(box,i){if(!box)return;const it=box.querySelectorAll('.adz-i'),d=box.querySelectorAll('.adz-dots button');if(!it.length)return;i=(i+it.length)%it.length;
+ it.forEach((x,k)=>x.classList.toggle('on',k===i));d.forEach((x,k)=>x.classList.toggle('on',k===i));const tr=box.querySelector('.adz-tr');if(tr&&!box.classList.contains('adz-side')&&window.innerWidth>700)tr.style.height=adHt({h:parseInt(it[i].style.getPropertyValue('--adh'))})+'px';const l=box.querySelector('.adz-l b');if(l)l.textContent=it[i].dataset.co||'';box._i=i}
+let _adTimer=null;
+function adTick(){document.querySelectorAll('.adz').forEach(b=>{if(b.matches(':hover')||b.querySelectorAll('.adz-i').length<2)return;adGo(b,(b._i||0)+1)})}
+function adPaint(){const app=$('#app');if(!app)return;app.querySelectorAll('.adz,.adz-wrap').forEach(x=>x.remove());
+ if(/^#\/(admin|manager|office|gauth|gdone)/.test(location.hash||''))return;
+ const B=adsFor('bottom');if(B.length)app.insertAdjacentHTML('beforeend',`<div class="wrap adz-wrap">${adSlot(B,'bottom')}</div>`);
+ let cards=[...app.querySelectorAll('.nj')];if(cards.length<6){const g=[...app.querySelectorAll('.grid,.cgrid')].sort((x,y)=>y.children.length-x.children.length)[0];if(g)cards=[...g.children]}
+ if(cards.length>=6){const L=adsFor('list');if(L.length)cards[4].insertAdjacentHTML('afterend',adSlot(L,'list'))}
+ const side=app.querySelector('.jd-side')||app.querySelector('.nk3 > aside:last-of-type');if(side&&window.innerWidth>900){const L=adsFor('side');if(L.length)side.insertAdjacentHTML('beforeend',adSlot(L,'side'))}
+ clearInterval(_adTimer);_adTimer=null;const s=adCfg().sec;if(s&&app.querySelector('.adz .adz-i+.adz-i'))_adTimer=setInterval(adTick,s*1000)}
+function adFormVals(){const sz=val('ad-sz')||'md';return {co:val('ad-co'),title:val('ad-title'),link:val('ad-link'),img:(_adEdit&&_adEdit.img)||'',from:val('ad-from')?new Date(val('ad-from')).getTime():now(),to:val('ad-to')?new Date(val('ad-to')).getTime():0,spots:jpPicked('ad-spot'),pages:radio('ad-pw')==='some'?jpPicked('ad-page'):[],paused:false,
+ sz,h:sz==='custom'?(+val('ad-h')||110):(AD_SZ.find(x=>x[0]===sz)||[,,110])[2],w:+val('ad-w')||100}}
+function adSzChange(){const sz=val('ad-sz'),r=$('#ad-hbox');if(r)r.hidden=sz!=='custom';const o=$('#ad-hv');if(o)o.textContent=val('ad-h')+' px';adPrev()}
+function adSizeBlock(e){const sz=e.sz||(e.h?(AD_SZ.find(x=>x[2]===+e.h)||['custom'])[0]:'md'),h=adHt(e);
+ return `<div class="fld"><label for="ad-sz">Ad size on the website</label><select id="ad-sz" onchange="adSzChange()">${AD_SZ.map(([k,l,px])=>`<option value="${k}" ${k===sz?'selected':''}>${l}${px?' — '+px+' px tall':''}</option>`).join('')}</select></div>
+ <div class="fld"><label for="ad-w">Ad width</label><select id="ad-w" onchange="adPrev()">${AD_W.map(([v,l])=>`<option value="${v}" ${v===adWd(e)?'selected':''}>${l}</option>`).join('')}</select></div>
+ <div class="fld full" id="ad-hbox" ${sz==='custom'?'':'hidden'}><label for="ad-h">Custom height <b id="ad-hv">${h} px</b></label><input id="ad-h" type="range" min="40" max="320" step="5" value="${h}" oninput="adSzChange()"><small class="hint">The whole picture always shows; width follows the picture's shape.</small></div>`}
+async function adSpeed(v){if(!isAdminNow())return;db.settings=db.settings||{};db.settings.adCfg={sec:+v};await publishNow('Ad slide speed');toast(+v?`Ads now slide every ${v} seconds ✓`:'Ad sliding switched off.')}
+{const _pa98=pgAdsAdmin;pgAdsAdmin=function(){let h=_pa98.apply(this,arguments);const s=adCfg().sec;
+ h=h.replace('<div class="fld"><label for="ad-from">',adSizeBlock(_adEdit||{})+'<div class="fld"><label for="ad-from">');
+ h=h.replace('<details class="ad-how">',`<div class="ad-speed"><label for="ad-sec"><b>🔁 Slide ads automatically:</b></label> <select id="ad-sec" onchange="adSpeed(this.value)">${[[3,'every 3 seconds'],[5,'every 5 seconds'],[7,'every 7 seconds'],[10,'every 10 seconds'],[15,'every 15 seconds'],[0,'Off (show one ad)']].map(([v,l])=>`<option value="${v}" ${v===s?'selected':''}>${l}</option>`).join('')}</select> <span class="hint">When a place has more than one ad, they change by themselves. Stops while the mouse is on the ad.</span></div><details class="ad-how">`);
+ return h.replace(/(<span class="hint">[^<]*?)( · (?:every page|[^<]*?))(<\/span><\/div>\s*<div class="ad-acts">)/g,'$1$2$3')}}
+{const _an98=adNew;adNew=function(){_an98.apply(this,arguments);if(_adEdit){_adEdit.sz='md';_adEdit.h=110;_adEdit.w=100;route()}}}
+{const _cp98=cfgPick;cfgPick=function(){return Object.assign(_cp98.apply(this,arguments),{adCfg:(db.settings||{}).adCfg||null})}}
+{const _gc98=gsCollections;gsCollections=function(){const C=_gc98.apply(this,arguments);try{if(C.settings&&C.settings[0])C.settings[0]=Object.assign({},C.settings[0],{adCfg:(db.settings||{}).adCfg||null})}catch(e){}return C}}
+{const _ca98=cfgApply;cfgApply=function(x){const r=_ca98.apply(this,arguments);if(r&&x&&'adCfg' in x){try{db.settings.adCfg=typeof x.adCfg==='string'?JSON.parse(x.adCfg||'null'):x.adCfg}catch(e){}save()}return r}}
+document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInterval(_adTimer);_adTimer=null}else{const s=adCfg().sec;if(s&&!_adTimer&&document.querySelector('.adz .adz-i+.adz-i'))_adTimer=setInterval(adTick,s*1000)}});
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
