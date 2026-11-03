@@ -1847,6 +1847,15 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .adz-wrap{text-align:center}.adz-wrap .adz{text-align:left}
 @media(max-width:700px){.adz .adz-tr{max-width:100%}}
 .adz .adz-cap .adz-l{background:rgba(255,255,255,.88);color:#4b5466;padding:1px 8px;border-radius:20px}
+/* ===== V100: moving ad strip across the page ===== */
+.adz.adz-strip{width:100%!important;max-width:100%}
+.adz-strip .adz-run{width:100%;overflow:hidden;position:relative}
+.adz-strip .adz-track{display:flex;align-items:center;gap:16px;width:max-content;will-change:transform}
+.adz-strip .adz-track.go{animation:adzRun linear infinite}
+.adz-strip .adz-s{flex:none;display:block;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(15,23,42,.14)}
+.adz-strip .adz-s img{display:block;width:auto!important;max-width:none!important;object-fit:contain}
+@keyframes adzRun{from{transform:translateX(0)}to{transform:translateX(var(--adx,-50%))}}
+@media(prefers-reduced-motion:reduce){.adz-strip .adz-track.go{animation-duration:200s!important}}
 </style>
 </head>
 <body>
@@ -4628,7 +4637,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='99';
+const WEB_BUILD='100';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7436,6 +7445,32 @@ window.addEventListener('resize',()=>document.querySelectorAll('.adz').forEach(a
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!_adTimer&&document.querySelector('#app .adz'))_adTimer=setInterval(adTick,adCfg().sec*1000)});
 {const _pa99=pgAdsAdmin;pgAdsAdmin=function(){return _pa99.apply(this,arguments).replace(/<option value="0"[^>]*>Off \(show one ad\)<\/option>/,'').replace('When a place has more than one ad, they change by themselves. Stops while the mouse is on the ad.','Ads keep sliding all the time. With one ad, it slides in again and again; with more ads, they change one after another.')}}
 {const _pv99=adPrev;adPrev=function(){_pv99.apply(this,arguments);const b=document.querySelector('#ad-prev .adz');if(b)adFit(b)}}
+
+/* ==================================================================
+   V100: ads move across the whole page width (moving strip, non-stop)
+   ================================================================== */
+function adCfg(){const c=(db.settings||{}).adCfg||{};return {sec:[3,5,7,10,15].includes(+c.sec)?+c.sec:5,mode:c.mode==='box'?'box':'strip',speed:[30,60,100].includes(+c.speed)?+c.speed:60}}
+{const _sl100=adSlot;adSlot=function(L,kind){if(!L.length)return '';if(kind==='side'||adCfg().mode!=='strip'||/#ad-prev/.test(window._adPrevFlag||''))return _sl100.apply(this,arguments);
+ const one=L.map(a=>`<a class="adz-s" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" title="${esc(a.co||'')}" onclick="return adOpen(event,'${esc(a.id)}')"><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" style="height:${adHt(a)}px" onload="adStrip(this.closest('.adz'))"></a>`).join('');
+ return `<div class="adz adz-${kind} adz-strip" data-ad="${esc(L[0].id)}"><div class="adz-run"><div class="adz-track" data-one="${encodeURIComponent(one)}">${one}</div></div><div class="adz-cap"><span class="adz-l">Sponsored${L.length===1?' · <b>'+esc(L[0].co||'')+'</b>':''}</span></div></div>`}}
+/* fill the strip so it always covers the page, then move it right → left without a gap */
+function adStrip(box){if(!box||!box.classList.contains('adz-strip'))return;const run=box.querySelector('.adz-run'),tr=box.querySelector('.adz-track');if(!run||!tr)return;
+ const one=decodeURIComponent(tr.dataset.one||'');const imgs=[...tr.querySelectorAll('img')];if(imgs.some(i=>!i.complete))return;
+ const W=run.clientWidth||300;const mob=window.innerWidth<=700;
+ if(mob)tr.querySelectorAll('img').forEach(i=>{i.style.height=Math.min(parseInt(i.style.height)||110,90)+'px'});
+ let unit=0;[...tr.children].slice(0,Math.max(1,tr.children.length/Math.max(1,+tr.dataset.rep||1))).forEach(a=>unit+=a.getBoundingClientRect().width+16);
+ if(!unit)return;const rep=Math.max(1,Math.ceil(W/unit));const html=Array(rep*2).fill(one).join('');
+ if(+tr.dataset.n!==rep){tr.dataset.n=rep;tr.dataset.rep=rep*2;tr.innerHTML=html;if(mob)tr.querySelectorAll('img').forEach(i=>{i.style.height=Math.min(parseInt(i.style.height)||110,90)+'px'})}
+ const dist=unit*rep;tr.style.setProperty('--adx',-dist+'px');tr.style.animationDuration=Math.max(4,dist/adCfg().speed)+'s';tr.classList.add('go')}
+{const _ft100=adFit;adFit=function(box){if(box&&box.classList.contains('adz-strip'))return adStrip(box);return _ft100.apply(this,arguments)}}
+{const _tk100=adTick;adTick=function(){document.querySelectorAll('.adz:not(.adz-strip)').forEach(b=>adGo(b,(b._i||0)+1))}}
+{const _pv100=adPrev;adPrev=function(){window._adPrevFlag='#ad-prev';try{_pv100.apply(this,arguments)}finally{window._adPrevFlag=''}}}
+async function adCfgSet(p,msg){if(!isAdminNow())return;db.settings=db.settings||{};db.settings.adCfg=Object.assign({},adCfg(),p);await publishNow('Ad settings');toast(msg)}
+async function adSpeed(v){return adCfgSet({sec:+v},`Box ads change every ${v} seconds ✓`)}
+{const _pa100=pgAdsAdmin;pgAdsAdmin=function(){const c=adCfg();let h=_pa100.apply(this,arguments);
+ return h.replace('<div class="ad-speed">',`<div class="ad-speed"><label for="ad-mode"><b>🎞 How ads move:</b></label> <select id="ad-mode" onchange="adCfgSet({mode:this.value},this.value==='strip'?'Ads now move across the whole page ✓':'Ads now change one by one in a box ✓')"><option value="strip" ${c.mode==='strip'?'selected':''}>Across the whole page (moving strip, non-stop)</option><option value="box" ${c.mode==='box'?'selected':''}>One by one in a box</option></select>
+  <label for="ad-spd"><b>Speed:</b></label> <select id="ad-spd" onchange="adCfgSet({speed:+this.value},'Ad speed saved ✓')"><option value="30" ${c.speed===30?'selected':''}>Slow</option><option value="60" ${c.speed===60?'selected':''}>Normal</option><option value="100" ${c.speed===100?'selected':''}>Fast</option></select></div><div class="ad-speed">`)}}
+window.addEventListener('resize',()=>document.querySelectorAll('.adz-strip').forEach(adStrip));
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
