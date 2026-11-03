@@ -1923,6 +1923,13 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 /* ===== V104 ===== */
 .af-scroll{max-height:330px;overflow-y:auto;overflow-x:hidden;padding-right:4px;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin}
 .af-scroll .af-o{min-width:0}
+/* ===== V106: search suggestions ===== */
+.ac-box{position:absolute;z-index:9999;background:#fff;border:1px solid #e3e7ef;border-radius:14px;box-shadow:0 14px 34px rgba(15,23,42,.16);max-height:300px;overflow-y:auto;padding:6px 0;scrollbar-width:thin}
+.ac-it{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 16px;cursor:pointer;font-size:.95rem;color:#1b2333}
+.ac-it span{font-weight:400;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac-it b{font-weight:700}
+.ac-it em{font-style:normal;font-size:.72rem;color:#9aa3b5;flex:none}
+.ac-it:hover,.ac-it.on{background:#f3f5f9}
 </style>
 </head>
 <body>
@@ -3259,7 +3266,7 @@ function pgPostJob(editId){
  if(!a.ok)return `<section class="wrap narrow sec">${accessBanner(u)}<div class="panel"><h2>Choose a plan to post jobs</h2><p class="lead">Every plan includes unlimited job posts for ${esc(u.company?.name)} and full candidate details.</p><div style="margin-top:14px">${planCards('employer')}</div></div></section>`;
  const j=editId?db.jobs.find(x=>x.id===editId&&x.employerId===u.id):null;
  if(editId&&!j)return notFound();
- const cc=u.company||{},v=j||{contact:u.mobile,email:u.email,whatsapp:u.mobile,jobType:'Work From Office',shift:'Day',workStatus:'Fresher',minExp:0,openings:1,state:cc.state||'',city:cc.city||'',address:cc.address||'',pincode:cc.pincode||'',geo:cc.geo||null};
+ const cc=u.company||{},v=j||{contact:u.mobile,email:u.email,whatsapp:u.mobile,jobType:'Work From Office',shift:'Day',workStatus:'Fresher',minExp:0,openings:1,state:matchState(cc.state||'')||'',city:matchState(cc.state||'')&&cityIn(matchState(cc.state),cc.city)||'',address:cc.address||'',pincode:cc.pincode||'',geo:cc.geo||null};
  return `<section class="wrap narrow"><div class="page-h"><h1>${j?'Edit job':'Post a job'}</h1><p class="lead">Matching job seekers get a notification as soon as you publish.</p></div>
  ${accessBanner(u)}
  <div class="panel"><form class="form" onsubmit="saveJob(event,'${j?j.id:''}')" novalidate>
@@ -4704,7 +4711,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='105';
+const WEB_BUILD='106';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7635,6 +7642,56 @@ eduSec=function(base,title,k,ok,list,q,hint){const on=afList(q,k),cnt=EDU_ALL.ma
 const TRADE_RE=/technician|mechanic|repair|welder|plumber|carpenter|painter|mason|fitter|electrician/i;
 function officeTitles(){const u=me(),own=(db.jobs||[]).filter(j=>u&&j.employerId===u.id&&!j.dummy).flatMap(j=>tagSplit(j.title,'/'));
  return uniqCI(JOB_TITLES.concat(own).filter(t=>!TRADE_RE.test(t)||/^lab technician$/i.test(t)))}
+
+/* ==================================================================
+   V106: search suggestions while typing (like Naukri):
+   job search → job titles, skills, companies;
+   Find candidates → skills, designations; companies page → companies
+   ================================================================== */
+const AC_KIND={'hq':'job','ah-q':'job','ds-q':'job','t-q':'job','aj-q':'job','cs-sk':'skill','cs-q':'desig','dc-q':'company'};
+let _acCache={k:'',L:{}};
+function acLists(){const k=db.jobs.length+'|'+db.users.length;if(_acCache.k===k)return _acCache.L;
+ const jobs=openJobs(),cands=db.users.filter(u=>u.role==='candidate'),emps=activeEmployers();
+ const titles=uniqCI(JOB_TITLES.concat(jobs.flatMap(j=>tagSplit(j.title,'/'))));
+ const skills=uniqCI(SKILL_LIST.concat(OFFICE_SKILLS,jobs.slice(-3000).flatMap(j=>tagSplit(j.skills)),cands.flatMap(c=>tagSplit(c.profile?.skills||''))).filter(s=>s.length<40));
+ const cos=uniqCI(emps.map(e=>e.company?.name).concat(jobs.map(j=>j.company)).filter(Boolean));
+ const desig=uniqCI(cands.map(c=>c.profile?.designation).filter(Boolean).concat(JOB_TITLES));
+ const inds=uniqCI(emps.map(e=>e.company?.industry).filter(Boolean)),cities=uniqCI(emps.map(e=>e.company?.city).filter(Boolean));
+ _acCache={k,L:{titles,skills,cos,desig,inds,cities}};return _acCache.L}
+function acSource(kind){const L=acLists();
+ if(kind==='job')return [[L.titles,'Job title'],[L.skills,'Skill'],[L.cos,'Company']];
+ if(kind==='skill')return [[L.skills,'Skill']];
+ if(kind==='desig')return [[L.desig,'Designation'],[L.skills,'Skill']];
+ return [[L.cos,'Company'],[L.inds,'Industry'],[L.cities,'City']]}
+function acTerm(inp,kind){const v=inp.value;return kind==='skill'?v.split(',').pop().trim():v.trim()}
+function acFind(q,kind){q=q.toLowerCase();if(!q)return [];const seen=new Set(),out=[];
+ acSource(kind).forEach(([list,tag])=>list.forEach(t=>{const l=t.toLowerCase(),i=l.indexOf(q);if(i<0||seen.has(l))return;seen.add(l);
+  const sc=i===0?0:(/[\s\/(.-]/.test(l[i-1]||'')?1:2);out.push({t,tag,sc,i})}));
+ return out.sort((a,b)=>a.sc-b.sc||a.t.length-b.t.length||a.t.localeCompare(b.t)).slice(0,12)}
+function acMark(t,i,n){return `<b>${esc(t.slice(0,i))}</b>${esc(t.slice(i,i+n))}<b>${esc(t.slice(i+n))}</b>`}
+let _ac={inp:null,items:[],sel:-1};
+function acBox(){let b=document.getElementById('ac-box');if(!b){b=document.createElement('div');b.id='ac-box';b.className='ac-box';b.setAttribute('role','listbox');b.hidden=true;document.body.appendChild(b);
+ b.addEventListener('mousedown',e=>{const it=e.target.closest('.ac-it');if(!it)return;e.preventDefault();acPick(+it.dataset.i)})}return b}
+function acHide(){const b=document.getElementById('ac-box');if(b)b.hidden=true;_ac.items=[];_ac.sel=-1}
+function acShow(inp){const kind=AC_KIND[inp.id];if(!kind)return;const q=acTerm(inp,kind),items=q.length>=1?acFind(q,kind):[];_ac={inp,items,sel:-1};const b=acBox();
+ if(!items.length){b.hidden=true;return}
+ b.innerHTML=items.map((x,i)=>`<div class="ac-it" role="option" data-i="${i}"><span>${acMark(x.t,x.i,q.length)}</span><em>${x.tag}</em></div>`).join('');
+ const r=inp.getBoundingClientRect();b.style.left=(r.left+scrollX)+'px';b.style.top=(r.bottom+scrollY+4)+'px';b.style.width=Math.max(r.width,240)+'px';b.hidden=false}
+function acPaintSel(){const b=document.getElementById('ac-box');if(!b)return;b.querySelectorAll('.ac-it').forEach((x,i)=>x.classList.toggle('on',i===_ac.sel));const on=b.querySelector('.ac-it.on');if(on)on.scrollIntoView({block:'nearest'})}
+function acPick(i){const x=_ac.items[i],inp=_ac.inp;if(!x||!inp)return;const kind=AC_KIND[inp.id];
+ if(kind==='skill'){const parts=inp.value.split(',');parts.pop();parts.push(' '+x.t);inp.value=parts.join(',').replace(/^\s+/,'')}else inp.value=x.t;
+ acHide();inp.dispatchEvent(new Event('input',{bubbles:true}));
+ if(kind==='skill'){inp.focus();return}const f=inp.closest('form');if(f&&f.requestSubmit)f.requestSubmit();}
+document.addEventListener('input',e=>{const i=e.target;if(i&&AC_KIND[i.id]&&i===document.activeElement)acShow(i)});
+document.addEventListener('focusin',e=>{const i=e.target;if(i&&AC_KIND[i.id]){i.setAttribute('autocomplete','off');if(i.value)acShow(i)}});
+document.addEventListener('focusout',e=>{if(e.target&&AC_KIND[e.target.id])setTimeout(acHide,150)});
+document.addEventListener('keydown',e=>{const i=e.target;if(!i||!AC_KIND[i.id]||!_ac.items.length||document.getElementById('ac-box')?.hidden)return;
+ if(e.key==='ArrowDown'){e.preventDefault();_ac.sel=(_ac.sel+1)%_ac.items.length;acPaintSel()}
+ else if(e.key==='ArrowUp'){e.preventDefault();_ac.sel=(_ac.sel-1+_ac.items.length)%_ac.items.length;acPaintSel()}
+ else if(e.key==='Enter'&&_ac.sel>=0){e.preventDefault();acPick(_ac.sel)}
+ else if(e.key==='Escape')acHide()},true);
+window.addEventListener('resize',acHide);
+{const _r106=route;route=function(){acHide();return _r106.apply(this,arguments)}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
