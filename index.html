@@ -1856,6 +1856,12 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .adz-strip .adz-s img{display:block;width:auto!important;max-width:none!important;object-fit:contain}
 @keyframes adzRun{from{transform:translateX(0)}to{transform:translateX(var(--adx,-50%))}}
 @media(prefers-reduced-motion:reduce){.adz-strip .adz-track.go{animation-duration:200s!important}}
+/* ===== V101: one picture crosses the page ===== */
+.adz-strip .adz-run{position:relative}
+.adz-strip .adz-track{display:block;width:max-content;gap:0;transform:translateX(var(--from,100vw))}
+.adz-strip .adz-track.go{animation:none}
+.adz-strip .adz-track.cross{animation:adzCross linear 1 forwards}
+@keyframes adzCross{from{transform:translateX(var(--from,100vw))}to{transform:translateX(var(--to,-100%))}}
 </style>
 </head>
 <body>
@@ -4637,7 +4643,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='100';
+const WEB_BUILD='101';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7471,6 +7477,25 @@ async function adSpeed(v){return adCfgSet({sec:+v},`Box ads change every ${v} se
  return h.replace('<div class="ad-speed">',`<div class="ad-speed"><label for="ad-mode"><b>🎞 How ads move:</b></label> <select id="ad-mode" onchange="adCfgSet({mode:this.value},this.value==='strip'?'Ads now move across the whole page ✓':'Ads now change one by one in a box ✓')"><option value="strip" ${c.mode==='strip'?'selected':''}>Across the whole page (moving strip, non-stop)</option><option value="box" ${c.mode==='box'?'selected':''}>One by one in a box</option></select>
   <label for="ad-spd"><b>Speed:</b></label> <select id="ad-spd" onchange="adCfgSet({speed:+this.value},'Ad speed saved ✓')"><option value="30" ${c.speed===30?'selected':''}>Slow</option><option value="60" ${c.speed===60?'selected':''}>Normal</option><option value="100" ${c.speed===100?'selected':''}>Fast</option></select></div><div class="ad-speed">`)}}
 window.addEventListener('resize',()=>document.querySelectorAll('.adz-strip').forEach(adStrip));
+
+/* ==================================================================
+   V101: only ONE copy of the ad picture travels across the page
+   (right edge → left edge, again and again); with more ads, the next
+   one comes after the first has gone
+   ================================================================== */
+{const _sl101=adSlot;adSlot=function(L,kind){const h=_sl101.apply(this,arguments);if(!/adz-strip/.test(h))return h;
+ const items=L.map(a=>`<a class="adz-s" href="${esc(a.link)}" target="_blank" rel="noopener sponsored nofollow" title="${esc(a.co||'')}" data-co="${esc(a.co||'')}" onclick="return adOpen(event,'${esc(a.id)}')"><img src="${esc(a.img)}" alt="${esc(a.title||a.co||'Advertisement')}" style="height:${adHt(a)}px" onload="adStrip(this.closest('.adz'))"></a>`);
+ return h.replace(/<div class="adz-track"[^>]*>[\s\S]*?<\/div><\/div><div class="adz-cap">/,`<div class="adz-track" data-all="${encodeURIComponent(JSON.stringify(items))}" data-i="0">${items[0]}</div></div><div class="adz-cap">`)
+  .replace(/<span class="adz-l">Sponsored[^<]*(<b>[^<]*<\/b>)?<\/span>/,`<span class="adz-l">Sponsored · <b>${esc(L[0].co||'')}</b></span>`)}}
+function adStrip(box){if(!box||!box.classList.contains('adz-strip'))return;const run=box.querySelector('.adz-run'),tr=box.querySelector('.adz-track');if(!run||!tr)return;
+ const im=tr.querySelector('img');if(!im||!im.complete||!im.naturalWidth)return;
+ if(window.innerWidth<=700)im.style.height=Math.min(parseInt(im.style.height)||110,90)+'px';
+ const W=run.clientWidth||300,w=im.getBoundingClientRect().width||im.naturalWidth;
+ tr.style.setProperty('--from',W+'px');tr.style.setProperty('--to',(-w-4)+'px');tr.style.animationDuration=Math.max(4,(W+w)/adCfg().speed)+'s';
+ tr.classList.remove('go','cross');void tr.offsetWidth;tr.classList.add('cross');
+ if(!tr._end){tr._end=1;tr.addEventListener('animationend',()=>{let all=[];try{all=JSON.parse(decodeURIComponent(tr.dataset.all||'[]'))}catch(e){}
+  if(all.length>1){const i=((+tr.dataset.i||0)+1)%all.length;tr.dataset.i=i;tr.innerHTML=all[i];const b=box.querySelector('.adz-l b'),a=tr.querySelector('a');if(b&&a)b.textContent=a.dataset.co||'';}
+  else{tr.classList.remove('cross');void tr.offsetWidth;tr.classList.add('cross')}})}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
