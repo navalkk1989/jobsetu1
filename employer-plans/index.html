@@ -2527,7 +2527,8 @@ function pgCompanyProfile(){
   <div class="fld"><label for="cp-des">Your designation</label><input id="cp-des" list="des-list" value="${esc(u.designation||'')}" placeholder="e.g. HR Manager"></div>
   ${otpField('cp-mobile','Mobile number','tel','10-digit mobile number',u.mobile)}
   <p class="hint" style="grid-column:1/-1;margin-top:-8px">Changed your mobile? Send and verify an OTP before saving.</p>
-  <div class="fld full"><label for="cp-email">Email address</label><input id="cp-email" type="email" value="${esc(u.email)}"></div>
+  ${otpField('cp-email','Email address','email','you@company.com',u.email)}
+  <p class="hint" style="grid-column:1/-1;margin-top:-8px">Changed your email? Verify it with an OTP before saving.</p>
   <div class="fld"><label for="cp-pass">New password</label><input id="cp-pass" type="password" autocomplete="new-password" placeholder="Leave blank to keep current"></div>
   <div class="fld"><label for="cp-pass2">Confirm new password</label><input id="cp-pass2" type="password" autocomplete="new-password"></div>
   <h3 class="form-sec">Company</h3>
@@ -2552,6 +2553,7 @@ async function saveCompanyProfile(e){
  if(!name)return toast('Enter your name.');
  if(mob!==u.mobile){if(!isMobile(mob))return toast('Enter a valid 10-digit mobile number.');if(!otpOk('cp-mobile'))return toast('Verify your new mobile number with the OTP.');if(db.users.some(x=>x.id!==u.id&&x.mobile===mob))return toast('Another account already uses this mobile number.')}
  if(!isEmail(em))return toast('Enter a valid email address.');
+ if(em!==String(u.email||'').toLowerCase()&&!otpOk('cp-email'))return toast('Verify your new email with the OTP.');
  if(db.users.some(x=>x.id!==u.id&&x.email===em))return toast('Another account already uses this email.');
  if(p1||p2){if(p1.length<6)return toast('New password needs at least 6 characters.');if(p1!==p2)return toast('The two passwords don\'t match.')}
  if(!co)return toast('Enter your company name.');
@@ -3030,7 +3032,7 @@ async function submitEmp(e){
  let docs;try{docs={logo:await readDoc($('#d-logo').files[0],300),gstReg:await readDoc($('#d-gst').files[0]),pan:await readDoc($('#d-pan').files[0]),card:await readDoc($('#d-card').files[0]),udyam:await readDoc($('#d-udyam').files[0])}}catch(m){return toast(m)}
  if(!checked('e-agree'))return toast('Accept the Privacy policy and Terms to continue.');
  Object.keys(docs).forEach(k=>{if(!docs[k])delete docs[k]});
- const u={id:uid('u'),role:'employer',name,designation:val('e-des'),mobile,email,password:pass,createdAt:now(),status:'active',marketing:checked('e-mk'),plan:null,company:{name:co,type:val('e-type'),industry:val('e-ind'),state:val('e-state'),city:val('e-city'),address:val('e-addr'),pincode:val('e-pin'),geo:val('e-lat')?{lat:+val('e-lat'),lng:+val('e-lng')}:null,about:val('e-about'),employees:size,website:web,gst,docs,verified:false}};
+ const u={id:uid('u'),role:'employer',name,designation:val('e-des'),mobile,email,password:pass,createdAt:now(),status:'active',marketing:checked('e-mk'),plan:null,company:{name:co,type:val('e-type'),industry:val('e-ind'),state:val('e-state'),city:val('e-city'),address:val('e-addr'),pincode:val('e-pin'),geo:val('e-lat')?{lat:+val('e-lat'),lng:+val('e-lng')}:null,about:val('e-about'),employees:size,website:web,gst,docs,verified:true,autoVerified:true}};
  db.users.push(u);notify(u.id,'Welcome to JobSetu1',freeRight('employer','post')?`Post unlimited jobs free of cost. We'll review your documents shortly.`:'Choose a plan to start posting jobs. We\'ll review your documents shortly.','#/post-job');save();
  setSession({kind:'user',id:u.id});toast(freeRight('employer','post')?'Company registered. You can post jobs free of cost.':'Company registered. Choose a plan to start posting jobs.');go('#/employer');
 }
@@ -3466,7 +3468,7 @@ async function gsPull(){
  jobs.forEach(j=>{if(!j||!j.id||local.has(String(j.id))||isDemoId(j.employerId))return;ids.add(String(j.id));const r=Object.assign({},j,{id:String(j.id),remote:true});delete r.syncedAt;delete r.firstSyncedAt;delete r._json;['geo','walkin'].forEach(k=>{if(!r[k])r[k]=null});
   ['salary','openings','minExp','createdAt'].forEach(k=>{if(r[k]!==''&&r[k]!=null)r[k]=+r[k]});['contact','whatsapp','pincode'].forEach(k=>{if(r[k]!=null)r[k]=String(r[k])});
   const ix=db.jobs.findIndex(x=>String(x.id)===r.id);if(ix>=0)db.jobs[ix]=r;else{db.jobs.push(r);n++}});
- db.jobs=db.jobs.filter(j=>!j.remote||ids.has(String(j.id)));
+ {const b4=db.jobs.length;db.jobs=db.jobs.filter(j=>!j.remote||ids.has(String(j.id)));n+=b4-db.jobs.length;const cid=new Set(cos.map(c=>String(c&&c.id)));const u4=db.users.length;db.users=db.users.filter(u=>!u.remote||cid.has(String(u.id)));n+=u4-db.users.length}
  const st=gsState();st.lastPull=now();st.pulled=jobs.length;gsSaveState(st);_cache={};save();window._cfgNew=cfgNew;return n}
 function gsBaseline(){const st=gsState(),C=gsCollections();st.h={};for(const [c,list] of Object.entries(C)){st.h[c]={};list.forEach(r=>{if(r&&r.id)st.h[c][r.id]=gsHash(r)})}st.base=now();gsSaveState(st)}
 function gsBoot(){if(!gsOn())return;if(!gsState().h)gsBaseline();gsPull().then(n=>{const a=document.activeElement;if((n||window._cfgNew)&&!(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))&&(window._cfgNew||/^#\/(jobs|companies|company|)(\?|$|\/)/.test(location.hash||'#/')))route()}).catch(e=>{const st=gsState();st.err='Could not read jobs from the Sheet: '+(e.message||e);gsSaveState(st)});gsQueue();setTimeout(()=>cloudPull(true),1200)}
@@ -4716,7 +4718,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='108';
+const WEB_BUILD='109';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7344,7 +7346,7 @@ async function auSubmit(e){e.preventDefault();if(!isAdminNow())return toast('Onl
  if(db.users.some(u=>!isDemoUser(u)&&u.role===role&&(u.mobile===mobile||(email&&u.email===email))))return toast('An account with this mobile or email already exists.');
  if(cloudOn()){try{const r=await gsPost({action:'exists',email,mobile});if(r.email||r.mobile)return toast(`This ${r.mobile?'mobile number':'email'} is already registered.`,7000)}catch(err){}}
  const by={by:session&&session.id,at:now()},base={id:uid('u'),role,name,mobile,email,password:pw,createdAt:now(),status:'active',marketing:false,plan:null,byAdmin:by,verified:{mobile:true,email:!!email,by:'admin'}};
- const u=role==='employer'?Object.assign(base,{designation:val('au-des'),company:{name:val('au-co'),type:val('au-type'),industry:val('au-ind'),employees:val('au-size'),state,city,address:'',pincode:'',geo:null,about:'',website:'',gst:'',docs:{},verified:false}})
+ const u=role==='employer'?Object.assign(base,{designation:val('au-des'),company:{name:val('au-co'),type:val('au-type'),industry:val('au-ind'),employees:val('au-size'),state,city,address:'',pincode:'',geo:null,about:'',website:'',gst:'',docs:{},verified:true,autoVerified:true}})
   :Object.assign(base,{profile:{workStatus:radio('au-ws')||'Fresher',education:val('au-edu'),skills:val('au-sk'),jobTypes:pickedJobTypes('au'),state,city,address:'',pincode:'',geo:null}});
  db.users.push(u);if(checked('au-wel'))notify(u.id,'Welcome to JobSetu1',role==='employer'?'Your company account is ready. Post your first job now.':'Your account is ready. Complete your profile to get matching jobs.',role==='employer'?'#/post-job':'#/profile');
  save();try{gsQueue()}catch(x){}_auLast={name,role,mobile,email,pw};toast('Registered ✓ No OTP was needed.');route();setTimeout(()=>window.scrollTo(0,0),50)}
@@ -7740,6 +7742,30 @@ async function logoSync(){if(_logoBusy)return;_logoBusy=true;try{let ch=false;
 {const _r108=route;route=function(){const r=_r108.apply(this,arguments);setTimeout(logoSync,400);return r}}
 setTimeout(logoSync,2500);
 {const _cl108=coLogo;coLogo=function(empId,cls){try{const e=getUser(empId),c=e&&e.company;if(c&&c.logoSm&&!(c.docs&&c.docs.logo&&c.docs.logo.data)){c.docs=c.docs||{};c.docs.logo={name:'logo',data:c.logoSm,fromCloud:1}}}catch(x){}return _cl108.apply(this,arguments)}}
+
+/* ==================================================================
+   V109: deleting an account removes it everywhere (Sheet + every device),
+   employers verified right after registration, paste = bullets,
+   employer email change needs OTP
+   ================================================================== */
+async function cloudPurge(id){if(!cloudOn()||!myTok())return null;try{const r=await gsPost({action:'purgeUser',token:myTok(),id});
+ const st=gsState();st.h=st.h||{};Object.keys(st.h).forEach(c=>{if(st.h[c])delete st.h[c][id]});(st.h.jobs?Object.keys(st.h.jobs):[]).forEach(j=>{if(!db.jobs.some(x=>x.id===j))delete st.h.jobs[j]});gsSaveState(st);return r.removed||{}}catch(e){toast('Deleted here. Could not remove from the Google Sheet: '+cloudErr(e),7000);return null}}
+delUser=function(id){if(!staffCan('delete'))return;const x=getUser(id);if(!x)return;askConfirm('Delete '+(x.role==='employer'?(x.company?.name||x.name):x.name)+'? All their jobs, applications and data will be removed from the website and the app.','Delete account',async()=>{
+ recordDel(db.jobs.filter(j=>j.employerId===id).map(j=>j.id),[id]);db.users=db.users.filter(u=>u.id!==id);db.jobs=db.jobs.filter(j=>j.employerId!==id);db.apps=db.apps.filter(a=>a.candId!==id&&a.employerId!==id);db.notes=db.notes.filter(n=>n.userId!==id);save();route();
+ const r=await cloudPurge(id);toast(r?`Account deleted everywhere ✓ (${r.jobs||0} job${r.jobs===1?'':'s'}, ${r.apps||0} application${r.apps===1?'':'s'} removed)`:'Account deleted.',6000)})};
+delJob=function(id){if(!staffCan('delete'))return;askConfirm('Delete this job and its applications?','Delete job',async()=>{const apps=db.apps.filter(a=>a.jobId===id).map(a=>a.id);recordDel([id],[]);db.jobs=db.jobs.filter(j=>j.id!==id);db.apps=db.apps.filter(a=>a.jobId!==id);save();toast('Job deleted.');route();
+ if(cloudOn()&&myTok()){try{await gsPost({action:'delete',collection:'jobs',ids:[id],token:myTok()});if(apps.length)await gsPost({action:'delete',collection:'apps',ids:apps,token:myTok()})}catch(e){}}})};
+/* admin: clear jobs left behind by accounts deleted earlier */
+async function orphanCheck(){const b=$('#orph-b');if(!b)return;b.innerHTML='<span class="spin"></span> Checking…';try{const r=await gsPost({action:'purgeOrphans',token:myTok(),dry:1});const c=r.count||{};const n=(c.jobs||0)+(c.apps||0)+(c.companies||0);
+ b.innerHTML=n?`Found <b>${c.jobs||0}</b> job(s), <b>${c.companies||0}</b> company record(s) and <b>${c.apps||0}</b> application(s) of deleted accounts. <button class="btn sm danger" onclick="orphanRun()">Remove them now</button>`:'✓ Nothing left behind — all clean.'}catch(e){b.textContent=/unknown action/.test(cloudErr(e))?'Update the Google Sheet code to Version 24 first.':'Could not check: '+cloudErr(e)}}
+async function orphanRun(){const b=$('#orph-b');try{const r=await gsPost({action:'purgeOrphans',token:myTok()});const c=r.removed||{};toast(`Removed ${c.jobs||0} job(s), ${c.companies||0} company record(s), ${c.apps||0} application(s) ✓`,6000);await gsPull().catch(()=>{});route()}catch(e){if(b)b.textContent='Could not remove: '+cloudErr(e)}}
+{const _r109=route;route=function(){const r=_r109.apply(this,arguments);try{if(/^#\/admin\/(jobs|employers|candidates)/.test(location.hash)&&isAdminNow()&&cloudOn()&&myTok()&&!$('#orph-p')){const t=document.querySelector('#app .panel');if(t)t.insertAdjacentHTML('beforebegin',`<div class="panel" id="orph-p" style="margin-bottom:14px"><b>🧹 Jobs of deleted accounts</b><div id="orph-b" class="hint" style="margin-top:6px"><button class="btn ghost sm" onclick="orphanCheck()">Check now</button> Removes jobs and applications that still show from accounts deleted earlier.</div></div>`)}}catch(e){}return r}}
+/* paste many lines in a bullet box = one bullet per line */
+document.addEventListener('paste',e=>{const t=e.target;if(!t||t.tagName!=='TEXTAREA'||t.dataset.bul!=='1')return;const txt=(e.clipboardData||window.clipboardData)?.getData('text');if(!txt)return;
+ e.preventDefault();const v=t.value,s=t.selectionStart,en=t.selectionEnd,ls=v.lastIndexOf('\n',s-1)+1,before=v.slice(ls,s);
+ const lines=txt.replace(/\r/g,'').split('\n').map(l=>l.replace(BUL_RE,'').replace(/^\s*\d+[.)]\s+/,'').trim()).filter(Boolean);if(!lines.length)return;
+ const onBul=/^\s*•\s*$/.test(before),atStart=!before.trim();let ins=lines.map((l,i)=>i===0&&!atStart?l:(i===0&&onBul?l:BUL+l)).join('\n');
+ const nv=v.slice(0,s)+ins+v.slice(en);t.value=nv;const p=s+ins.length;t.setSelectionRange(p,p);t.dispatchEvent(new Event('input',{bubbles:true}))});
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
