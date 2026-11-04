@@ -1943,6 +1943,7 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .logo-r{display:flex;align-items:center;gap:10px;border:1px solid #e6e9f2;border-radius:12px;padding:8px 10px}
 .logo-r>span{flex:1;min-width:0;font-size:.9rem}
 .logo-th{width:40px;height:40px;border-radius:10px;object-fit:contain;flex:none}
+.logo-s{margin-top:8px}.logo-s input{max-width:320px}
 </style>
 </head>
 <body>
@@ -2640,7 +2641,7 @@ async function saveFileObj(r,label){
 }
 const CAND_DOCS=[];
 const EMP_DOCS=[['logo','Company logo'],['gstReg','GST registration'],['pan','Company PAN card'],['card','Company visiting card'],['udyam','Udyam certificate']];
-function docField(prefix,key,label,f,uid,scope){return `<div class="docbox"><label class="l" for="${prefix}-${key}">${label}</label>${f?`<span class="hint">Attached: ${esc(f.name)} (${Math.max(1,Math.round(f.size/1024))} KB)</span><div class="acts">${f.data?`<button type="button" class="btn ghost sm" onclick="downloadDoc('${uid}','${scope}','${key}')">Download</button>`:''}<button type="button" class="btn danger sm" onclick="removeDoc('${scope}','${key}')">Remove</button></div>`:'<span class="hint">Not attached</span>'}<input id="${prefix}-${key}" type="file" accept="${key==='logo'?'image/*':'.pdf,.doc,.docx,image/*'}" aria-label="${f?'Replace':'Attach'} ${label}"></div>`}
+function docField(prefix,key,label,f,uid,scope){return `<div class="docbox"><label class="l" for="${prefix}-${key}">${label}</label>${f?`<span class="hint">Attached: ${esc(f.name)} (${Math.max(1,Math.round(f.size/1024))} KB)</span><div class="acts">${(f.data||f.fid)?`<button type="button" class="btn ghost sm" onclick="downloadDoc('${uid}','${scope}','${key}')">Download</button>`:''}<button type="button" class="btn danger sm" onclick="removeDoc('${scope}','${key}')">Remove</button></div>`:'<span class="hint">Not attached</span>'}<input id="${prefix}-${key}" type="file" accept="${key==='logo'?'image/*':'.pdf,.doc,.docx,image/*'}" aria-label="${f?'Replace':'Attach'} ${label}"></div>`}
 function downloadDoc(uid,scope,key){const v=me(),x=getUser(uid);if(!v||!(v.id===uid||isStaffNow()))return toast('Only the owner or JobSetu1 staff can download this document.');saveFileObj(scope==='company'?x?.company?.docs?.[key]:x?.profile?.docs?.[key],'Document')}
 function removeDoc(scope,key){const u=me();if(!u)return;const box=scope==='company'?u.company.docs:(u.profile.docs||{});if(!box||!box[key])return;askConfirm('Remove this document?','Remove',()=>{delete box[key];save();toast('Document removed.');route()})}
 async function downloadResume(id){
@@ -3845,7 +3846,7 @@ function pgStaff(role,tab,q){q=q||new URLSearchParams();
  <div class="split"><nav class="side" aria-label="Panel sections">${tabs.map(([k,l])=>`<a href="#/${role}/${k}" class="${k===tab?'on':''}">${l}</a>`).join('')}</nav><div><div class="res-h"><h2 style="margin:0">${esc(label)}</h2>${EXPORT_MAP[tab]&&(isAdmin||staffCan('export'))?`<button class="btn ghost" onclick="exportExcel('${tab}')">⬇ ${tab==='overview'?'Download all data (Excel)':'Download to Excel'}</button>`:''}</div>${body}</div></div></section>`}
 function viewUser(id){
  if(!isStaffNow())return;const x=getUser(id);if(!x)return;const p=x.profile||{},c=x.company||{};
- const docRow=(k,l)=>c.docs?.[k]?`<dt>${l}</dt><dd>${esc(c.docs[k].name)} (${Math.max(1,Math.round(c.docs[k].size/1024))} KB)${c.docs[k].data&&/^data:image/.test(c.docs[k].data)?`<br><img src="${c.docs[k].data}" alt="${l}" style="max-height:110px;margin-top:6px;border-radius:8px">`:''}${c.docs[k].data?`<div style="margin-top:6px"><button class="btn ghost sm" onclick="downloadDoc('${x.id}','company','${k}')">Download</button></div>`:''}</dd>`:'';
+ const docRow=(k,l)=>c.docs?.[k]?`<dt>${l}</dt><dd>${esc(c.docs[k].name)} (${Math.max(1,Math.round(c.docs[k].size/1024))} KB)${c.docs[k].data&&/^data:image/.test(c.docs[k].data)?`<br><img src="${c.docs[k].data}" alt="${l}" style="max-height:110px;margin-top:6px;border-radius:8px">`:''}${(c.docs[k].data||c.docs[k].fid)?`<div style="margin-top:6px"><button class="btn ghost sm" onclick="downloadDoc('${x.id}','company','${k}')">${c.docs[k].data?'Download':'Open (saved online)'}</button></div>`:''}</dd>`:'';
  const pdocs=CAND_DOCS.filter(([k])=>p.docs?.[k]).map(([k,l])=>`<dt>${l}</dt><dd>${esc(p.docs[k].name)}${p.docs[k].data?` <button class="btn ghost sm" onclick="downloadDoc('${x.id}','profile','${k}')">Download</button>`:''}</dd>`).join('');
  openModal(`${x.role==='candidate'?avatar(x,'lg'):''}<h2>${esc(x.name)}</h2><p class="hint">${x.role==='employer'?'Employer':'Job seeker'} · registered ${fmtDate(x.createdAt)}</p><dl class="dl" style="margin-top:12px">
   <dt>Email</dt><dd>${esc(x.email)}</dd><dt>Mobile</dt><dd>${esc(x.mobile||'—')}</dd><dt>Status</dt><dd>${esc(x.status)}</dd><dt>Plan</dt><dd>${planActive(x)?esc(x.plan.name)+' till '+fmtDate(x.plan.expires):'None'}</dd><dt>Marketing updates</dt><dd>${x.marketing?'Opted in':'Opted out'}</dd>
@@ -4725,7 +4726,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='112';
+const WEB_BUILD='113';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7860,6 +7861,54 @@ function userDedupe(){const seen=new Map();let ch=false;db.users.forEach((u,i)=>
  const j=seen.get(k),a=db.users[j];const keepB=a.remote&&!u.remote;const lose=keepB?a:u,win=keepB?u:a;if(win.company&&lose.company&&lose.company.logoSm&&!win.company.logoSm){win.company.logoSm=lose.company.logoSm;win.company.docs=win.company.docs||{};if(!win.company.docs.logo)win.company.docs.logo={name:'logo',data:lose.company.logoSm,fromCloud:1}}
  lose._dup=1;if(keepB)seen.set(k,i);ch=true});if(ch){db.users=db.users.filter(u=>!u._dup);_cache={};save()}}
 {const _r112b=route;route=function(){try{userDedupe()}catch(e){}return _r112b.apply(this,arguments)}}
+
+/* ==================================================================
+   V113: (1) ad clicks counted on the server — Admin sees the same numbers
+   on every device; (2) employer documents (GST, PAN, Udyam, visiting card,
+   logo) saved to Google Drive — Admin can open them from any device
+   ================================================================== */
+/* ---------- ad clicks ---------- */
+{const _ao113=adOpen;adOpen=function(e,id){try{if(cloudOn()&&id&&id!=='prev')gsPost({action:'adClick',id}).catch(()=>{})}catch(x){}return _ao113.apply(this,arguments)}}
+let _adStats=null;
+async function adStatsLoad(force){if(!cloudOn()||!myTok())return;if(_adStats&&!force&&Date.now()-_adStats.at<60000)return adStatsPaint();
+ try{const r=await gsPost({action:'adStats',token:myTok()});_adStats={at:Date.now(),s:r.stats||{},today:r.today};adStatsPaint()}catch(e){_adStats={at:Date.now(),s:{},err:cloudErr(e)};adStatsPaint()}}
+function adStatsPaint(){if(!_adStats)return;document.querySelectorAll('.ad-row').forEach(row=>{const b=row.querySelector('[onclick^="adEditId("]');const id=b&&(/adEditId\('([^']+)'/.exec(b.getAttribute('onclick'))||[])[1];if(!id)return;
+ let el=row.querySelector('.ad-clk');if(!el){el=document.createElement('div');el.className='ad-clk';row.querySelector('.ad-in').appendChild(el)}
+ if(_adStats.err){el.innerHTML=/unknown action/.test(_adStats.err)?'<span class="hint">Click counts need Sheet code Version 27.</span>':'';return}
+ const a=_adStats.s[id]||{t:0,d:{}},d=a.d||{},T=_adStats.today||'',k7=Object.keys(d).sort().slice(-7).reduce((n,k)=>n+(+d[k]||0),0);
+ el.innerHTML=`👆 <b>${(+a.t||0).toLocaleString('en-IN')}</b> clicks in total · <b>${+d[T]||0}</b> today · <b>${k7}</b> in the last 7 days${a.last?` · last click ${ago(a.last)}`:''}`})}
+{const _r113=route;route=function(){const r=_r113.apply(this,arguments);try{if(/^#\/admin\/ads/.test(location.hash||'')&&isAdminNow())adStatsLoad()}catch(e){}try{setTimeout(docSync,900)}catch(e){}return r}}
+/* the old "clicks on this device" note is replaced by the real total */
+{const _pa113=pgAdsAdmin;pgAdsAdmin=function(){return _pa113.apply(this,arguments).replace(/ · \d+ click\(s\) on this device/g,'')}}
+
+/* ---------- documents in Google Drive ---------- */
+const DOC_KEYS=()=>EMP_DOCS.map(x=>x[0]);
+let _docBusy=false;
+async function docSync(){if(_docBusy||!cloudOn())return;_docBusy=true;try{const toks=tokAll(),staff=isStaffNow()?myTok():'';let ch=false;
+ for(const u of db.users){if(!u||u.role!=='employer'||isDemoUser(u)||u.remote||!u.company||!u.company.docs)continue;const tok=toks[u.id]||staff;if(!tok)continue;
+  for(const k of DOC_KEYS()){const d=u.company.docs[k];if(!d||!d.data||d.fromCloud)continue;const fk=String(d.data.length)+':'+String(d.data).slice(-40);if(d.fid&&d.fk===fk)continue;
+   try{const res=await gsPost({action:'fileUp',token:tok,id:u.id,kind:'doc',name:('doc-'+k+'-'+(d.name||'file')).slice(0,110),type:d.type||(String(d.data).slice(5,String(d.data).indexOf(';'))),data:String(d.data).slice(String(d.data).indexOf(',')+1),prev:d.fid||''});
+    d.fid=res.fid;d.fk=fk;d.at=d.at||now();ch=true}catch(e){if(/too_big|not_allowed|session_expired/.test(cloudErr(e)))continue;break}}}
+ if(ch){save();try{gsQueue()}catch(e){}}}finally{_docBusy=false}}
+function docsMetaOf(u){const o={},D=(u&&u.company&&u.company.docs)||{};DOC_KEYS().forEach(k=>{const d=D[k];if(d&&d.fid)o[k]={name:d.name||'',type:d.type||'',size:+d.size||0,fid:d.fid,at:+d.at||0}});return o}
+{const _gc113=gsCollections;gsCollections=function(){const C=_gc113.apply(this,arguments);try{if(C.companies)C.companies=C.companies.map(r=>{const u=db.users.find(x=>x.id===r.id);const m=u?docsMetaOf(u):{};return Object.keys(m).length?Object.assign({},r,{docsMeta:m}):r})}catch(e){}return C}}
+function docsApply(u,meta){if(!u||!u.company||!meta)return false;if(typeof meta==='string'){try{meta=JSON.parse(meta)}catch(e){return false}}let ch=false;const D=u.company.docs=u.company.docs||{};
+ Object.entries(meta).forEach(([k,m])=>{if(!m||!m.fid)return;const cur=D[k];if(cur&&cur.data&&!cur.fromCloud&&k!=='logo')return;if(k==='logo'&&cur&&cur.data)return;if(cur&&cur.fid===m.fid)return;D[k]=Object.assign({},m,{fromCloud:1});ch=true});return ch}
+{const _ca113=cloudApply;cloudApply=function(c,r){const u=_ca113.apply(this,arguments);try{if(c==='companies'&&r&&r.docsMeta)docsApply(u,r.docsMeta)}catch(e){}return u}}
+{const _gg113=gsGet;gsGet=async function(c){const rows=await _gg113.apply(this,arguments);if(c==='companies'){try{let ch=false;(rows||[]).forEach(r=>{if(r&&r.docsMeta)db.users.filter(x=>String(x.id)===String(r.id)).forEach(u=>{if(docsApply(u,r.docsMeta))ch=true})});if(ch){_cache={};save()}}catch(e){}}return rows}}
+/* download from Drive when the file is not on this device */
+downloadDoc=async function(uid,scope,key){const v=me(),x=getUser(uid);if(!v||!(v.id===uid||isStaffNow()))return toast('Only the owner or JobSetu1 staff can download this document.');
+ const d=scope==='company'?x?.company?.docs?.[key]:x?.profile?.docs?.[key];if(!d)return toast('Document not found.');if(d.data&&!(d.fromCloud&&key==='logo'&&d.fid))return saveFileObj(d,'Document');
+ if(!d.fid)return toast('This document is only on the employer\'s own phone. Ask them to open JobSetu1 once so it is saved online.');
+ if(!cloudOn()||!myTok())return toast('Connect / link the Google Sheet to open this document.');toast('Getting the document…');
+ try{const r=await gsPost({action:'fileGet',token:myTok(),fid:d.fid});const f={name:d.name||r.name,type:r.type||d.type,data:'data:'+(r.type||d.type||'application/octet-stream')+';base64,'+r.data};saveFileObj(f,'Document')}catch(e){toast('Could not get the document: '+cloudErr(e),6000)}};
+/* logos: easier to find — open list with search, a "🖼 Logo" button on every employer row,
+   and the website version shown in the Admin panel (to check the new files are live) */
+{const _lp113=logoPanel;logoPanel=function(){return _lp113.apply(this,arguments).replace('<details ','<div class="logo-s"><input placeholder="Search company…" oninput="const q=this.value.toLowerCase();document.querySelectorAll(\'#logo-p .logo-r\').forEach(r=>r.hidden=!r.innerText.toLowerCase().includes(q))"></div><details open ').replace(/<details open \s*open/,'<details open')}}
+function logoPick(id){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>logoAdmin(id,i);i.click()}
+{const _r113b=route;route=function(){const r=_r113b.apply(this,arguments);try{
+ if(/^#\/admin/.test(location.hash||'')&&isAdminNow()){const h=document.querySelector('#app h1');if(h&&!document.getElementById('webver'))h.insertAdjacentHTML('beforeend',` <small id="webver" class="chip" title="Website version now running">v${WEB_BUILD}</small>`)}
+ if(/^#\/admin\/employers/.test(location.hash||'')&&isAdminNow())document.querySelectorAll('#app [onclick^="delUser(\'"]').forEach(btn=>{if(btn.dataset.lg)return;btn.dataset.lg=1;const id=(/delUser\('([^']+)'/.exec(btn.getAttribute('onclick'))||[])[1];const u=id&&getUser(id);if(!u||u.role!=='employer')return;const b=document.createElement('button');b.type='button';b.className='btn ghost sm';b.textContent=(u.company?.logoSm||u.company?.docs?.logo?.data)?'🖼 Change logo':'🖼 Upload logo';b.onclick=()=>logoPick(id);btn.before(b)})}catch(e){}return r}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
