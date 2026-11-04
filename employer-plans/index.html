@@ -1944,6 +1944,16 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .logo-r>span{flex:1;min-width:0;font-size:.9rem}
 .logo-th{width:40px;height:40px;border-radius:10px;object-fit:contain;flex:none}
 .logo-s{margin-top:8px}.logo-s input{max-width:320px}
+/* ===== V114 ===== */
+.adrep-f{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin:12px 0}
+.adrep-f label{display:grid;gap:4px;font-size:.85rem;font-weight:600}
+.adrep-f input,.adrep-f select{width:auto;min-width:150px}
+.adrep-q{display:flex;flex-wrap:wrap;gap:6px}
+.adrep-sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px 0}
+.adrep-sum div{background:#f4f6fa;border-radius:12px;padding:10px 12px;display:grid}
+.adrep-sum b{font-size:1.3rem}.adrep-sum span{font-size:.78rem;color:var(--muted,#5b6478)}
+.adrep-tot td{background:#f8fafc}
+@media(max-width:600px){.adrep-sum{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -4726,7 +4736,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='113';
+const WEB_BUILD='114';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7909,6 +7919,50 @@ function logoPick(id){const i=document.createElement('input');i.type='file';i.ac
 {const _r113b=route;route=function(){const r=_r113b.apply(this,arguments);try{
  if(/^#\/admin/.test(location.hash||'')&&isAdminNow()){const h=document.querySelector('#app h1');if(h&&!document.getElementById('webver'))h.insertAdjacentHTML('beforeend',` <small id="webver" class="chip" title="Website version now running">v${WEB_BUILD}</small>`)}
  if(/^#\/admin\/employers/.test(location.hash||'')&&isAdminNow())document.querySelectorAll('#app [onclick^="delUser(\'"]').forEach(btn=>{if(btn.dataset.lg)return;btn.dataset.lg=1;const id=(/delUser\('([^']+)'/.exec(btn.getAttribute('onclick'))||[])[1];const u=id&&getUser(id);if(!u||u.role!=='employer')return;const b=document.createElement('button');b.type='button';b.className='btn ghost sm';b.textContent=(u.company?.logoSm||u.company?.docs?.logo?.data)?'🖼 Change logo':'🖼 Upload logo';b.onclick=()=>logoPick(id);btn.before(b)})}catch(e){}return r}}
+
+/* ==================================================================
+   V114: Ad click report — choose a date range, see date-wise clicks
+   (app / mobile website / computer), download as Excel
+   ================================================================== */
+const adDay=v=>Array.isArray(v)?[+v[0]||0,+v[1]||0,+v[2]||0,+v[3]||0]:[+v||0,0,0,0];
+const adYmd=d=>{const x=new Date(d);return x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0')};
+const adYmdIso=k=>k.slice(0,4)+'-'+k.slice(4,6)+'-'+k.slice(6,8);
+const adYmdNice=k=>new Date(+k.slice(0,4),+k.slice(4,6)-1,+k.slice(6,8)).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+{const _ao114=adOpen;adOpen=function(e,id){try{if(cloudOn()&&id&&id!=='prev'){const src=APP?'app':(/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent||'')?'mob':'pc');gsPost({action:'adClick',id,src}).catch(()=>{})}}catch(x){}
+ /* skip the V113 sender (it would count twice) */ const a=adAll().find(x=>x.id===id);if(!a)return true;try{const k='js1_adc';const m=JSON.parse(localStorage.getItem(k)||'{}');m[id]=(m[id]||0)+1;localStorage.setItem(k,JSON.stringify(m))}catch(x){}
+ if(APP&&window.AndroidApp&&AndroidApp.openExternal){try{e.preventDefault();AndroidApp.openExternal(a.link);return false}catch(x){}}return true}}
+adStatsPaint=function(){if(!_adStats)return;document.querySelectorAll('.ad-row').forEach(row=>{const b=row.querySelector('[onclick^="adEditId("]');const id=b&&(/adEditId\('([^']+)'/.exec(b.getAttribute('onclick'))||[])[1];if(!id)return;
+ let el=row.querySelector('.ad-clk');if(!el){el=document.createElement('div');el.className='ad-clk';row.querySelector('.ad-in').appendChild(el)}
+ if(_adStats.err){el.innerHTML=/unknown action/.test(_adStats.err)?'<span class="hint">Click counts need Sheet code Version 28.</span>':'';return}
+ const a=_adStats.s[id]||{t:0,d:{}},d=a.d||{},T=_adStats.today||adYmd(now()),c7=adYmd(now()-6*DAY),k7=Object.keys(d).filter(k=>k>=c7).reduce((n,k)=>n+adDay(d[k])[0],0);
+ el.innerHTML=`👆 <b>${(+a.t||0).toLocaleString('en-IN')}</b> clicks in total · <b>${adDay(d[T])[0]}</b> today · <b>${k7}</b> in the last 7 days${a.last?` · last click ${ago(a.last)}`:''}`});adRepPaint()};
+let _adRep={from:'',to:'',ad:''};
+function adRepRange(kind){const t=new Date();let f=new Date(t);if(kind==='today'){}else if(kind==='7')f.setDate(t.getDate()-6);else if(kind==='30')f.setDate(t.getDate()-29);else if(kind==='month')f=new Date(t.getFullYear(),t.getMonth(),1);else if(kind==='last'){f=new Date(t.getFullYear(),t.getMonth()-1,1);t.setDate(0)}
+ const iso=d=>adYmdIso(adYmd(d));_adRep.from=iso(f);_adRep.to=iso(t);adRepPaint()}
+function adRepRows(){const s=(_adStats&&_adStats.s)||{},f=(_adRep.from||'').replace(/-/g,''),t=(_adRep.to||'').replace(/-/g,''),ads=adAll(),name=id=>{const a=ads.find(x=>x.id===id);return a?a.co||a.title||id:'(deleted ad) '+id};
+ const rows=[];Object.entries(s).forEach(([id,a])=>{if(_adRep.ad&&id!==_adRep.ad)return;Object.entries(a.d||{}).forEach(([k,v])=>{if(f&&k<f||t&&k>t)return;const[n,ap,mb,pc]=adDay(v);if(n)rows.push({k,id,name:name(id),n,ap,mb,pc})})});
+ return rows.sort((x,y)=>y.k.localeCompare(x.k)||x.name.localeCompare(y.name))}
+function adRepPaint(){const box=$('#adrep-b');if(!box)return;if(!_adStats){box.innerHTML='<p class="hint"><span class="spin"></span> Loading clicks…</p>';return}
+ if(_adStats.err){box.innerHTML=`<p class="hint">${/unknown action/.test(_adStats.err)?'Update the Google Sheet code to Version 28 to see the report.':'Could not load: '+esc(_adStats.err)}</p>`;return}
+ const R=adRepRows(),T=R.reduce((o,r)=>{o.n+=r.n;o.ap+=r.ap;o.mb+=r.mb;o.pc+=r.pc;return o},{n:0,ap:0,mb:0,pc:0});const by={};R.forEach(r=>{by[r.name]=(by[r.name]||0)+r.n});
+ box.innerHTML=`<div class="adrep-sum"><div><b>${T.n.toLocaleString('en-IN')}</b><span>Total clicks</span></div><div><b>${T.ap}</b><span>From the app</span></div><div><b>${T.mb}</b><span>Mobile website</span></div><div><b>${T.pc}</b><span>Computer</span></div></div>
+ ${Object.keys(by).length?`<p class="hint" style="margin:8px 0">${Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<b>${esc(n)}</b>: ${c}`).join(' · ')}</p>`:''}
+ ${R.length?`<div class="tablewrap"><table class="tbl"><thead><tr><th>Date</th><th>Ad (company)</th><th>Clicks</th><th>App</th><th>Mobile website</th><th>Computer</th></tr></thead><tbody>${R.map(r=>`<tr><td>${adYmdNice(r.k)}</td><td>${esc(r.name)}</td><td><b>${r.n}</b></td><td>${r.ap}</td><td>${r.mb}</td><td>${r.pc}</td></tr>`).join('')}<tr class="adrep-tot"><td colspan="2"><b>Total</b></td><td><b>${T.n}</b></td><td>${T.ap}</td><td>${T.mb}</td><td>${T.pc}</td></tr></tbody></table></div>`:'<p class="hint">No clicks in these dates.</p>'}`}
+function adRepPanel(){if(!_adRep.from)adRepRange('7');const ads=adAll();
+ return `<div class="panel" id="adrep"><div class="of-h"><h3 style="margin:0">📊 Ad click report</h3><div class="row-btns" style="margin:0"><button class="btn ghost sm" onclick="adStatsLoad(true)">⟳ Refresh</button><button class="btn sm" onclick="adRepExcel()">⬇ Download Excel</button></div></div>
+ <div class="adrep-f"><label>From <input type="date" id="ar-from" value="${_adRep.from}" onchange="_adRep.from=this.value;adRepPaint()"></label><label>To <input type="date" id="ar-to" value="${_adRep.to}" onchange="_adRep.to=this.value;adRepPaint()"></label>
+ <label>Ad <select id="ar-ad" onchange="_adRep.ad=this.value;adRepPaint()"><option value="">All ads</option>${ads.map(a=>`<option value="${esc(a.id)}" ${_adRep.ad===a.id?'selected':''}>${esc(a.co||a.title||a.id)}</option>`).join('')}</select></label>
+ <span class="adrep-q">${[['today','Today'],['7','Last 7 days'],['30','Last 30 days'],['month','This month'],['last','Last month']].map(([k,l])=>`<button type="button" class="btn ghost sm" onclick="adRepRange('${k}');const f=$('#ar-from'),t=$('#ar-to');if(f)f.value=_adRep.from;if(t)t.value=_adRep.to">${l}</button>`).join('')}</span></div>
+ <div id="adrep-b"></div><p class="hint" style="margin-top:8px">Clicks from every phone, computer and the app are counted (Sheet code Version 28). Dates are kept for 400 days.</p></div>`}
+async function adRepExcel(){if(!_adStats||_adStats.err)return toast('Load the report first.');const R=adRepRows();if(!R.length)return toast('No clicks in these dates to download.');
+ const rows=R.map(r=>({'Date':adYmdIso(r.k),'Ad (company)':r.name,'Clicks':r.n,'App':r.ap,'Mobile website':r.mb,'Computer':r.pc}));
+ const per={};R.forEach(r=>{const p=per[r.name]=per[r.name]||{'Ad (company)':r.name,'Clicks':0,'App':0,'Mobile website':0,'Computer':0,'Days with clicks':0};p.Clicks+=r.n;p.App+=r.ap;p['Mobile website']+=r.mb;p.Computer+=r.pc;p['Days with clicks']++});
+ const sum=Object.values(per).sort((a,b)=>b.Clicks-a.Clicks),fn=`JobSetu1-Ad-clicks-${_adRep.from||'start'}-to-${_adRep.to||isoDay(now())}`;
+ const ok=await loadXLSX();if(!ok){const head=Object.keys(rows[0]);const csv=[head,...rows.map(r=>head.map(h=>r[h]))].map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');return saveBlob(fn+'.csv',new Blob(['﻿'+csv],{type:'text/csv'}),'Ad click report (CSV)')}
+ const wb=XLSX.utils.book_new(),add=(L,n)=>{const ws=XLSX.utils.json_to_sheet(L);ws['!cols']=Object.keys(L[0]).map(k=>({wch:Math.max(12,k.length+2,...L.slice(0,200).map(r=>String(r[k]).length+1))}));ws['!autofilter']={ref:ws['!ref']};XLSX.utils.book_append_sheet(wb,ws,n)};
+ add(rows,'Date-wise clicks');add(sum,'Summary by ad');const out=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+ saveBlob(fn+'.xlsx',new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Ad click report')}
+{const _pa114=pgAdsAdmin;pgAdsAdmin=function(){const h=_pa114.apply(this,arguments);const i=h.lastIndexOf('<div class="panel"><h3>All ads');return i>=0?h.slice(0,i)+adRepPanel()+h.slice(i):h+adRepPanel()}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
