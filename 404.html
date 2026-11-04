@@ -1938,6 +1938,11 @@ input.otp-auto{border-color:#16a34a!important;background:#f0fdf4}
 .dup-g{margin-top:10px;border-top:1px solid #eef0f5;padding-top:8px}
 .dup-r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;font-size:.9rem;flex-wrap:wrap}
 .warnp{border-left:4px solid #f59e0b}
+/* ===== V111 ===== */
+.logo-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:10px}
+.logo-r{display:flex;align-items:center;gap:10px;border:1px solid #e6e9f2;border-radius:12px;padding:8px 10px}
+.logo-r>span{flex:1;min-width:0;font-size:.9rem}
+.logo-th{width:40px;height:40px;border-radius:10px;object-fit:contain;flex:none}
 </style>
 </head>
 <body>
@@ -4720,7 +4725,7 @@ setInterval(idleCheck,15000);
 if(session&&session.kind==='staff'){const last=idleGet();if(last&&Date.now()-last>=STAFF_IDLE_MS){try{localStorage.removeItem(IDLE_KEY)}catch(e){}setSession(null);setTimeout(()=>toast('You were logged out after 10 minutes without activity. Please log in again.',8000),600);if(/^#\/(admin|manager)/.test(location.hash))history.replaceState(null,'','#/office')}}
 
 /* ============ V58: cross-device sync (login anywhere, admin sees every device) ============ */
-const WEB_BUILD='110';
+const WEB_BUILD='112';
 const TOK_KEY='jobsetu_cloud_tok';
 function tokAll(){try{return JSON.parse(localStorage.getItem(TOK_KEY)||'{}')||{}}catch(e){return {}}}
 function tokSet(id,t){const m=tokAll();if(t)m[id]=t;else delete m[id];try{localStorage.setItem(TOK_KEY,JSON.stringify(m))}catch(e){}}
@@ -7792,6 +7797,69 @@ function dupGroups(role){const by=new Map();db.users.filter(x=>realAcc(x)&&x.rol
  const seen=new Set(),out=[];by.forEach((L,k)=>{if(L.length<2)return;const key=L.map(u=>u.id).sort().join('|');if(seen.has(key))return;seen.add(key);out.push({k,L})});return out}
 {const _r110=route;route=function(){const r=_r110.apply(this,arguments);try{gmailKeep()}catch(e){}
  try{const m=/^#\/admin\/(candidates|employers)/.exec(location.hash||'');if(m&&isAdminNow()&&!$('#dup-p')){const role=m[1]==='employers'?'employer':'candidate',G=dupGroups(role);if(G.length){const t=document.querySelector('#app .panel');if(t)t.insertAdjacentHTML('beforebegin',`<div class="panel warnp" id="dup-p" style="margin-bottom:14px"><b>⚠ ${G.length} possible duplicate account${G.length>1?'s':''}</b> <span class="hint">(same ${'email or mobile'}). Keep the right one and delete the extra.</span>${G.map(g=>`<div class="dup-g"><span class="hint">${g.k.startsWith('e:')?'Email':'Mobile'}: <b>${esc(g.k.slice(2))}</b></span>${g.L.map(u=>`<div class="dup-r"><span>${esc(role==='employer'?(u.company?.name||u.name):u.name)} · ${esc(u.email||'')} · ${esc(u.mobile||'')} · joined ${fmtDate(u.createdAt)}</span><button class="btn danger sm" onclick="delUser('${u.id}')">Delete</button></div>`).join('')}</div>`).join('')}</div>`)}}}catch(e){}return r}}
+
+/* ==================================================================
+   V111: company logo — saved straight to the Sheet (by the employer, even
+   when someone else is logged in on that phone, or by the Admin), and
+   Admin → Employers can upload a logo for any company
+   ================================================================== */
+function logoRec(u){return Object.assign(gsStrip(u.company,['docs','logo','logoKey','logoSent']),{id:u.id,contactName:u.name,status:u.status,createdAt:u.createdAt})}
+async function logoPush(u){const c=u.company,toks=tokAll(),tok=toks[u.id]||(isStaffNow()?myTok():'');if(!tok||!cloudOn()||!c.logoSm)return false;
+ try{await gsPost({action:'logoSet',token:tok,id:u.id,logoSm:c.logoSm});c.logoSent=c.logoKey;return true}
+ catch(e){if(/unknown action|not_found/.test(cloudErr(e))){try{await gsPost({action:'upsert',collection:'companies',records:[logoRec(u)],token:tok});c.logoSent=c.logoKey;return true}catch(x){}}return false}}
+logoSync=async function(){if(_logoBusy)return;_logoBusy=true;try{let ch=false;
+ for(const u of db.users){if(u.role!=='employer'||!u.company||isDemoUser(u)||u.remote)continue;const L=u.company.docs&&u.company.docs.logo;if(!L||!L.data||L.fromCloud)continue;
+  const key=String(L.data.length)+':'+L.data.slice(-40);
+  if(u.company.logoKey!==key||!u.company.logoSm){const sm=await logoSmall(L.data);if(!sm)continue;u.company.logoSm=sm;u.company.logoKey=key;ch=true}
+  if(u.company.logoSent!==key&&await logoPush(u))ch=true}
+ if(ch)save()}finally{_logoBusy=false}};
+/* Admin → Employers: company logos */
+function logoPanel(){const E=db.users.filter(u=>u.role==='employer'&&!isDemoUser(u)&&u.company);const miss=E.filter(u=>!(u.company.logoSm||u.company.docs?.logo?.data));
+ return `<div class="panel" id="logo-p" style="margin-bottom:14px"><b>🖼 Company logos</b> <span class="hint">${E.length-miss.length} of ${E.length} companies have a logo. The logo shows on their jobs for everyone (website and app).</span>
+ <details ${miss.length?'open':''}><summary class="hint" style="cursor:pointer;margin-top:6px">Show companies</summary><div class="logo-l">${E.map(u=>{const has=u.company.logoSm||u.company.docs?.logo?.data;return `<div class="logo-r">${coMark(u,'logo-th')}<span><b>${esc(u.company.name||u.name)}</b><br><span class="hint">${has?'Logo added ✓':'No logo yet'}</span></span><label class="btn ghost sm">${has?'Change':'Upload'} logo<input type="file" accept="image/*" hidden onchange="logoAdmin('${u.id}',this)"></label></div>`}).join('')}</div></details></div>`}
+async function logoAdmin(id,inp){if(!isAdminNow())return;const f=inp.files&&inp.files[0];if(!f)return;const u=getUser(id);if(!u)return;
+ try{const big=await shrinkPicture(await fileData(f),400,true);const sm=await logoSmall(big);if(!sm)return toast('This picture could not be used. Try a PNG or JPG.');
+  u.company.docs=Object.assign({},u.company.docs||{},{logo:{name:f.name,type:'image/webp',size:dataSize(big),data:big}});u.company.logoSm=sm;u.company.logoKey=String(big.length)+':'+big.slice(-40);save();
+  const ok=await logoPush(u);toast(ok?`Logo saved for ${u.company.name} ✓ It now shows on their jobs everywhere.`:'Logo saved here. Connect / link the Google Sheet to show it on every device.',6000);route()}catch(e){toast('Could not read this picture.')}}
+{const _r111=route;route=function(){const r=_r111.apply(this,arguments);try{if(/^#\/admin\/employers/.test(location.hash||'')&&isAdminNow()&&!$('#logo-p')){const t=document.querySelector('#app .panel');if(t)t.insertAdjacentHTML('beforebegin',logoPanel())}}catch(e){}return r}}
+
+/* ==================================================================
+   V112: same everywhere —
+   • company logo from the Sheet reaches every device (also when that
+     employer is already known on the device, e.g. after applying)
+   • profile photo travels with the account (small copy)
+   • saved jobs follow the account to every phone / computer
+   ================================================================== */
+window._coLogo={};
+function logoApply(rows){let ch=false;(rows||[]).forEach(r=>{if(!r||!r.id)return;const id=String(r.id),sm=String(r.logoSm||'');window._coLogo[id]=/^data:image\//.test(sm);
+ if(!window._coLogo[id])return;db.users.filter(x=>String(x.id)===id&&x.role==='employer').forEach(u=>{u.company=u.company||{};const d=u.company.docs=u.company.docs||{};
+ if(d.logo&&d.logo.data&&!d.logo.fromCloud)return;if(u.company.logoSm===sm&&d.logo&&d.logo.data===sm)return;u.company.logoSm=sm;d.logo={name:'logo',data:sm,fromCloud:1};ch=true})});
+ if(ch){_cache={};save()}return ch}
+{const _gg112=gsGet;gsGet=async function(c){const r=await _gg112.apply(this,arguments);if(c==='companies'){try{if(logoApply(r))setTimeout(()=>{const a=document.activeElement;if(!(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)))route()},50)}catch(e){}}return r}}
+/* logo list for the admin also says whether the Sheet has it */
+{const _lp112=logoPanel;logoPanel=function(){return _lp112.apply(this,arguments).replace(/<b>([^<]*)<\/b><br><span class="hint">(Logo added ✓|No logo yet)<\/span>/g,(m,name,st)=>{const u=db.users.find(x=>x.role==='employer'&&(x.company?.name||x.name)===name.replace(/&amp;/g,'&'));const ok=u&&window._coLogo[u.id];return `<b>${name}</b><br><span class="hint">${st}${u&&st!=='No logo yet'?(ok?' · on all devices ✓':' · <span class="err-t">not on other devices yet — press Change logo</span>'):''}</span>`})}}
+/* ---------- profile photo on every device ---------- */
+let _phBusy=false;
+async function photoSync(){if(_phBusy)return;_phBusy=true;try{let ch=false;for(const u of db.users){if(!u||isDemoUser(u)||u.remote||u.photoCloud)continue;
+  if(!u.photo){if(u.photoSm){u.photoSm='';ch=true}continue}const key=u.photo.length+':'+u.photo.slice(-30);if(u.photoKey===key&&u.photoSm)continue;
+  let sm='';try{sm=await shrinkPicture(u.photo,120,false);if(sm.length>30000)sm=await shrinkPicture(u.photo,80,false,true)}catch(e){}if(sm&&sm.length<=30000){u.photoSm=sm;u.photoKey=key;ch=true}}
+ if(ch)save()}finally{_phBusy=false}}
+{const _gc112=gsCollections;gsCollections=function(){const C=_gc112.apply(this,arguments);try{if(C.users)C.users=C.users.map(r=>{const u=db.users.find(x=>x.id===r.id);const o=Object.assign({},r);['photoKey','photoCloud'].forEach(k=>delete o[k]);if(u&&!u.photoCloud)o.photoSm=u.photoSm||'';else delete o.photoSm;return o})}catch(e){}return C}}
+{const _ca112=cloudApply;cloudApply=function(c,r){const u=_ca112.apply(this,arguments);try{if(c==='users'&&u&&r){const sm=String(r.photoSm||'');if(/^data:image\//.test(sm)&&(!u.photo||u.photoCloud)){u.photo=sm;u.photoCloud=1}else if(!sm&&u.photoCloud){delete u.photo;delete u.photoCloud}}}catch(e){}return u}}
+/* the owner's own new photo replaces a copy that came from the Sheet */
+{const _sp112=typeof savePhoto==='function'?savePhoto:null;if(_sp112)savePhoto=function(){const u=me();if(u)delete u.photoCloud;return _sp112.apply(this,arguments)}}
+{const _rp112=typeof removePhoto==='function'?removePhoto:null;if(_rp112)removePhoto=function(){const u=me();if(u){delete u.photoCloud;u.photoSm=''}return _rp112.apply(this,arguments)}}
+/* ---------- saved jobs follow the account ---------- */
+savedSet=function(){const u=me();if(!u)return new Set();if(!Array.isArray(u.saved)){let l=[];try{l=JSON.parse(localStorage.getItem('js1_saved_'+u.id)||'[]')}catch(e){}u.saved=l}return new Set(u.saved)};
+{const _ts112=toggleSaveJob;toggleSaveJob=function(id,btn){const u=me();if(!u)return go('#/login');const s=savedSet();s.has(id)?s.delete(id):s.add(id);u.saved=[...s];try{localStorage.setItem('js1_saved_'+u.id,JSON.stringify(u.saved))}catch(e){}save();
+ if(btn){const on=s.has(id);btn.classList.toggle('on',on);btn.innerHTML=(on?'🔖 Saved':'🏷️ Save')}toast(s.has(id)?'Job saved ✓ Find it in the Saved tab.':'Removed from saved jobs.')}}
+{const _r112=route;route=function(){const r=_r112.apply(this,arguments);setTimeout(photoSync,600);return r}}
+setTimeout(photoSync,3000);
+/* one record per account on each device (a read-only copy never hides the real one) */
+function userDedupe(){const seen=new Map();let ch=false;db.users.forEach((u,i)=>{if(!u||!u.id)return;const k=String(u.id);if(!seen.has(k)){seen.set(k,i);return}
+ const j=seen.get(k),a=db.users[j];const keepB=a.remote&&!u.remote;const lose=keepB?a:u,win=keepB?u:a;if(win.company&&lose.company&&lose.company.logoSm&&!win.company.logoSm){win.company.logoSm=lose.company.logoSm;win.company.docs=win.company.docs||{};if(!win.company.docs.logo)win.company.docs.logo={name:'logo',data:lose.company.logoSm,fromCloud:1}}
+ lose._dup=1;if(keepB)seen.set(k,i);ch=true});if(ch){db.users=db.users.filter(u=>!u._dup);_cache={};save()}}
+{const _r112b=route;route=function(){try{userDedupe()}catch(e){}return _r112b.apply(this,arguments)}}
 
 try{if(SITECFG)cfgApply(SITECFG)}catch(e){}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button,.btn');if(b&&e.detail>0)setTimeout(()=>{try{if(document.activeElement===b)b.blur()}catch(_){}},0)});
